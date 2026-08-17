@@ -1,0 +1,49 @@
+## 120. Hands-On Engineering Labs I: Fundamentals to Intermediate
+
+### 120.1 How to Use These Labs
+
+Each lab states a problem, explicit acceptance criteria, and hints pointing back to the relevant handbook chapters — deliberately without a full solution. Reading a mechanism explained is recognition; implementing it against a concrete acceptance test is retention, and the gap between those two is exactly what §119's reading-path guide flagged as under-served by a reading-only pass through a book this size. Use any language you're comfortable in; the acceptance criteria are language-agnostic.
+
+### 120.2 Lab: Token Bucket Rate Limiter
+
+**Problem:** Implement a rate limiter allowing at most N requests per T seconds per client, using the token-bucket algorithm. **Acceptance criteria:** (1) A burst of requests up to the bucket's capacity succeeds immediately; (2) requests beyond capacity are rejected until tokens refill; (3) tokens refill continuously (or in small increments), not just once per full window boundary; (4) the limiter is safe under concurrent access from multiple threads/requests simultaneously. **Hints:** §60.2, §99.3 cover the algorithm family and tradeoffs against sliding-window/fixed-window alternatives — implement token bucket specifically first, then compare its behavior against what a fixed-window implementation would do at a window boundary. **Done when:** you can demonstrate, via a test, the specific difference in behavior between your token-bucket implementation and a naive fixed-window counter at a boundary condition.
+
+### 120.3 Lab: LRU Cache From Scratch
+
+**Problem:** Implement an LRU (Least Recently Used) cache with O(1) `get` and `put`, and a fixed maximum capacity. **Acceptance criteria:** (1) Both operations are genuinely O(1), not O(n) — you should be able to explain why your chosen data structure achieves this; (2) `get` on an existing key updates its recency; (3) `put` beyond capacity evicts the correct (least recently used) entry; (4) a test explicitly demonstrates eviction order across a sequence of operations. **Hints:** §39.2, §107.2 cover the hash-map-plus-doubly-linked-list combination and *why* a doubly-linked list specifically (not a singly-linked list or array) is required for O(1) arbitrary-node removal. **Done when:** you can explain, without looking it up, why a singly-linked list would break the O(1) guarantee.
+
+### 120.4 Lab: URL Shortener With Real Persistence and Caching
+
+**Problem:** Build a working URL shortener: an endpoint that accepts a long URL and returns a short code, and an endpoint that redirects a short code to its original URL, backed by a real database and a cache layer. **Acceptance criteria:** (1) Short codes are generated without a single, contended global counter (§35.5's distributed-ID-generation concern); (2) redirects are served from cache on repeat access, with a measurable cache-hit-rate improvement over a no-cache baseline; (3) the system handles a collision on short-code generation correctly (detects and regenerates, doesn't silently overwrite); (4) a basic rate limit protects the shortening endpoint specifically (§103.3). **Hints:** §80.4's estimation methodology — deliberately estimate the read/write ratio before building, and let it justify your caching decision rather than adding caching reflexively (§108.3). **Done when:** you've measured (not assumed) your cache hit rate under a simulated realistic access pattern (a small number of URLs receiving most of the redirect traffic).
+
+### 120.5 Lab: In-Memory Publish/Subscribe Event Bus
+
+**Problem:** Implement a simple in-process pub/sub system: publishers emit named events, subscribers register interest in specific event names, and every registered subscriber for an event receives it. **Acceptance criteria:** (1) A single event with multiple subscribers reaches all of them (true fan-out, §97.2); (2) a subscriber that throws an exception while handling an event does not prevent other subscribers from receiving it; (3) subscribing and publishing are safe under concurrent access; (4) unsubscribing actually stops future delivery (no memory leak of dead subscriber references). **Hints:** §97.2-97.3 cover the pattern conceptually; this lab is deliberately in-process (no real message broker) so you build the fan-out and failure-isolation logic yourself rather than relying on a broker's built-in guarantees. **Done when:** a test demonstrates that one failing subscriber doesn't block delivery to the others (acceptance criterion 2) — this is the part most naive implementations get wrong first.
+
+### 120.6 Lab: Circuit Breaker Wrapper for an HTTP Client
+
+**Problem:** Implement a circuit breaker wrapping calls to an external HTTP endpoint, with closed/open/half-open states. **Acceptance criteria:** (1) After N consecutive failures (or a failure-rate threshold within a window), the circuit opens and subsequent calls fail fast without attempting the real request; (2) after a configurable timeout, the circuit transitions to half-open and allows one trial request through; (3) a successful trial request closes the circuit again; a failed one reopens it; (4) the breaker's current state and transition history are observable (loggable/inspectable), not a black box. **Hints:** §42.5, §110.5 — deliberately configure your breaker's thresholds differently for a "critical" versus "optional" simulated dependency and observe the different failure behavior each produces downstream. **Done when:** you can demonstrate all three state transitions (closed→open, open→half-open, half-open→closed or back to open) with a test for each, not just the closed→open case most implementations stop at.
+
+### 120.7 Lab: Job Queue With Retry and Dead Letter Handling
+
+**Problem:** Implement a simple job queue: jobs are enqueued, a worker processes them, failed jobs are retried with backoff, and jobs that repeatedly fail are routed to a dead-letter queue rather than retried forever. **Acceptance criteria:** (1) A transient failure triggers a retry with increasing delay (exponential backoff), not an immediate retry (§64.5); (2) a job failing more than a configured maximum number of times lands in the DLQ, not in an infinite retry loop; (3) job processing is idempotent-safe — processing the same job twice (simulating an at-least-once delivery redelivery) produces the same end state as processing it once; (4) DLQ contents are inspectable for later investigation. **Hints:** §105.4's distributed-job-scheduler discussion and §110.2's payment-retry case study directly motivate acceptance criteria 1 and 3. **Done when:** a test simulates a job that always fails and confirms it lands in the DLQ after exactly the configured number of attempts, not before or indefinitely after.
+
+### 120.8 Lab: Consistent Hashing Ring
+
+**Problem:** Implement consistent hashing: given a set of backend nodes and a set of keys, route each key to a node such that adding or removing one node only reassigns a small fraction of keys. **Acceptance criteria:** (1) Implement the ring structure and routing function from §28.4; (2) write a test that measures what fraction of keys change their assigned node when one node is added to an existing pool of several — this fraction should be small (roughly 1/N of keys, not the majority); (3) compare this measured fraction explicitly against what a naive `hash(key) % node_count` approach would produce under the same node-addition scenario. **Hints:** §28.4's ring diagram is the direct reference; implement virtual nodes (multiple ring positions per physical node) as a stretch extension and observe how it improves load distribution evenness. **Done when:** you have a concrete, measured number (not just a code implementation) showing your consistent-hashing approach reassigns dramatically fewer keys than the naive modulus approach under the same test scenario.
+
+### 120.9 Lab: TTL-Aware Key-Value Store
+
+**Problem:** Extend §120.3's LRU cache with per-key time-to-live (TTL) expiration, supporting both lazy (checked on access) and active (background sweep) expiration. **Acceptance criteria:** (1) A key with an expired TTL is never returned by `get`, even if it hasn't been swept yet (lazy check on access); (2) a background process periodically removes expired keys proactively; (3) a key's TTL and its LRU recency are independent — accessing a key updates recency but does not extend its TTL unless explicitly requested; (4) capacity-based eviction (§120.3) and TTL-based expiration correctly coexist without interfering with each other. **Hints:** §107.2's key-value-store discussion covers the eviction-policy-drives-data-structure principle; this lab adds the TTL dimension explicitly. **Done when:** a test demonstrates a key expiring via TTL *before* it would have been evicted by LRU capacity pressure, and a separate test demonstrates the reverse ordering, confirming both mechanisms operate correctly and independently.
+
+### 120.10 Engineering Intuition
+
+> **Why no full solutions provided?** Because the value of these labs is in the specific decisions you make while implementing them (which data structure, how to handle the concurrent-access edge case) — a provided solution short-circuits exactly the productive struggle that builds retention (§119.6).
+>
+> **What should I do if I get stuck?** Re-read the specific cross-referenced section, then try to state in one sentence what property you're actually trying to guarantee (O(1) lookup, fan-out to all subscribers, correct eviction order) before returning to the code — most implementation stalls come from an unclear target, not an unclear language feature.
+
+### 120.11 Further Reading
+
+- §28.4 (Consistent Hashing), §39.2/§107.2 (Eviction Policies), §42.5 (Circuit Breakers), §60.2/§99.3 (Rate Limiting Algorithms), §97.2 (Fan-Out/Pub-Sub) — the direct mechanism references for this chapter's eight labs.
+
+---

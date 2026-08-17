@@ -1,0 +1,33 @@
+## 86. How to Read This Handbook: A Guide by Background and Experience Level
+
+### 86.1 The Problem This Chapter Solves
+
+This handbook assumes general software engineering knowledge (§0.2) but readers arrive with genuinely different starting points relative to *AI* specifically — some are experienced backend engineers with zero AI exposure, some have a data-science/ML background but little production-systems experience, some are early-career and building both skill sets simultaneously. A single linear read serves none of these groups optimally. This chapter gives each an explicit path, the same role §119 plays in the companion Software Systems Handbook.
+
+### 86.2 Path A: Experienced Software Engineer, New to AI
+
+You already have the systems intuition (§0.2's assumed prerequisite) — your gap is purely the AI-specific mechanisms. **Read Part I (§1-14) at full depth, in order** — this is genuinely new material for you, not review, and skipping ahead into Part II's mechanism depth before the mental models are solid will make §17-19's transformer internals harder to anchor than they need to be. **Then read Part II (§15-31) in full** — you'll recognize the *pattern* of many of these chapters (a serving-infrastructure chapter, a caching-adjacent chapter) from your general systems background, which should make absorption faster than it would be for someone without that background; explicitly notice where an AI-specific mechanism (KV cache, §18.4) is a direct analogue of a general-systems concept you already know (paged virtual memory) — this handbook flags these deliberately (§18.4 does so explicitly), and recognizing the pattern yourself is a stronger signal of real understanding than just reading the analogy once. **Prioritize §87-88's hands-on labs early** — building a minimal RAG pipeline yourself will cement Part I-II faster than continued reading will.
+
+### 86.3 Path B: Data Science / ML Background, New to Production Systems
+
+You likely already understand embeddings, transformers, and model behavior at a level Part I's mental models will feel slow for — your actual gap is everything about running these systems reliably and cheaply in production. **Skim Part I (§1-10) quickly** for the ordering discipline and vocabulary, but don't expect much genuinely new content until §11-14 (Agents, Fine-Tuning framed as "when NOT to," Inference Engineering, AI Infrastructure) — these are more likely to contain real gaps for you, since they're systems-and-cost concerns a research or modeling background doesn't typically emphasize. **Read Part III (§32-42) as your center of gravity** — production latency/cost/retrieval/hallucination diagnosis, GPU throughput, evaluation-at-scale, security operations, incident response — this is precisely the material a modeling background doesn't cover and production AI engineering absolutely requires. **Read §9/§26's "when NOT to fine-tune" sections particularly closely** — this is the single most common blind spot for engineers coming from a modeling background, where fine-tuning is often the default tool reached for regardless of whether the actual problem is a knowledge gap (better solved by RAG) or a prompting gap.
+
+### 86.4 Path C: Early Career, Building Software and AI Fluency Simultaneously
+
+You're building two skill sets at once, and the honest advice is: don't try to master both from this handbook alone at the same time. **Read this handbook's companion Software Systems Engineering Handbook's Parts I-II first**, or in parallel at a much slower pace, before pushing deep into this book's Part II-III — most of this handbook's production-diagnosis chapters (§32-42) assume you can already reason about caching, load balancing, and distributed systems generally; without that foundation, an AI-specific latency or cost incident will be hard to distinguish from a general-systems one. **Within this handbook, read Part I (§1-14) fully and slowly**, treating every cross-reference to "companion §NN" as an explicit signal to go read that general-systems concept before continuing, rather than skipping past it. **Defer Part III and the capstone (§43-56) until you have some real production exposure** — like §119.2's advice for the companion handbook, reading production-diagnosis chapters before you've experienced anything like the failure mode they describe produces recognition without retention.
+
+### 86.5 Path D: Experienced AI/ML Engineer Moving Into Production AI Engineering
+
+You know the modeling and research side well and are moving toward building and operating real AI products — your path is closest to Path B (§86.3) but likely with even less patience for Part I's mental models. **Skim Part I entirely**, reading only the Engineering Intuition blocks and decision trees to confirm you're not missing an ordering-discipline point specific to this handbook. **Read Part II (§15-31) for the production-engineering framing specifically** — even mechanisms you know well (attention, quantization) are presented here with an explicit engineering-consequence framing (memory cost, latency chain, §15) that a research-oriented treatment typically doesn't emphasize; this reframing is the actual value for you, not the mechanism itself. **Read Part IV's capstone (§43-56) in full** — Nova's stage-by-stage evolution is the fastest way to internalize the *product* judgment (what to build when, what tradeoff each addition costs) that pure modeling experience doesn't automatically provide. **Use Part VI (§61-85) as your fastest path to interview- and review-ready fluency** — you already have the depth; this Part's job is teaching you to derive and communicate it under the specific pressure of an unfamiliar "design X" question.
+
+### 86.6 Engineering Intuition
+
+> **What's the fastest way to tell which path actually fits me?** Ask: "if someone described a KV cache to me right now, would I understand it faster via the paged-virtual-memory analogy (§18.4) or would I need the AI-specific mechanism explained from scratch?" — if the analogy lands immediately, you're closer to Path A or D; if the AI mechanism itself is more familiar than the systems analogy, you're closer to Path B.
+>
+> **Is it possible I'm a blend of two paths?** Very likely, and that's fine — use these paths as weighting guidance (spend more time here, less there), not a strict binary assignment; most readers will genuinely combine elements of two adjacent paths.
+
+### 86.7 Further Reading
+
+- §0.2 (Target Audience & Prerequisites), the companion Software Systems Handbook's §119 (its own reading-path chapter) — the direct structural precedent for this chapter.
+
+---
