@@ -131,6 +131,21 @@ safe to keep authoring notes alongside real chapters.
       post-reversal pattern from the start, no vscode:// links.
 - [ ] Batches 3-6 — not started.
 
+## App-level change: syntax highlighting added
+
+Sreedhar asked for Java keywords/strings/comments to be colored in code blocks.
+Added `prismjs` (1.30.0, zero runtime deps) to `app-src/package.json`, a new
+`app-src/src/components/CodeBlock.jsx` that tokenizes fenced code via
+`Prism.highlight` and renders the token spans, wired into `Reader.jsx`'s
+`components.code` for non-inline code (inline `` `code` `` spans are
+untouched). Token colors in `index.css` reuse the app's existing palette
+variables (`--purple` keywords, `--emerald` strings, `--cyan` class names,
+`--gold` functions, `--danger` annotations, `--text-faint` comments) rather
+than introducing new colors. Covers java/python/json/yaml/docker/bash — python
+is the majority language across the *other* handbooks (~199 fenced blocks), so
+this benefits every book, not just this one. Ran `npm run build` after, so
+`dist/` (what `server.py` actually serves) is current.
+
 ## Open questions (not yet decided)
 
 - Whether to also add a Java entry to `xpRules`/`achievementState`, or
