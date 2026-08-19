@@ -645,6 +645,11 @@ body.reader-open {
   font-weight: 700;
 }
 
+.reader-body {
+  flex: 1;
+  display: flex;
+  min-height: 0; /* let .reader-content's own overflow-y do the scrolling, not this row */
+}
 .reader-content {
   flex: 1;
   overflow-y: auto;
@@ -656,10 +661,53 @@ body.reader-open {
   scroll-behavior: smooth;
 }
 .reader-content > * {
-  max-width: 760px;
+  /* % resolves against .reader-content's own box, so this scales down correctly once the
+     outline sidebar below is actually taking its share of the width, unlike vw would. */
+  max-width: clamp(680px, 74%, 860px);
   margin-left: auto;
   margin-right: auto;
 }
+.reader-outline {
+  display: none; /* only worth showing once there's real spare width to use, see media query */
+  width: 232px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  padding: 28px 28px 28px 4px;
+  border-left: 1px solid var(--card-border);
+}
+@media (min-width: 1280px) {
+  .reader-outline { display: flex; flex-direction: column; gap: 1px; }
+}
+.reader-outline-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-faint);
+  margin-bottom: 10px;
+  padding: 0 10px;
+}
+.reader-outline-item {
+  background: none;
+  border: none;
+  border-left: 2px solid transparent;
+  text-align: left;
+  cursor: pointer;
+  color: var(--text-dim);
+  font-size: 13px;
+  line-height: 1.4;
+  padding: 7px 10px;
+  border-radius: 0 6px 6px 0;
+  transition: background 0.15s, color 0.15s;
+}
+.reader-outline-item:hover { background: rgba(255, 255, 255, 0.05); color: var(--text); }
+.reader-outline-item.active {
+  color: var(--cyan);
+  border-left-color: var(--cyan);
+  background: rgba(56, 189, 248, 0.08);
+  font-weight: 600;
+}
+.reader-outline-item.lvl-2 { font-weight: 700; color: var(--text); }
 .reader-loading { color: var(--text-faint); text-align: center; padding: 60px 0; }
 .reader-content h1, .reader-content h2, .reader-content h3, .reader-content h4 {
   color: #f4f7ff;
@@ -686,6 +734,44 @@ body.reader-open {
   overflow-x: auto;
   font-family: var(--mono);
   font-size: 0.85em;
+}
+.reader-content pre code .token.comment,
+.reader-content pre code .token.prolog,
+.reader-content pre code .token.doctype,
+.reader-content pre code .token.cdata {
+  color: var(--text-faint);
+  font-style: italic;
+}
+.reader-content pre code .token.keyword,
+.reader-content pre code .token.boolean-literal {
+  color: var(--purple);
+  font-weight: 600;
+}
+.reader-content pre code .token.string,
+.reader-content pre code .token.char,
+.reader-content pre code .token.triple-quoted-string {
+  color: var(--emerald);
+}
+.reader-content pre code .token.number,
+.reader-content pre code .token.boolean {
+  color: var(--amber);
+}
+.reader-content pre code .token.class-name,
+.reader-content pre code .token.generics,
+.reader-content pre code .token.builtin {
+  color: var(--cyan);
+}
+.reader-content pre code .token.function {
+  color: var(--gold);
+}
+.reader-content pre code .token.annotation,
+.reader-content pre code .token.decorator {
+  color: var(--danger);
+}
+.reader-content pre code .token.operator,
+.reader-content pre code .token.punctuation,
+.reader-content pre code .token.namespace {
+  color: var(--text-dim);
 }
 .reader-content a {
   color: var(--cyan);
@@ -837,6 +923,10 @@ body.reader-open {
   padding: 8px 14px;
   font-size: 12.5px;
   backdrop-filter: blur(6px);
+}
+@media (min-width: 1280px) {
+  /* clear the outline sidebar (232px) so the button doesn't sit on top of it */
+  .jump-top-btn { right: 254px; }
 }
 
 .reader-footer {

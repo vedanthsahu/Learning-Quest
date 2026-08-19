@@ -1,10 +1,10 @@
 {
   "meta": {
     "createdAt": "2026-07-24T00:45:13.254367",
-    "lastActiveDate": "2026-08-17",
-    "streak": 1,
-    "longestStreak": 1,
-    "totalActiveSeconds": 325,
+    "lastActiveDate": "2026-08-19",
+    "streak": 3,
+    "longestStreak": 3,
+    "totalActiveSeconds": 632,
     "dailyLog": {
       "2026-08-10": {
         "seconds": 49,
@@ -13,10 +13,23 @@
         ]
       },
       "2026-08-17": {
-        "seconds": 276,
+        "seconds": 461,
         "chapters": [
           "The Journey of a Request: DNS, TLS, and What Happens When You Hit Enter",
           "Front Matter: Philosophy, Provenance, and How to Use This Book"
+        ]
+      },
+      "2026-08-18": {
+        "seconds": 65,
+        "chapters": [
+          "Foundations: AI/ML/DL/GenAI, LLMs, Model Selection"
+        ]
+      },
+      "2026-08-19": {
+        "seconds": 57,
+        "chapters": [
+          "Front Matter: How This Book Works, and the Codebase You're Reading",
+          "Records as Immutable DTOs"
         ]
       }
     }
@@ -1793,13 +1806,13 @@
             {
               "num": "1",
               "title": "Foundations: AI/ML/DL/GenAI, LLMs, Model Selection",
-              "status": "not_started",
+              "status": "in_progress",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/ai/part1_ch001_foundations.md",
               "estMinutes": 10,
-              "scrollPct": 0,
-              "activeSeconds": 0,
+              "scrollPct": 0.006717671207314798,
+              "activeSeconds": 65,
               "highlights": []
             },
             {
@@ -6063,8 +6076,8 @@
               "dateCompleted": null,
               "contentFile": "content/peg/part1_ch001_request_journey_dns_tls.md",
               "estMinutes": 3,
-              "scrollPct": 0.2920759659462999,
-              "activeSeconds": 271,
+              "scrollPct": 0.34512115258677145,
+              "activeSeconds": 456,
               "highlights": [
                 {
                   "blockId": 0,
@@ -8356,6 +8369,108 @@
           ]
         }
       ]
+    },
+    {
+      "id": "java",
+      "name": "Java Handbook",
+      "subtitle": "Learning Java from a real, finished codebase",
+      "color": "#ED8B00",
+      "parts": [
+        {
+          "name": "PART 0 -- Orientation",
+          "topics": [
+            {
+              "num": "0",
+              "title": "Front Matter: How This Book Works, and the Codebase You're Reading",
+              "status": "done",
+              "notes": "",
+              "dateCompleted": "2026-08-19",
+              "contentFile": "content/java/front_matter.md",
+              "estMinutes": 8,
+              "scrollPct": 0.9973262032085561,
+              "activeSeconds": 17,
+              "highlights": []
+            }
+          ]
+        },
+        {
+          "name": "PART I -- Core Java, the Spring Way",
+          "topics": [
+            {
+              "num": "1",
+              "title": "Records as Immutable DTOs",
+              "status": "in_progress",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/java/part1_ch001_records_as_immutable_dtos.md",
+              "estMinutes": 10,
+              "scrollPct": 0.7693333333333333,
+              "activeSeconds": 40,
+              "highlights": []
+            },
+            {
+              "num": "2",
+              "title": "Generics in Practice",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/java/part1_ch002_generics_in_practice.md",
+              "estMinutes": 10,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "3",
+              "title": "Enums Beyond Constants",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/java/part1_ch003_enums_beyond_constants.md",
+              "estMinutes": 9,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "4",
+              "title": "Streams and Optional",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/java/part1_ch004_streams_and_optional.md",
+              "estMinutes": 9,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "5",
+              "title": "Exceptions as a Hierarchy",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/java/part1_ch005_exceptions_as_a_hierarchy.md",
+              "estMinutes": 9,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "6",
+              "title": "Interfaces, Statics, Final, and Recursion",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/java/part1_ch006_interfaces_statics_final_recursion.md",
+              "estMinutes": 10,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            }
+          ]
+        }
+      ]
     }
   ],
   "challengeSeries": {
@@ -8696,8 +8811,8 @@
       "unlockedAt": "2026-08-17T16:07:36.387Z"
     },
     "streak_3": {
-      "unlocked": false,
-      "unlockedAt": null
+      "unlocked": true,
+      "unlockedAt": "2026-08-19T19:19:26.036Z"
     },
     "on_a_roll": {
       "unlocked": false,

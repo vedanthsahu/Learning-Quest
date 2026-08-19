@@ -1,10 +1,10 @@
 {
   "meta": {
     "createdAt": "2026-07-24T00:45:13.254367",
-    "lastActiveDate": "2026-08-17",
-    "streak": 1,
-    "longestStreak": 1,
-    "totalActiveSeconds": 325,
+    "lastActiveDate": "2026-08-18",
+    "streak": 2,
+    "longestStreak": 2,
+    "totalActiveSeconds": 575,
     "dailyLog": {
       "2026-08-10": {
         "seconds": 49,
@@ -13,10 +13,16 @@
         ]
       },
       "2026-08-17": {
-        "seconds": 276,
+        "seconds": 461,
         "chapters": [
           "The Journey of a Request: DNS, TLS, and What Happens When You Hit Enter",
           "Front Matter: Philosophy, Provenance, and How to Use This Book"
+        ]
+      },
+      "2026-08-18": {
+        "seconds": 65,
+        "chapters": [
+          "Foundations: AI/ML/DL/GenAI, LLMs, Model Selection"
         ]
       }
     }
@@ -1793,13 +1799,13 @@
             {
               "num": "1",
               "title": "Foundations: AI/ML/DL/GenAI, LLMs, Model Selection",
-              "status": "not_started",
+              "status": "in_progress",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/ai/part1_ch001_foundations.md",
               "estMinutes": 10,
-              "scrollPct": 0,
-              "activeSeconds": 0,
+              "scrollPct": 0.006717671207314798,
+              "activeSeconds": 65,
               "highlights": []
             },
             {
@@ -6063,8 +6069,8 @@
               "dateCompleted": null,
               "contentFile": "content/peg/part1_ch001_request_journey_dns_tls.md",
               "estMinutes": 3,
-              "scrollPct": 0.29469548133595286,
-              "activeSeconds": 271,
+              "scrollPct": 0.34512115258677145,
+              "activeSeconds": 456,
               "highlights": [
                 {
                   "blockId": 0,

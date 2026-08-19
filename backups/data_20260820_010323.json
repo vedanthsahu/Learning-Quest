@@ -1,91 +1,35 @@
 {
   "meta": {
     "createdAt": "2026-07-24T00:45:13.254367",
-    "lastActiveDate": "2026-08-10",
-    "streak": 1,
-    "longestStreak": 4,
-    "totalActiveSeconds": 5325,
+    "lastActiveDate": "2026-08-19",
+    "streak": 3,
+    "longestStreak": 3,
+    "totalActiveSeconds": 661,
     "dailyLog": {
-      "2026-07-23": {
-        "seconds": 84,
-        "chapters": [
-          "Networking Internals: TCP, HTTP/1.1->2->3, TLS, DNS",
-          "How This Handbook Works (Spiral Learning Model, four passes)"
-        ]
-      },
-      "2026-07-24": {
-        "seconds": 228,
-        "chapters": [
-          "How to Read This Book at Different Career Stages",
-          "Foundations: Why Systems Fail and What Engineering Judgment Means",
-          "Mental Model: Operating Systems",
-          "Mental Model: Networking",
-          "Mental Model: Backend & APIs",
-          "Mental Model: AuthN/AuthZ",
-          "Challenge: URL Shortener",
-          "Cross-Reference Index"
-        ]
-      },
-      "2026-07-28": {
-        "seconds": 963,
-        "chapters": [
-          "Mental Model: AuthN/AuthZ"
-        ]
-      },
-      "2026-07-29": {
-        "seconds": 628,
-        "chapters": [
-          "Mental Model: AuthN/AuthZ",
-          "Mental Model: Data Storage"
-        ]
-      },
-      "2026-07-30": {
-        "seconds": 2679,
-        "chapters": [
-          "Mental Model: Data Storage",
-          "Front Matter: Philosophy, 9-Step Pipeline, Capstone Preview",
-          "The Python Execution & Object Model",
-          "Functions, Closures & Decorators",
-          "Context Managers, Iterators & Generators",
-          "Dataclasses, Enums & Structural Typing (Protocols)",
-          "Challenge: URL Shortener",
-          "Solution Guide: URL Shortener"
-        ]
-      },
-      "2026-07-31": {
-        "seconds": 61,
-        "chapters": [
-          "Balanced Trees & AVL Trees",
-          "Mental Model: Data Storage",
-          "Mental Model: Operating Systems"
-        ]
-      },
-      "2026-08-03": {
-        "seconds": 18,
-        "chapters": [
-          "Lambda",
-          "EC2",
-          "Front Matter: Philosophy, Tier Structure, Full Table of Contents"
-        ]
-      },
-      "2026-08-05": {
-        "seconds": 312,
-        "chapters": [
-          "Front Matter: Philosophy, Provenance, and How to Use This Book",
-          "The Journey of a Request: DNS, TLS, and What Happens When You Hit Enter"
-        ]
-      },
-      "2026-08-06": {
-        "seconds": 325,
-        "chapters": [
-          "Mental Model: Data Storage",
-          "The Journey of a Request: DNS, TLS, and What Happens When You Hit Enter"
-        ]
-      },
       "2026-08-10": {
-        "seconds": 27,
+        "seconds": 49,
         "chapters": [
-          "The Journey of a Request: DNS, TLS, and What Happens When You Hit Enter"
+          "EC2"
+        ]
+      },
+      "2026-08-17": {
+        "seconds": 461,
+        "chapters": [
+          "The Journey of a Request: DNS, TLS, and What Happens When You Hit Enter",
+          "Front Matter: Philosophy, Provenance, and How to Use This Book"
+        ]
+      },
+      "2026-08-18": {
+        "seconds": 65,
+        "chapters": [
+          "Foundations: AI/ML/DL/GenAI, LLMs, Model Selection"
+        ]
+      },
+      "2026-08-19": {
+        "seconds": 86,
+        "chapters": [
+          "Front Matter: How This Book Works, and the Codebase You're Reading",
+          "Records as Immutable DTOs"
         ]
       }
     }
@@ -155,35 +99,33 @@
             {
               "num": "0.1",
               "title": "How This Handbook Works (Spiral Learning Model, four passes)",
-              "status": "done",
+              "status": "not_started",
               "notes": "",
-              "dateCompleted": "2026-07-23",
+              "dateCompleted": null,
               "contentFile": "content/ssh/front_matter.md",
               "estMinutes": 7,
-              "scrollPct": 1,
-              "activeSeconds": 74,
-              "highlights": [
-                9
-              ]
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
             },
             {
               "num": "0.2",
               "title": "How to Read This Book at Different Career Stages",
-              "status": "done",
+              "status": "not_started",
               "notes": "",
-              "dateCompleted": "2026-07-24",
+              "dateCompleted": null,
               "contentFile": "content/ssh/front_matter.md",
               "estMinutes": 7,
               "scrollPct": 0,
-              "activeSeconds": 6,
+              "activeSeconds": 0,
               "highlights": []
             },
             {
               "num": "0.3",
               "title": "The Continuous Project (capstone app preview)",
-              "status": "done",
+              "status": "not_started",
               "notes": "",
-              "dateCompleted": "2026-07-24",
+              "dateCompleted": null,
               "contentFile": "content/ssh/front_matter.md",
               "estMinutes": 7,
               "scrollPct": 0,
@@ -193,9 +135,9 @@
             {
               "num": "0.4",
               "title": "Notation, Diagram Conventions, and Numbering",
-              "status": "done",
+              "status": "not_started",
               "notes": "",
-              "dateCompleted": "2026-07-24",
+              "dateCompleted": null,
               "contentFile": "content/ssh/front_matter.md",
               "estMinutes": 7,
               "scrollPct": 0,
@@ -210,73 +152,73 @@
             {
               "num": "1",
               "title": "Foundations: Why Systems Fail and What Engineering Judgment Means",
-              "status": "done",
+              "status": "not_started",
               "notes": "",
-              "dateCompleted": "2026-07-24",
+              "dateCompleted": null,
               "contentFile": "content/ssh/part1_ch01_foundations.md",
               "estMinutes": 13,
-              "scrollPct": 0.2996715927750411,
-              "activeSeconds": 3,
+              "scrollPct": 0,
+              "activeSeconds": 0,
               "highlights": []
             },
             {
               "num": "2",
               "title": "Mental Model: Operating Systems",
-              "status": "done",
+              "status": "not_started",
               "notes": "",
-              "dateCompleted": "2026-07-24",
+              "dateCompleted": null,
               "contentFile": "content/ssh/part1_ch02_os.md",
               "estMinutes": 8,
-              "scrollPct": 0.31398809523809523,
-              "activeSeconds": 6,
+              "scrollPct": 0,
+              "activeSeconds": 0,
               "highlights": []
             },
             {
               "num": "3",
               "title": "Mental Model: Networking",
-              "status": "done",
+              "status": "not_started",
               "notes": "",
-              "dateCompleted": "2026-07-24",
+              "dateCompleted": null,
               "contentFile": "content/ssh/part1_ch03_networking.md",
               "estMinutes": 8,
               "scrollPct": 0,
-              "activeSeconds": 5,
+              "activeSeconds": 0,
               "highlights": []
             },
             {
               "num": "4",
               "title": "Mental Model: Backend & APIs",
-              "status": "done",
+              "status": "not_started",
               "notes": "",
-              "dateCompleted": "2026-07-24",
+              "dateCompleted": null,
               "contentFile": "content/ssh/part1_ch04_apis.md",
               "estMinutes": 7,
-              "scrollPct": 0.7143877186719029,
-              "activeSeconds": 120,
+              "scrollPct": 0,
+              "activeSeconds": 0,
               "highlights": []
             },
             {
               "num": "5",
               "title": "Mental Model: AuthN/AuthZ",
-              "status": "done",
+              "status": "not_started",
               "notes": "",
-              "dateCompleted": "2026-07-28",
+              "dateCompleted": null,
               "contentFile": "content/ssh/part1_ch05_authn_authz.md",
               "estMinutes": 6,
-              "scrollPct": 0.9995680521339543,
-              "activeSeconds": 1056,
+              "scrollPct": 0,
+              "activeSeconds": 0,
               "highlights": []
             },
             {
               "num": "6",
               "title": "Mental Model: Data Storage",
-              "status": "done",
+              "status": "not_started",
               "notes": "",
-              "dateCompleted": "2026-07-31",
+              "dateCompleted": null,
               "contentFile": "content/ssh/part1_ch06_data_storage.md",
               "estMinutes": 7,
               "scrollPct": 0,
-              "activeSeconds": 812,
+              "activeSeconds": 0,
               "highlights": []
             },
             {
@@ -533,7 +475,7 @@
               "contentFile": "content/ssh/part2_ch27_networking_internals.md",
               "estMinutes": 7,
               "scrollPct": 0,
-              "activeSeconds": 25,
+              "activeSeconds": 0,
               "highlights": []
             },
             {
@@ -1786,13 +1728,13 @@
             {
               "num": "D",
               "title": "Cross-Reference Index",
-              "status": "in_progress",
+              "status": "not_started",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/ssh/part9_appendixD_cross_reference_index.md",
               "estMinutes": 3,
-              "scrollPct": 1,
-              "activeSeconds": 5,
+              "scrollPct": 0,
+              "activeSeconds": 0,
               "highlights": []
             }
           ]
@@ -1864,13 +1806,13 @@
             {
               "num": "1",
               "title": "Foundations: AI/ML/DL/GenAI, LLMs, Model Selection",
-              "status": "not_started",
+              "status": "in_progress",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/ai/part1_ch001_foundations.md",
               "estMinutes": 10,
-              "scrollPct": 0,
-              "activeSeconds": 0,
+              "scrollPct": 0.006717671207314798,
+              "activeSeconds": 65,
               "highlights": []
             },
             {
@@ -3028,13 +2970,13 @@
             {
               "num": "0",
               "title": "Front Matter: Philosophy, 9-Step Pipeline, Capstone Preview",
-              "status": "done",
+              "status": "not_started",
               "notes": "",
-              "dateCompleted": "2026-07-30",
+              "dateCompleted": null,
               "contentFile": "content/pbh/front_matter.md",
               "estMinutes": 4,
-              "scrollPct": 1,
-              "activeSeconds": 8,
+              "scrollPct": 0,
+              "activeSeconds": 0,
               "highlights": []
             }
           ]
@@ -3045,49 +2987,49 @@
             {
               "num": "1",
               "title": "The Python Execution & Object Model",
-              "status": "done",
+              "status": "not_started",
               "notes": "",
-              "dateCompleted": "2026-07-30",
+              "dateCompleted": null,
               "contentFile": "content/pbh/part1_ch001_execution_object_model.md",
               "estMinutes": 5,
-              "scrollPct": 1,
-              "activeSeconds": 96,
+              "scrollPct": 0,
+              "activeSeconds": 0,
               "highlights": []
             },
             {
               "num": "2",
               "title": "Functions, Closures & Decorators",
-              "status": "done",
+              "status": "not_started",
               "notes": "",
-              "dateCompleted": "2026-07-30",
+              "dateCompleted": null,
               "contentFile": "content/pbh/part1_ch002_functions_closures_decorators.md",
               "estMinutes": 5,
-              "scrollPct": 1,
-              "activeSeconds": 239,
+              "scrollPct": 0,
+              "activeSeconds": 0,
               "highlights": []
             },
             {
               "num": "3",
               "title": "Context Managers, Iterators & Generators",
-              "status": "done",
+              "status": "not_started",
               "notes": "",
-              "dateCompleted": "2026-07-30",
+              "dateCompleted": null,
               "contentFile": "content/pbh/part1_ch003_context_managers_iterators_generators.md",
               "estMinutes": 6,
-              "scrollPct": 1,
-              "activeSeconds": 175,
+              "scrollPct": 0,
+              "activeSeconds": 0,
               "highlights": []
             },
             {
               "num": "4",
               "title": "Dataclasses, Enums & Structural Typing (Protocols)",
-              "status": "in_progress",
+              "status": "not_started",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/pbh/part1_ch004_dataclasses_enums_protocols.md",
               "estMinutes": 6,
-              "scrollPct": 0.6356641017062563,
-              "activeSeconds": 89,
+              "scrollPct": 0,
+              "activeSeconds": 0,
               "highlights": []
             },
             {
@@ -4508,13 +4450,13 @@
             {
               "num": "0",
               "title": "Front Matter: Philosophy, Tier Structure, Full Table of Contents",
-              "status": "done",
+              "status": "not_started",
               "notes": "",
-              "dateCompleted": "2026-08-03",
+              "dateCompleted": null,
               "contentFile": "content/cep/front_matter.md",
               "estMinutes": 7,
-              "scrollPct": 0.9013258541560428,
-              "activeSeconds": 8,
+              "scrollPct": 0,
+              "activeSeconds": 0,
               "highlights": []
             }
           ]
@@ -4530,20 +4472,33 @@
               "dateCompleted": null,
               "contentFile": "content/cep/part1_ch001_ec2.md",
               "estMinutes": 8,
-              "scrollPct": 0.19436345966958213,
-              "activeSeconds": 4,
-              "highlights": []
+              "scrollPct": 0.12385558818448782,
+              "activeSeconds": 49,
+              "highlights": [
+                {
+                  "blockId": 1,
+                  "note": "",
+                  "imagePath": null,
+                  "updatedAt": "2026-08-10T10:15:53.807Z"
+                },
+                {
+                  "blockId": 0,
+                  "note": "",
+                  "imagePath": "uploads/fb30166ea20d4b1e9752bbd9ab8658a3.png",
+                  "updatedAt": "2026-08-10T10:16:09.899Z"
+                }
+              ]
             },
             {
               "num": "2",
               "title": "Lambda",
-              "status": "in_progress",
+              "status": "not_started",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/cep/part1_ch002_lambda.md",
               "estMinutes": 8,
-              "scrollPct": 0.5492847344699197,
-              "activeSeconds": 6,
+              "scrollPct": 0,
+              "activeSeconds": 0,
               "highlights": []
             },
             {
@@ -5454,21 +5409,14 @@
             {
               "num": "12",
               "title": "Balanced Trees & AVL Trees",
-              "status": "in_progress",
+              "status": "not_started",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/dsa/part2_ch012_balanced_trees_avl.md",
               "estMinutes": 4,
               "scrollPct": 0,
-              "activeSeconds": 15,
-              "highlights": [
-                {
-                  "blockId": 0,
-                  "note": "",
-                  "imagePath": null,
-                  "updatedAt": "2026-07-31T03:28:43.713Z"
-                }
-              ]
+              "activeSeconds": 0,
+              "highlights": []
             },
             {
               "num": "13",
@@ -6108,11 +6056,11 @@
               "title": "Front Matter: Philosophy, Provenance, and How to Use This Book",
               "status": "done",
               "notes": "",
-              "dateCompleted": "2026-08-05",
+              "dateCompleted": "2026-08-17",
               "contentFile": "content/peg/front_matter.md",
               "estMinutes": 7,
-              "scrollPct": 1,
-              "activeSeconds": 51,
+              "scrollPct": 0.5044843049327354,
+              "activeSeconds": 5,
               "highlights": []
             }
           ]
@@ -6128,21 +6076,21 @@
               "dateCompleted": null,
               "contentFile": "content/peg/part1_ch001_request_journey_dns_tls.md",
               "estMinutes": 3,
-              "scrollPct": 0.1688132474701012,
-              "activeSeconds": 451,
+              "scrollPct": 0.34512115258677145,
+              "activeSeconds": 456,
               "highlights": [
                 {
                   "blockId": 0,
                   "note": "",
-                  "imagePath": "uploads/9457f1c1646748ed8519ea1622292f0b.png",
-                  "updatedAt": "2026-08-06T08:42:42.321Z"
+                  "imagePath": "uploads/5bb9d872d7fb41eaa3484360a36a3e75.png",
+                  "updatedAt": "2026-08-17T16:11:05.192Z"
                 }
               ]
             },
             {
               "num": "2",
               "title": "HTTP Methods, Status Codes, and Headers in Practice",
-              "status": "in_progress",
+              "status": "not_started",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/peg/part1_ch002_http_methods_status_headers.md",
@@ -6491,7 +6439,7 @@
             {
               "num": "29",
               "title": "Relational Database Basics: Tables, Keys, Indexes",
-              "status": "in_progress",
+              "status": "not_started",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/peg/part6_ch029_relational_db_basics.md",
@@ -6527,7 +6475,7 @@
             {
               "num": "32",
               "title": "Database Migrations Done Safely",
-              "status": "in_progress",
+              "status": "not_started",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/peg/part6_ch032_migrations_done_safely.md",
@@ -6604,7 +6552,7 @@
             {
               "num": "38",
               "title": "Caching Fundamentals: Hit, Miss, TTL, Cache-Aside",
-              "status": "in_progress",
+              "status": "not_started",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/peg/part7_ch038_caching_fundamentals.md",
@@ -6657,7 +6605,7 @@
             {
               "num": "42",
               "title": "Why Queues Exist: Producers, Consumers, Decoupling",
-              "status": "in_progress",
+              "status": "not_started",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/peg/part8_ch042_why_queues_exist.md",
@@ -6722,7 +6670,7 @@
             {
               "num": "47",
               "title": "Logs, Metrics, and Traces: The Three Pillars",
-              "status": "in_progress",
+              "status": "not_started",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/peg/part9_ch047_logs_metrics_traces.md",
@@ -6847,7 +6795,7 @@
             {
               "num": "57",
               "title": "Blast Radius, Multi-AZ, and Disaster Recovery",
-              "status": "in_progress",
+              "status": "not_started",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/peg/part10_ch057_blast_radius_multiaz_dr.md",
@@ -6876,7 +6824,7 @@
             {
               "num": "59",
               "title": "AuthN vs AuthZ, Password Hashing, and JWTs",
-              "status": "in_progress",
+              "status": "not_started",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/peg/part11_ch059_authn_authz_password_jwt.md",
@@ -6953,7 +6901,7 @@
             {
               "num": "65",
               "title": "Regions, Availability Zones, and VPC Basics",
-              "status": "in_progress",
+              "status": "not_started",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/peg/part12_ch065_regions_az_vpc_basics.md",
@@ -7042,7 +6990,7 @@
             {
               "num": "72",
               "title": "Git Workflow Basics: Branches, PRs, and Merge Conflicts",
-              "status": "in_progress",
+              "status": "not_started",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/peg/part13_ch072_git_workflow_basics.md",
@@ -7095,7 +7043,7 @@
             {
               "num": "76",
               "title": "Unit, Integration, and End-to-End Tests",
-              "status": "in_progress",
+              "status": "not_started",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/peg/part14_ch076_unit_integration_e2e_tests.md",
@@ -7194,7 +7142,7 @@
             {
               "num": "83",
               "title": "LLM Basics: Tokens, Context Windows, and Temperature",
-              "status": "in_progress",
+              "status": "not_started",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/peg/part17_ch083_llm_basics.md",
@@ -7283,7 +7231,7 @@
             {
               "num": "90",
               "title": "Time & Timezones: Why You Always Store UTC",
-              "status": "in_progress",
+              "status": "not_started",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/peg/part18_ch090_time_timezones_utc.md",
@@ -7353,7 +7301,7 @@
             {
               "num": "95",
               "title": "Clarifying Requirements and Defining \"Done\"",
-              "status": "in_progress",
+              "status": "not_started",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/peg/part20_ch095_clarifying_requirements_done.md",
@@ -8214,7 +8162,7 @@
             {
               "num": "163",
               "title": "Design Patterns IV: Proxy, Composite, Command, Iterator, State, Chain of Responsibility",
-              "status": "in_progress",
+              "status": "not_started",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/peg/part29_ch163_design_patterns_iv.md",
@@ -8409,11 +8357,113 @@
             {
               "num": "D",
               "title": "Weak Answer vs Strong Answer Bank",
-              "status": "in_progress",
+              "status": "not_started",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/peg/appendix_d_weak_vs_strong_answers.md",
               "estMinutes": 4,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "java",
+      "name": "Java Handbook",
+      "subtitle": "Learning Java from a real, finished codebase",
+      "color": "#ED8B00",
+      "parts": [
+        {
+          "name": "PART 0 -- Orientation",
+          "topics": [
+            {
+              "num": "0",
+              "title": "Front Matter: How This Book Works, and the Codebase You're Reading",
+              "status": "done",
+              "notes": "",
+              "dateCompleted": "2026-08-19",
+              "contentFile": "content/java/front_matter.md",
+              "estMinutes": 8,
+              "scrollPct": 0.9973262032085561,
+              "activeSeconds": 17,
+              "highlights": []
+            }
+          ]
+        },
+        {
+          "name": "PART I -- Core Java, the Spring Way",
+          "topics": [
+            {
+              "num": "1",
+              "title": "Records as Immutable DTOs",
+              "status": "in_progress",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/java/part1_ch001_records_as_immutable_dtos.md",
+              "estMinutes": 10,
+              "scrollPct": 0.07486515641855447,
+              "activeSeconds": 69,
+              "highlights": []
+            },
+            {
+              "num": "2",
+              "title": "Generics in Practice",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/java/part1_ch002_generics_in_practice.md",
+              "estMinutes": 10,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "3",
+              "title": "Enums Beyond Constants",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/java/part1_ch003_enums_beyond_constants.md",
+              "estMinutes": 9,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "4",
+              "title": "Streams and Optional",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/java/part1_ch004_streams_and_optional.md",
+              "estMinutes": 9,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "5",
+              "title": "Exceptions as a Hierarchy",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/java/part1_ch005_exceptions_as_a_hierarchy.md",
+              "estMinutes": 9,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "6",
+              "title": "Interfaces, Statics, Final, and Recursion",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/java/part1_ch006_interfaces_statics_final_recursion.md",
+              "estMinutes": 10,
               "scrollPct": 0,
               "activeSeconds": 0,
               "highlights": []
@@ -8432,17 +8482,17 @@
       {
         "num": "01",
         "name": "URL Shortener",
-        "challengeStatus": "in_progress",
+        "challengeStatus": "not_started",
         "challengeFile": "content/ces/challenge01_url_shortener.md",
         "challengeEstMinutes": 5,
-        "challengeScrollPct": 0.20815986677768525,
-        "challengeActiveSeconds": 976,
+        "challengeScrollPct": 0,
+        "challengeActiveSeconds": 0,
         "challengeHighlights": [],
-        "solutionStatus": "in_progress",
+        "solutionStatus": "not_started",
         "solutionFile": "content/ces/solution01_url_shortener.md",
         "solutionEstMinutes": 5,
-        "solutionScrollPct": 1,
-        "solutionActiveSeconds": 1110,
+        "solutionScrollPct": 0,
+        "solutionActiveSeconds": 0,
         "solutionHighlights": [],
         "notes": "",
         "dateCompleted": null
@@ -8758,15 +8808,15 @@
   "achievementState": {
     "first_steps": {
       "unlocked": true,
-      "unlockedAt": "2026-07-23T19:39:40.860Z"
+      "unlockedAt": "2026-08-17T16:07:36.387Z"
     },
     "streak_3": {
       "unlocked": true,
-      "unlockedAt": "2026-07-30T09:03:03.083Z"
+      "unlockedAt": "2026-08-19T19:19:26.036Z"
     },
     "on_a_roll": {
-      "unlocked": true,
-      "unlockedAt": "2026-07-30T13:04:09.526Z"
+      "unlocked": false,
+      "unlockedAt": null
     }
   }
 }
