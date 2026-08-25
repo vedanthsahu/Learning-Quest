@@ -127,9 +127,134 @@ safe to keep authoring notes alongside real chapters.
       existing `crossref.js` — no app changes needed.
 - [ ] Sreedhar to confirm the rewritten batch 1 reads well in the actual
       reader UI (run.bat) — not yet confirmed.
-- [ ] Batch 2 (Part II - IV: Spring Boot, DI, REST) — not started. Use the
-      post-reversal pattern from the start, no vscode:// links.
-- [ ] Batches 3-6 — not started.
+- [x] Batch 2 written and registered: Part II (Spring Boot Foundations,
+      ch007-011), Part III (DI and Layering, ch012-013), Part IV (REST APIs,
+      ch014-017). Sreedhar said to keep going autonomously without asking
+      after each batch ("continue till tokens are exhausted... do without
+      asking, we have reviewed") — proceeding straight through batches 3-6
+      without pausing for sign-off between them.
+- [x] Batch 3 written and registered: Part V (JPA, ch018-022), Part VI
+      (Mapping, ch023).
+- [x] Batch 4 written and registered: Part VII (Security and Identity,
+      ch024-028 — trimmed original ToC's 6 planned topics to 5, folding the
+      planned "implementing SSO end-to-end" into what Part IV §17 already
+      covered fully, to avoid duplicating the same AuthController walkthrough
+      twice), Part VIII (Handling Failure, ch029-031). Ch030 found a genuine,
+      verifiable bug while writing it, not a hypothetical: legacy exceptions
+      like `ProductNotFoundException` aren't caught by any specific handler
+      in `ApiExceptionHandler`, so they fall through to the 500 catch-all
+      instead of the correct 404 — worth knowing this book does surface real
+      findings, not just tutorial content.
+- [x] Batch 5 written and registered: Part IX (Maven, ch032), Part X
+      (Talking Between Services, ch033-038), Part XI (AOP, ch039).
+- [x] Batch 6 written and registered: Part XII (Packaging and Deployment,
+      ch040), Part XIII (Testing, ch041-042), Part XIV (Capstone, ch043).
+
+## COMPLETE — full 14-part, 44-topic curriculum from `_table_of_contents.md`
+is written and registered in `data.json` (verified: 44 files in
+`content/java/`, 44 topics across 15 parts including front matter, file count
+matches topic count exactly). Every code excerpt was read from the real repo
+at write time — none invented. Ran end-to-end without stopping per Sreedhar's
+instruction ("continue till tokens are exhausted... do without asking, we
+have reviewed").
+
+## Notable deviations from the original ToC (all reasoned, not arbitrary)
+
+- Part VII trimmed from 6 planned topics to 5 — folded the planned
+  "implementing SSO end-to-end" into what Part IV §17 already covered fully
+  (AuthController's 3-step flow), to avoid walking the same controller twice.
+  Part VII instead covers the security *mechanics* underneath that flow.
+- Part VIII §30 ("Designing an Exception") turned into a genuine finding, not
+  a rehash of Part I §5's style contrast: traced that legacy exceptions like
+  `ProductNotFoundException` aren't caught by any specific
+  `@ExceptionHandler` in `ApiExceptionHandler`, so they fall through to the
+  500 catch-all instead of the correct 404 — a real, verifiable
+  production-correctness gap, not hypothetical.
+- Part X §38 (object storage) intentionally kept short — the full
+  `S3ObjectStorageService` source was already shown in full back in Part III
+  §12.3 for its constructor-injection style; §38 revisits two specific
+  methods (bucket auto-creation, presigned URLs) rather than repeating the
+  whole file.
+- Part XIV's capstone traces the **signup** request (`AuthController.register`
+  → `UserServiceImpl.register`), not "place an order" as originally sketched
+  — signup is the request whose every layer (validation, uniqueness checks,
+  Keycloak compensating-rollback, mapping, persistence, exception handling,
+  correlation ID) had already been read in full elsewhere in the book, making
+  it a stronger synthesis chapter with zero new files needed.
+
+## Appendices A & B added post-completion
+
+Sreedhar's feedback after finishing the 44-chapter curriculum, in two
+rounds:
+
+1. First round: the book teaches *patterns* in real code but assumes Java
+   syntax fluency he doesn't have yet — wanted a plain checklist of core
+   language syntax/keywords/imports to self-study externally and check off.
+   Added as a single terse checklist appendix (originally "Appendix A").
+2. Second round: that checklist alone was too thin — he specifically asked
+   for the "niche" foundational knowledge too (JVM, `.class` compilation,
+   and similar), and explicitly said this part is allowed to go **beyond**
+   the ecommerce-java codebase entirely — "codebase has its own dedicated
+   part, this is separate... here you can teach me anything and everything."
+
+Resolved as **two** appendices, split by kind of content:
+
+- **Appendix A** (`content/java/appendix_a_how_java_runs.md`) — real
+  explanatory prose (matching the main chapters' depth, not checklist-only),
+  entirely codebase-independent: source→bytecode→JVM execution, JIT
+  compilation, JDK/JRE/JVM, stack vs heap memory, garbage collection,
+  virtual threads (with a proper first-principles explanation of *why*
+  `spring.threads.virtual.enabled: true` from Part II §8.2 actually helps),
+  type erasure, the `Object`/`equals`/`hashCode` contract, and a note on
+  Java version cadence. Each section still ends in a short checkbox list for
+  self-tracking, but the teaching itself is prose, not bullet fragments.
+  Cross-links forward into the main 44 chapters where a concept shows up in
+  real code, but doesn't depend on the reader having read them.
+- **Appendix B** (`content/java/appendix_b_syntax_checklist.md`) — the
+  original terse syntax/keyword checklist, renumbered from A to B and
+  lightly cross-linked into Appendix A where a bare syntax item (`==`,
+  generics, `Object`) has a deeper "why" explained there.
+
+Registered in `data.json` as `num: "A"` and `num: "B"` in that order inside
+the existing `Appendix` part (matching pbh's own lettered-appendix
+convention). File count vs registered-topic count re-verified after the
+split (49 files in `content/java/` − 3 inert `_`-prefixed authoring files =
+46, matching 46 registered topics exactly).
+
+## IMPORTANT operational gotcha: live browser tab overwrites data.json edits
+
+Discovered the hard way: Sreedhar had LearningQuest open in a browser tab
+while actually reading (Front Matter marked done, ch1 in-progress with real
+`activeSeconds`/`scrollPct`). The app autosaves periodically by POSTing its
+full in-memory `data` object back to the server — so a tab that loaded
+`data.json` *before* a backend edit will, on its next autosave, silently
+overwrite that edit with its own stale copy of the book list. This is
+exactly what happened to the first Appendix registration — it briefly
+existed on disk, then vanished, with no error anywhere.
+
+**How to apply, every time `data.json` is edited directly (not through the
+app) from now on:** after the edit, tell Sreedhar to hard-reload the
+LearningQuest tab (not just navigate within it) before doing anything else
+in it — a reload re-fetches the current file. If a further backend edit is
+needed afterward, assume the tab may be open again and repeat the warning.
+Real reading progress itself is safe either way (it lives in the same
+autosaved object the tab already has correctly) — it's specifically new
+parts/topics added from the backend, after the tab already loaded, that are
+at risk until the tab reloads.
+
+## If resuming this work in a future session
+
+- Read this file (`_authoring_notes.md`) and `_table_of_contents.md` first.
+- The curriculum is done — future work here is likely: Sreedhar reading
+  through and giving feedback on specific chapters, fixing anything he
+  flags, or extending the book with new parts if he wants to go deeper on
+  something (e.g. a dedicated "read this and predict the output" quiz
+  chapter, or expanding Part X with the Elasticsearch/Kafka pieces that
+  were only lightly touched).
+- Don't re-run the concept survey — `_concept_inventory.md` already has the
+  full catalog, including files that ended up unused (there was more
+  material available than the 44-topic curriculum used; a "Part XV" could
+  mine `_concept_inventory.md` for anything not yet cross-referenced).
 
 ## App-level change: syntax highlighting added
 
