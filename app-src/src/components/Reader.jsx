@@ -7,6 +7,7 @@ import { useActiveTimer } from "../utils/useActiveTimer";
 import { formatDuration } from "../utils/xp";
 import { playPageTurn } from "../utils/sound";
 import HighlightPanel from "./HighlightPanel";
+import CodeBlock from "./CodeBlock";
 
 function resolveRef(data, target) {
   if (target.scope === "book") {
@@ -148,6 +149,23 @@ export default function Reader({
         updateScrollPct("challenge", { projectIndex: target.projectIndex, side: target.side }, pct);
       }
     }, 500);
+
+    // Cheap "which section am I in" scan for the outline's active-item highlight -- at
+    // most a handful of headings per chapter, so a direct DOM read on every scroll tick
+    // is fine (no IntersectionObserver plumbing needed for a list this small).
+    const ids = outlineIdsRef.current;
+    if (ids.length) {
+      let current = ids[0];
+      for (const id of ids) {
+        const headingEl = el.querySelector(`#${CSS.escape(id)}`);
+        if (headingEl && headingEl.offsetTop - el.offsetTop <= el.scrollTop + 40) {
+          current = id;
+        } else {
+          break;
+        }
+      }
+      setActiveHeadingId(current);
+    }
   }, [target, updateScrollPct]);
 
   // Active-time tracking (idle + tab-visibility aware, see useActiveTimer).
@@ -258,6 +276,36 @@ export default function Reader({
     return linkifyReferences(rawContent, { topicIndex, currentBookId, currentFlatIndex, currentPartIndex });
   }, [rawContent, topicIndex, currentBookId, currentFlatIndex, currentPartIndex]);
 
+  // "On this page" outline: pulled from the chapter's own numbered subheadings ("1. The
+  // Vocabulary", "2. Where It Sits", ...) so the wide-viewport side margin does something
+  // useful (jump navigation) instead of sitting empty. The un-numbered chapter title itself
+  // (headingAnchorId requires a leading digit) is deliberately excluded.
+  const outline = useMemo(() => {
+    if (!rawContent) return [];
+    const items = [];
+    for (const line of rawContent.split("\n")) {
+      const m = /^(#{2,3})\s+(.*)/.exec(line.trim());
+      if (!m) continue;
+      const text = m[2].trim();
+      const id = headingAnchorId(text);
+      if (!id) continue;
+      items.push({ level: m[1].length, text, id });
+    }
+    return items;
+  }, [rawContent]);
+
+  const [activeHeadingId, setActiveHeadingId] = useState(null);
+  const outlineIdsRef = useRef([]);
+  outlineIdsRef.current = outline.map((o) => o.id);
+  useEffect(() => {
+    setActiveHeadingId(outline[0]?.id ?? null);
+  }, [outline]);
+
+  function handleOutlineClick(id) {
+    const el = containerRef.current?.querySelector(`#${CSS.escape(id)}`);
+    if (el) el.scrollIntoView({ block: "start", behavior: "smooth" });
+  }
+
   const totalActiveForNudge = info.activeSeconds + elapsedSeconds;
   const showNudge =
     info.status !== "done" && info.estMinutes && totalActiveForNudge >= info.estMinutes * 60 * 0.7;
@@ -326,8 +374,12 @@ export default function Reader({
       li: ({ children }) => <BlockWrapper tag="li">{children}</BlockWrapper>,
       blockquote: ({ children }) => <BlockWrapper tag="blockquote">{children}</BlockWrapper>,
       pre: ({ children }) => <BlockWrapper tag="pre">{children}</BlockWrapper>,
-      code: ({ inline, children }) =>
-        inline ? <code className="rd-inline-code">{children}</code> : <code>{children}</code>,
+      code: ({ inline, className, children }) =>
+        inline ? (
+          <code className="rd-inline-code">{children}</code>
+        ) : (
+          <CodeBlock className={className}>{children}</CodeBlock>
+        ),
       // Every link -- cross-reference or external -- opens in a new tab. For a cross-
       // reference specifically, that's the whole point: jumping to an earlier chapter to
       // check something shouldn't cost you your scroll position in the one you're reading.
@@ -391,15 +443,32 @@ export default function Reader({
           </motion.div>
         )}
 
-        <div className="reader-content" ref={containerRef} onScroll={handleScroll}>
-          {rawContent === null ? (
-            <div className="reader-loading">Loading chapter…</div>
-          ) : (
-            <motion.div key={info.contentFile} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, ease: "easeOut" }}>
-              <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
-                {processedMarkdown}
-              </ReactMarkdown>
-            </motion.div>
+        <div className="reader-body">
+          <div className="reader-content" ref={containerRef} onScroll={handleScroll}>
+            {rawContent === null ? (
+              <div className="reader-loading">Loading chapter…</div>
+            ) : (
+              <motion.div key={info.contentFile} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, ease: "easeOut" }}>
+                <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
+                  {processedMarkdown}
+                </ReactMarkdown>
+              </motion.div>
+            )}
+          </div>
+
+          {outline.length > 0 && (
+            <nav className="reader-outline" aria-label="On this page">
+              <div className="reader-outline-label">On this page</div>
+              {outline.map((item) => (
+                <button
+                  key={item.id}
+                  className={`reader-outline-item lvl-${item.level}${activeHeadingId === item.id ? " active" : ""}`}
+                  onClick={() => handleOutlineClick(item.id)}
+                >
+                  {item.text}
+                </button>
+              ))}
+            </nav>
           )}
         </div>
 

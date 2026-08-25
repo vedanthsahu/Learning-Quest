@@ -1,10 +1,10 @@
 {
   "meta": {
     "createdAt": "2026-07-24T00:45:13.254367",
-    "lastActiveDate": "2026-08-25",
-    "streak": 2,
+    "lastActiveDate": "2026-08-20",
+    "streak": 4,
     "longestStreak": 4,
-    "totalActiveSeconds": 1649,
+    "totalActiveSeconds": 918,
     "dailyLog": {
       "2026-08-10": {
         "seconds": 49,
@@ -33,24 +33,11 @@
         ]
       },
       "2026-08-20": {
-        "seconds": 204,
+        "seconds": 191,
         "chapters": [
           "Records as Immutable DTOs",
-          "How Java Actually Runs (JVM, Compilation, Memory, Threads)",
-          "Java Syntax and Keyword Self-Study Checklist"
-        ]
-      },
-      "2026-08-24": {
-        "seconds": 249,
-        "chapters": [
           "Front Matter: How This Book Works, and the Codebase You're Reading",
-          "How Java Actually Runs (JVM, Compilation, Memory, Threads)"
-        ]
-      },
-      "2026-08-25": {
-        "seconds": 469,
-        "chapters": [
-          "How Java Actually Runs (JVM, Compilation, Memory, Threads)"
+          "Java Syntax and Keyword Self-Study Checklist"
         ]
       }
     }
@@ -8408,8 +8395,8 @@
               "dateCompleted": "2026-08-19",
               "contentFile": "content/java/front_matter.md",
               "estMinutes": 8,
-              "scrollPct": 0.1888162672476398,
-              "activeSeconds": 22,
+              "scrollPct": 0.41975308641975306,
+              "activeSeconds": 27,
               "highlights": []
             }
           ]
@@ -8426,7 +8413,7 @@
               "contentFile": "content/java/part1_ch001_records_as_immutable_dtos.md",
               "estMinutes": 10,
               "scrollPct": 0.968284789644013,
-              "activeSeconds": 270,
+              "activeSeconds": 261,
               "highlights": []
             },
             {
@@ -9005,26 +8992,14 @@
           "topics": [
             {
               "num": "A",
-              "title": "How Java Actually Runs (JVM, Compilation, Memory, Threads)",
-              "status": "in_progress",
-              "notes": "",
-              "dateCompleted": null,
-              "contentFile": "content/java/appendix_a_how_java_runs.md",
-              "estMinutes": 22,
-              "scrollPct": 0.44892286309937457,
-              "activeSeconds": 731,
-              "highlights": []
-            },
-            {
-              "num": "B",
               "title": "Java Syntax and Keyword Self-Study Checklist",
               "status": "in_progress",
               "notes": "",
               "dateCompleted": null,
-              "contentFile": "content/java/appendix_b_syntax_checklist.md",
+              "contentFile": "content/java/appendix_a_syntax_checklist.md",
               "estMinutes": 15,
-              "scrollPct": 0.008904109589041096,
-              "activeSeconds": 51,
+              "scrollPct": 0.8249400479616307,
+              "activeSeconds": 55,
               "highlights": []
             }
           ]
@@ -9375,7 +9350,7 @@
     },
     "on_a_roll": {
       "unlocked": true,
-      "unlockedAt": "2026-08-20T06:47:08.063Z"
+      "unlockedAt": "2026-08-20T06:30:00.292Z"
     }
   }
 }

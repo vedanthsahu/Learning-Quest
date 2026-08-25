@@ -4,7 +4,7 @@
     "lastActiveDate": "2026-08-25",
     "streak": 2,
     "longestStreak": 4,
-    "totalActiveSeconds": 1649,
+    "totalActiveSeconds": 1572,
     "dailyLog": {
       "2026-08-10": {
         "seconds": 49,
@@ -48,7 +48,7 @@
         ]
       },
       "2026-08-25": {
-        "seconds": 469,
+        "seconds": 392,
         "chapters": [
           "How Java Actually Runs (JVM, Compilation, Memory, Threads)"
         ]
@@ -9012,7 +9012,7 @@
               "contentFile": "content/java/appendix_a_how_java_runs.md",
               "estMinutes": 22,
               "scrollPct": 0.44892286309937457,
-              "activeSeconds": 731,
+              "activeSeconds": 654,
               "highlights": []
             },
             {
