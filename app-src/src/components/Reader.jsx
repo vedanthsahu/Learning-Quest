@@ -6,6 +6,16 @@ import { buildTopicIndex, linkifyReferences, headingAnchorId, nextTopicRef } fro
 import { useActiveTimer } from "../utils/useActiveTimer";
 import { formatDuration } from "../utils/xp";
 import { playPageTurn } from "../utils/sound";
+import {
+  ChapterReader,
+  getVoicesAsync,
+  guessWordLength,
+  isTtsSupported,
+  isWordHighlightSupported,
+  loadTtsPrefs,
+  rangeFromCharOffset,
+  saveTtsPrefs,
+} from "../utils/tts";
 import HighlightPanel from "./HighlightPanel";
 import CodeBlock from "./CodeBlock";
 
@@ -306,6 +316,173 @@ export default function Reader({
     if (el) el.scrollIntoView({ block: "start", behavior: "smooth" });
   }
 
+  // Read Aloud -- browser-native SpeechSynthesis (see utils/tts.js for why: free, no key,
+  // works offline). The engine instance is created once and lives in a ref specifically so
+  // it's untouched by the same remount-avoidance rules as `components` above -- it's plain
+  // imperative DOM/Web-API code, not React state, so it can freely add/remove a "now
+  // reading" class on block elements directly without ever forcing a re-render (which would
+  // risk the exact chapter-remount bug `components`'s memoization exists to prevent).
+  const ttsRef = useRef(null);
+  const speakingElRef = useRef(null);
+  const wordHighlightOnRef = useRef(false);
+  if (!ttsRef.current) {
+    ttsRef.current = new ChapterReader({
+      onBlockStart: (block) => {
+        if (speakingElRef.current) speakingElRef.current.classList.remove("rd-speaking");
+        block.el.classList.add("rd-speaking");
+        block.el.scrollIntoView({ block: "center", behavior: "smooth" });
+        speakingElRef.current = block.el;
+      },
+      onWordBoundary: (block, charIndex, charLength) => {
+        if (!isWordHighlightSupported()) return;
+        const len = charLength || guessWordLength(block.text, charIndex);
+        const range = rangeFromCharOffset(block.el, charIndex, charIndex + len);
+        if (range) {
+          CSS.highlights.set("tts-word", new Highlight(range));
+          wordHighlightOnRef.current = true;
+        }
+      },
+      onDone: () => {
+        if (speakingElRef.current) speakingElRef.current.classList.remove("rd-speaking");
+        speakingElRef.current = null;
+        if (wordHighlightOnRef.current) {
+          CSS.highlights.delete("tts-word");
+          wordHighlightOnRef.current = false;
+        }
+        setTtsState("idle");
+      },
+    });
+  }
+
+  const [ttsState, setTtsState] = useState("idle"); // "idle" | "playing" | "paused"
+  const [ttsSupported] = useState(() => isTtsSupported());
+  const [voices, setVoices] = useState([]);
+  const [ttsPrefs, setTtsPrefs] = useState(() => loadTtsPrefs());
+  const [ttsPanelOpen, setTtsPanelOpen] = useState(false);
+
+  useEffect(() => {
+    if (!ttsSupported) return;
+    getVoicesAsync().then((list) => {
+      // English voices first (this book is English-only); the browser's default still
+      // wins if the saved preference no longer matches an installed voice.
+      const sorted = [...list].sort((a, b) => Number(b.lang.startsWith("en")) - Number(a.lang.startsWith("en")));
+      setVoices(sorted);
+    });
+  }, [ttsSupported]);
+
+  useEffect(() => {
+    const voice = voices.find((v) => v.voiceURI === ttsPrefs.voiceURI) || null;
+    ttsRef.current.setVoice(voice);
+    ttsRef.current.setRate(ttsPrefs.rate);
+  }, [voices, ttsPrefs]);
+
+  function updateTtsPrefs(patch) {
+    setTtsPrefs((prev) => {
+      const next = { ...prev, ...patch };
+      saveTtsPrefs(next);
+      return next;
+    });
+  }
+
+  // Stop speech the moment this chapter's content changes (navigating away) or the Reader
+  // unmounts (closing it) -- nobody wants a chapter still being read aloud after leaving it.
+  useEffect(() => {
+    return () => {
+      ttsRef.current?.stop();
+      if (wordHighlightOnRef.current && isWordHighlightSupported()) {
+        CSS.highlights.delete("tts-word");
+        wordHighlightOnRef.current = false;
+      }
+    };
+  }, [info.contentFile]);
+
+  function collectTtsBlocks() {
+    const container = containerRef.current;
+    if (!container) return [];
+    const els = Array.from(container.querySelectorAll("[data-block-id]"));
+    return els
+      .filter((el) => el.tagName !== "PRE") // code blocks read aloud are noise, not useful
+      .map((el) => ({
+        el,
+        blockId: Number(el.dataset.blockId),
+        // The source markdown is hard-wrapped for editing, so a paragraph's raw textContent
+        // often contains a literal "\n" mid-sentence at whatever column it happened to wrap
+        // at -- e.g. "...what's\nthe IP for...". Most speech engines treat an embedded
+        // newline as a pause point, which is exactly the "breaks where there's no
+        // punctuation" symptom. Replacing each whitespace run with same-LENGTH spaces (never
+        // collapsing or trimming) fixes the pause without shifting any character position,
+        // which matters because the word-highlight feature's charIndex math (see
+        // rangeFromCharOffset in utils/tts.js) assumes this text lines up 1:1 with the DOM's
+        // real textContent.
+        text: el.textContent.replace(/\s+/g, (run) => " ".repeat(run.length)),
+      }))
+      .filter((b) => b.text.trim().length > 0);
+  }
+
+  // Default start point for the main Play button: the block nearest your current scroll
+  // position, not always chapter-start -- pressing play after scrolling down (or resuming a
+  // chapter you'd already read partway through) should pick up near where you actually are.
+  //
+  // Deliberately uses getBoundingClientRect(), not offsetTop: each block is wrapped in a
+  // `.rd-block-wrap` that's `position: relative` (for the highlight-pin/tts-block-play
+  // buttons), which makes IT the offsetParent for the block inside it -- so a block's own
+  // offsetTop ends up relative to its own tiny wrapper, not to .reader-content, and the
+  // naive "offsetTop - container.offsetTop" subtraction silently produces nonsense.
+  // getBoundingClientRect() is always viewport-relative for both sides, so it isn't affected
+  // by whatever positioned element happens to sit in between.
+  function nearestBlockIndex(blocks) {
+    const container = containerRef.current;
+    if (!container) return 0;
+    const containerTop = container.getBoundingClientRect().top;
+    for (let i = 0; i < blocks.length; i++) {
+      const top = blocks[i].el.getBoundingClientRect().top - containerTop + container.scrollTop;
+      if (top >= container.scrollTop - 20) return i;
+    }
+    return Math.max(0, blocks.length - 1);
+  }
+
+  function handleTtsPlay() {
+    if (ttsState === "paused") {
+      ttsRef.current.resume();
+      setTtsState("playing");
+      return;
+    }
+    const blocks = collectTtsBlocks();
+    if (blocks.length === 0) return;
+    ttsRef.current.playFrom(blocks, nearestBlockIndex(blocks));
+    setTtsState("playing");
+  }
+  function handleTtsPause() {
+    ttsRef.current.pause();
+    setTtsState("paused");
+  }
+  function handleTtsStop() {
+    ttsRef.current.stop();
+    if (speakingElRef.current) {
+      speakingElRef.current.classList.remove("rd-speaking");
+      speakingElRef.current = null;
+    }
+    if (wordHighlightOnRef.current) {
+      CSS.highlights.delete("tts-word");
+      wordHighlightOnRef.current = false;
+    }
+    setTtsState("idle");
+  }
+
+  // Exact-control counterpart to the above: jump straight to reading from one specific
+  // paragraph, via the small "read from here" button each block gets on hover. Genuinely
+  // stable identity (touches only refs and a state setter, no closed-over per-render
+  // values), so -- same as handleToggleHighlight etc. below -- it's safe to reference
+  // directly inside the memoized `components` without forcing a chapter remount.
+  const handleTtsPlayFrom = useCallback((blockId) => {
+    const blocks = collectTtsBlocks();
+    const startIndex = blocks.findIndex((b) => b.blockId === blockId);
+    if (startIndex === -1) return;
+    ttsRef.current.playFrom(blocks, startIndex);
+    setTtsState("playing");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const totalActiveForNudge = info.activeSeconds + elapsedSeconds;
   const showNudge =
     info.status !== "done" && info.estMinutes && totalActiveForNudge >= info.estMinutes * 60 * 0.7;
@@ -330,6 +507,7 @@ export default function Reader({
         <div className="rd-block-wrap">
           <Tag
             {...rest}
+            data-block-id={id}
             onClick={(e) => {
               if (e.target.closest("a")) return;
               handleToggleHighlight(id);
@@ -349,6 +527,18 @@ export default function Reader({
               title="Add a note or diagram"
             >
               {highlight.imagePath ? "🖼️" : highlight.note ? "📝" : "➕"}
+            </button>
+          )}
+          {Tag !== "pre" && (
+            <button
+              className="tts-block-play"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleTtsPlayFrom(id);
+              }}
+              title="Read aloud from here"
+            >
+              ▶
             </button>
           )}
           <AnimatePresence>
@@ -433,6 +623,61 @@ export default function Reader({
             <StatusPill status={info.status} />
           </div>
         </div>
+
+        {ttsSupported && (
+          <div className="reader-tts-bar">
+            <button
+              className="tts-play-btn"
+              onClick={ttsState === "playing" ? handleTtsPause : handleTtsPlay}
+            >
+              {ttsState === "playing" ? "⏸ Pause" : ttsState === "paused" ? "▶ Resume" : "🔊 Read Aloud"}
+            </button>
+            {ttsState !== "idle" && (
+              <button className="tts-stop-btn" onClick={handleTtsStop}>
+                ⏹ Stop
+              </button>
+            )}
+            <div className="tts-settings-wrap">
+              <button
+                className="tts-settings-btn"
+                onClick={() => setTtsPanelOpen((v) => !v)}
+                aria-label="Voice & speed settings"
+                title="Voice & speed settings"
+              >
+                ⚙
+              </button>
+              {ttsPanelOpen && (
+                <div className="tts-settings-panel">
+                  <label className="tts-settings-row">
+                    <span>Voice</span>
+                    <select
+                      value={ttsPrefs.voiceURI || ""}
+                      onChange={(e) => updateTtsPrefs({ voiceURI: e.target.value || null })}
+                    >
+                      <option value="">Browser default</option>
+                      {voices.map((v) => (
+                        <option key={v.voiceURI} value={v.voiceURI}>
+                          {v.name} ({v.lang})
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className="tts-settings-row">
+                    <span>Speed {ttsPrefs.rate.toFixed(2)}x</span>
+                    <input
+                      type="range"
+                      min="0.5"
+                      max="2"
+                      step="0.05"
+                      value={ttsPrefs.rate}
+                      onChange={(e) => updateTtsPrefs({ rate: Number(e.target.value) })}
+                    />
+                  </label>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
 
         {showNudge && (
           <motion.div className="reader-nudge" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }}>

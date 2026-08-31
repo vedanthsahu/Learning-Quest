@@ -645,6 +645,71 @@ body.reader-open {
   font-weight: 700;
 }
 
+.reader-tts-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  background: rgba(52, 211, 153, 0.06);
+  border-bottom: 1px solid var(--card-border);
+  font-size: 13px;
+}
+.tts-play-btn, .tts-stop-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--card-border);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.tts-play-btn:hover, .tts-stop-btn:hover { background: rgba(255, 255, 255, 0.12); }
+.tts-settings-wrap { position: relative; margin-left: auto; }
+.tts-settings-btn {
+  background: none;
+  border: 1px solid var(--card-border);
+  color: var(--text-dim);
+  border-radius: 8px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.tts-settings-btn:hover { color: var(--text); background: rgba(255, 255, 255, 0.06); }
+.tts-settings-panel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  background: var(--bg-elevated, #0e1524);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  width: 260px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.tts-settings-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--text-dim);
+}
+.tts-settings-row select {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--card-border);
+  color: var(--text);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 12.5px;
+}
+.tts-settings-row input[type="range"] { width: 100%; }
+
 .reader-body {
   flex: 1;
   display: flex;
@@ -793,6 +858,21 @@ body.reader-open {
   background: rgba(250, 204, 21, 0.16) !important;
   box-shadow: inset 3px 0 0 var(--gold);
 }
+.rd-speaking {
+  /* declared after .rd-highlighted so it wins the cascade on equal specificity if a block
+     is both a saved highlight and the one currently being read aloud -- the more
+     time-sensitive state should be the visible one. */
+  background: rgba(52, 211, 153, 0.14) !important;
+  box-shadow: inset 3px 0 0 var(--emerald);
+}
+/* Live per-word highlight while Read Aloud is speaking, drawn via the CSS Custom Highlight
+   API (see utils/tts.js rangeFromCharOffset) -- purely visual, no DOM wrapping, so it can't
+   corrupt bold/italic/link markup mid-word. Only a small set of properties are supported on
+   a ::highlight() pseudo-element; color + background-color is exactly what's needed here. */
+::highlight(tts-word) {
+  background-color: rgba(56, 189, 248, 0.55);
+  color: #071224;
+}
 .rd-block-wrap {
   position: relative;
 }
@@ -818,6 +898,34 @@ body.reader-open {
 .rd-highlight-pin.has-content {
   opacity: 1;
   background: rgba(250, 204, 21, 0.32);
+}
+
+.tts-block-play {
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  background: rgba(52, 211, 153, 0.18);
+  border: 1px solid rgba(52, 211, 153, 0.4);
+  border-radius: 7px;
+  width: 22px;
+  height: 22px;
+  font-size: 10px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--emerald);
+  opacity: 0; /* hidden until the paragraph is hovered -- every block having a permanently
+                 visible play icon would be far noisier than useful */
+  transition: opacity 0.12s, background 0.12s;
+  z-index: 2;
+}
+.rd-block-wrap:hover .tts-block-play {
+  opacity: 0.85;
+}
+.tts-block-play:hover {
+  opacity: 1 !important;
+  background: rgba(52, 211, 153, 0.32);
 }
 
 .highlight-panel {
