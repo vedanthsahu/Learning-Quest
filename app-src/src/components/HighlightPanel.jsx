@@ -10,16 +10,20 @@ export default function HighlightPanel({ highlight, onSave, onRemove, onClose })
   const [note, setNote] = useState(highlight?.note || "");
   const [imagePath, setImagePath] = useState(highlight?.imagePath || null);
   const [tab, setTab] = useState(highlight?.imagePath ? "image" : "note");
+  const [uploadError, setUploadError] = useState("");
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef(null);
 
   async function handleFile(file) {
     if (!file || !file.type.startsWith("image/")) return;
     setUploading(true);
+    setUploadError("");
     try {
       const { path } = await uploadImage(file, file.name);
       setImagePath(path);
       setTab("image");
+    } catch {
+      setUploadError("Could not upload this image. Please try again.");
     } finally {
       setUploading(false);
     }
@@ -54,7 +58,7 @@ export default function HighlightPanel({ highlight, onSave, onRemove, onClose })
         <button className={tab === "image" ? "active" : ""} onClick={() => setTab("image")}>
           🖼️ Diagram {imagePath ? "" : "(none)"}
         </button>
-        <button className="highlight-panel-close" onClick={onClose}>
+        <button aria-label="Close note editor" className="highlight-panel-close" onClick={onClose}>
           ✕
         </button>
       </div>
@@ -62,6 +66,7 @@ export default function HighlightPanel({ highlight, onSave, onRemove, onClose })
       {tab === "note" && (
         <textarea
           className="highlight-note-input"
+          aria-label="Note"
           placeholder="Jot a note about why this matters, or what to remember…"
           value={note}
           onChange={(e) => setNote(e.target.value)}
@@ -101,6 +106,7 @@ export default function HighlightPanel({ highlight, onSave, onRemove, onClose })
         </div>
       )}
 
+      {uploadError && <p role="alert" className="upload-error">{uploadError}</p>}
       <div className="highlight-panel-footer">
         <button className="btn-secondary" onClick={onRemove}>
           Remove Highlight

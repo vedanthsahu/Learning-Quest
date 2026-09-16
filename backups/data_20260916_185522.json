@@ -1,10 +1,10 @@
 {
   "meta": {
     "createdAt": "2026-07-24T00:45:13.254367",
-    "lastActiveDate": "2026-08-28",
-    "streak": 5,
+    "lastActiveDate": "2026-09-16",
+    "streak": 1,
     "longestStreak": 5,
-    "totalActiveSeconds": 5077,
+    "totalActiveSeconds": 5218,
     "dailyLog": {
       "2026-08-10": {
         "seconds": 49,
@@ -74,10 +74,23 @@
         ]
       },
       "2026-08-28": {
-        "seconds": 413,
+        "seconds": 431,
         "chapters": [
           "Foundations: AI/ML/DL/GenAI, LLMs, Model Selection",
           "Mental Model: Transformers & LLMs"
+        ]
+      },
+      "2026-09-10": {
+        "seconds": 103,
+        "chapters": [
+          "Mental Model: Transformers & LLMs"
+        ]
+      },
+      "2026-09-16": {
+        "seconds": 20,
+        "chapters": [
+          "EC2",
+          "How This Handbook Works"
         ]
       }
     }
@@ -1806,8 +1819,8 @@
               "dateCompleted": "2026-08-27",
               "contentFile": "content/ai/front_matter.md",
               "estMinutes": 4,
-              "scrollPct": 0.7729112992270887,
-              "activeSeconds": 8,
+              "scrollPct": 1,
+              "activeSeconds": 23,
               "highlights": []
             },
             {
@@ -1878,8 +1891,8 @@
               "dateCompleted": null,
               "contentFile": "content/ai/part1_ch002_transformers_llms_mental_model.md",
               "estMinutes": 8,
-              "scrollPct": 0.13917142148350287,
-              "activeSeconds": 57,
+              "scrollPct": 0.21334656412800793,
+              "activeSeconds": 178,
               "highlights": []
             },
             {
@@ -4527,8 +4540,8 @@
               "dateCompleted": null,
               "contentFile": "content/cep/part1_ch001_ec2.md",
               "estMinutes": 8,
-              "scrollPct": 0.12385558818448782,
-              "activeSeconds": 49,
+              "scrollPct": 0.34856700232378,
+              "activeSeconds": 54,
               "highlights": [
                 {
                   "blockId": 1,

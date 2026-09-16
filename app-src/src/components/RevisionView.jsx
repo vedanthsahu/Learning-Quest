@@ -1,3 +1,5 @@
+import PageHero from "./PageHero";
+import { useDialog } from "../utils/useDialog";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -44,22 +46,17 @@ function collectHighlights(data) {
 
 export default function RevisionView({ data, onOpenReader }) {
   const [lightbox, setLightbox] = useState(null);
-  const items = collectHighlights(data);
+  const [query, setQuery] = useState("");
+  const allItems = collectHighlights(data);
+  const items = allItems.filter(item => `${item.note || ""} ${item.topicTitle} ${item.bookName}`.toLowerCase().includes(query.toLowerCase().trim()));
 
   return (
     <div className="view revision-view">
-      <div className="revision-header">
-        <h2>📌 Notes &amp; Diagrams</h2>
-        <div className="book-view-sub">
-          Everything you've highlighted with a note or a diagram, newest first — click a card to jump back to that chapter.
-        </div>
-      </div>
+      <PageHero eyebrow="YOUR SECOND BRAIN" title="Keep the ideas that stay with you." description="Notes, sketches, and connections. A little collection of everything that clicked." accent="#c3b0ec"><div className="note-art" aria-hidden="true"><div className="paper-back"/><div className="paper-front"><span>FIELD NOTES</span><i/><i/><i/><b>&#10022;</b></div></div></PageHero>
+      <div className="collection-toolbar"><label className="search-field"><span aria-hidden="true">&#8981;</span><input type="search" aria-label="Search notes" placeholder="Search notes, chapters, or handbooks..." value={query} onChange={e => setQuery(e.target.value)}/></label><span className="collection-count" role="status">{items.length} saved ideas</span></div>
 
       {items.length === 0 ? (
-        <div className="empty-hint" style={{ marginTop: 20 }}>
-          Nothing here yet — while reading, click any paragraph to highlight it, then use the 📝/🖼️ pin to
-          add a note or sketch a diagram.
-        </div>
+        <div className="designed-empty"><span className="empty-orbit" aria-hidden="true">&#9998;</span><h2>{query ? "No matching ideas yet." : "Make room for your next lightbulb moment."}</h2><p>{query ? "Try a different keyword or handbook name." : "Open a chapter, click a paragraph to highlight it, then use its pin to save a note or upload a diagram."}</p>{query && <button className="btn-secondary" onClick={() => setQuery("")}>Clear search</button>}</div>
       ) : (
         <div className="revision-grid">
           {items.map((item, i) => (
@@ -76,12 +73,11 @@ export default function RevisionView({ data, onOpenReader }) {
               <div className="revision-card-title">{item.topicTitle}</div>
 
               {item.imagePath && (
-                <img
+                <button className="diagram-preview-button" aria-label={`Enlarge diagram for ${item.topicTitle}`} onClick={() => setLightbox(item.imagePath)}><img
                   src={`/${item.imagePath}`}
                   alt="Diagram"
                   className="revision-card-image"
-                  onClick={() => setLightbox(item.imagePath)}
-                />
+                /></button>
               )}
               {item.note && <div className="revision-card-note">{item.note}</div>}
 
@@ -95,23 +91,14 @@ export default function RevisionView({ data, onOpenReader }) {
 
       <AnimatePresence>
         {lightbox && (
-          <motion.div
-            className="lightbox-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setLightbox(null)}
-          >
-            <motion.img
-              src={`/${lightbox}`}
-              alt="Diagram"
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.9 }}
-            />
-          </motion.div>
+          <DiagramLightbox path={lightbox} onClose={() => setLightbox(null)} />
         )}
       </AnimatePresence>
     </div>
   );
+}
+
+function DiagramLightbox({ path, onClose }) {
+  const ref = useDialog(onClose);
+  return <motion.div ref={ref} role="dialog" aria-modal="true" aria-label="Diagram preview" tabIndex={-1} className="lightbox-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose}><button className="lightbox-close icon-btn" onClick={onClose} aria-label="Close diagram">Close &times;</button><img src={`/${path}`} alt="Saved diagram" onClick={e => e.stopPropagation()} /></motion.div>;
 }

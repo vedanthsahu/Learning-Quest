@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, MotionConfig } from "framer-motion";
 import { useGameData } from "./utils/useGameData";
 import { parseReaderHash } from "./utils/crossref";
 import Nav from "./components/Nav";
@@ -77,6 +77,7 @@ export default function App() {
   }
   function navigate(next) {
     setView(next);
+    window.scrollTo({ top: 0, behavior: "instant" });
   }
   function cycleBookStatus(bookId, partIndex, topicIndex, newStatus) {
     updateTopic(bookId, partIndex, topicIndex, { status: newStatus });
@@ -89,15 +90,17 @@ export default function App() {
   }
 
   return (
-    <div className="app-shell">
+    <MotionConfig reducedMotion="user"><div className="app-shell">
+      <a className="skip-link" href="#main-content">Skip to content</a>
       <Nav view={view} data={data} onNavigate={navigate} saveStatus={saveStatus} />
 
-      <main className="app-main">
+      <main className="app-main" id="main-content">
         {view.view === "dashboard" && (
           <Dashboard data={data} stats={stats} onOpenReader={openReader} onNavigateView={navigate} />
         )}
         {view.view === "book" && (
           <BookView
+            key={view.bookId}
             book={data.books.find((b) => b.id === view.bookId)}
             xpRules={data.xpRules}
             quizResults={data.quizResults}
@@ -144,6 +147,6 @@ export default function App() {
       </AnimatePresence>
 
       <NotificationCenter events={events} dismissEvent={dismissEvent} />
-    </div>
+    </div></MotionConfig>
   );
 }

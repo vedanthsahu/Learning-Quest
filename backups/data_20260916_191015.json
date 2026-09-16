@@ -1,10 +1,10 @@
 {
   "meta": {
     "createdAt": "2026-07-24T00:45:13.254367",
-    "lastActiveDate": "2026-08-28",
-    "streak": 5,
+    "lastActiveDate": "2026-09-16",
+    "streak": 1,
     "longestStreak": 5,
-    "totalActiveSeconds": 5013,
+    "totalActiveSeconds": 5249,
     "dailyLog": {
       "2026-08-10": {
         "seconds": 49,
@@ -74,9 +74,26 @@
         ]
       },
       "2026-08-28": {
-        "seconds": 349,
+        "seconds": 431,
         "chapters": [
-          "Foundations: AI/ML/DL/GenAI, LLMs, Model Selection"
+          "Foundations: AI/ML/DL/GenAI, LLMs, Model Selection",
+          "Mental Model: Transformers & LLMs"
+        ]
+      },
+      "2026-09-10": {
+        "seconds": 103,
+        "chapters": [
+          "Mental Model: Transformers & LLMs"
+        ]
+      },
+      "2026-09-16": {
+        "seconds": 51,
+        "chapters": [
+          "EC2",
+          "How This Handbook Works",
+          "Mental Model: Transformers & LLMs",
+          "Mental Model: Embeddings & Retrieval",
+          "Mental Model: Search & Retrieval"
         ]
       }
     }
@@ -1805,8 +1822,8 @@
               "dateCompleted": "2026-08-27",
               "contentFile": "content/ai/front_matter.md",
               "estMinutes": 4,
-              "scrollPct": 0.7729112992270887,
-              "activeSeconds": 8,
+              "scrollPct": 1,
+              "activeSeconds": 30,
               "highlights": []
             },
             {
@@ -1858,44 +1875,51 @@
               "dateCompleted": "2026-08-28",
               "contentFile": "content/ai/part1_ch001_foundations.md",
               "estMinutes": 10,
-              "scrollPct": 1,
-              "activeSeconds": 1287,
-              "highlights": []
+              "scrollPct": 0.9646688864224935,
+              "activeSeconds": 1294,
+              "highlights": [
+                {
+                  "blockId": 17,
+                  "note": "",
+                  "imagePath": null,
+                  "updatedAt": "2026-08-28T10:58:34.374Z"
+                }
+              ]
             },
             {
               "num": "2",
               "title": "Mental Model: Transformers & LLMs",
-              "status": "not_started",
+              "status": "done",
               "notes": "",
-              "dateCompleted": null,
+              "dateCompleted": "2026-09-16",
               "contentFile": "content/ai/part1_ch002_transformers_llms_mental_model.md",
               "estMinutes": 8,
-              "scrollPct": 0,
-              "activeSeconds": 0,
+              "scrollPct": 0.2133850630455868,
+              "activeSeconds": 183,
               "highlights": []
             },
             {
               "num": "3",
               "title": "Mental Model: Embeddings & Retrieval",
-              "status": "not_started",
+              "status": "done",
               "notes": "",
-              "dateCompleted": null,
+              "dateCompleted": "2026-09-16",
               "contentFile": "content/ai/part1_ch003_embeddings_mental_model.md",
               "estMinutes": 6,
               "scrollPct": 0,
-              "activeSeconds": 0,
+              "activeSeconds": 1,
               "highlights": []
             },
             {
               "num": "4",
               "title": "Mental Model: Search & Retrieval",
-              "status": "not_started",
+              "status": "in_progress",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/ai/part1_ch004_search_retrieval_mental_model.md",
               "estMinutes": 6,
               "scrollPct": 0,
-              "activeSeconds": 0,
+              "activeSeconds": 18,
               "highlights": []
             },
             {
@@ -4519,8 +4543,8 @@
               "dateCompleted": null,
               "contentFile": "content/cep/part1_ch001_ec2.md",
               "estMinutes": 8,
-              "scrollPct": 0.12385558818448782,
-              "activeSeconds": 49,
+              "scrollPct": 0.34856700232378,
+              "activeSeconds": 54,
               "highlights": [
                 {
                   "blockId": 1,

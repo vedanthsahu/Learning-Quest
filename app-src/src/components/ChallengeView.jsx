@@ -1,3 +1,4 @@
+import PageHero from "./PageHero";
 import { motion } from "framer-motion";
 import Mascot from "./Mascot";
 
@@ -7,13 +8,9 @@ const STATUS_CYCLE = { not_started: "in_progress", in_progress: "done", done: "n
 export default function ChallengeView({ series, onOpenReader, onCycleStatus }) {
   return (
     <div className="view challenge-view">
-      <div className="challenge-view-header">
-        <Mascot level={1} mood="idle" size={72} />
-        <div>
-          <h2 style={{ color: series.color }}>{series.name}</h2>
-          <div className="book-view-sub">{series.subtitle}</div>
-        </div>
-      </div>
+      <PageHero eyebrow="THE BUILD LAB" title="Turn understanding into craft." description={series.subtitle} accent={series.color}><Mascot mood="happy" size={170}/></PageHero>
+      <div className="lab-summary"><div><strong>{series.projects.length}</strong><span>real-world projects</span></div><div><strong>{series.projects.filter(p => p.challengeStatus === "done").length}</strong><span>challenges completed</span></div><div><strong>{series.projects.filter(p => p.solutionStatus === "done").length}</strong><span>solutions explored</span></div></div>
+      <div className="section-heading"><h2>{series.name}</h2><span>Try it. Build it. Understand it.</span></div>
 
       <div className="challenge-grid">
         {series.projects.map((p, index) => (
@@ -22,10 +19,10 @@ export default function ChallengeView({ series, onOpenReader, onCycleStatus }) {
             className="card challenge-card"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.02 }}
+            transition={{ delay: Math.min(index * 0.02, 0.3) }}
             style={{ "--node-color": series.color }}
           >
-            <div className="challenge-card-num">#{p.num}</div>
+            <div className="challenge-card-num">EXPERIMENT / {String(p.num).padStart(2, "0")}<span aria-hidden="true">&lt;/&gt;</span></div>
             <div className="challenge-card-name">{p.name}</div>
             <div className="challenge-card-row">
               <button

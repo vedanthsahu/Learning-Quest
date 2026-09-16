@@ -1,3 +1,4 @@
+import PageHero from "./PageHero";
 import { motion } from "framer-motion";
 import Mascot from "./Mascot";
 import ActivityHeatmap from "./ActivityHeatmap";
@@ -9,6 +10,7 @@ export default function ProfileView({ data, stats }) {
 
   return (
     <div className="view profile-view">
+      <PageHero eyebrow="THE LONG GAME" title="Look how far you have come." description="Every focused minute adds up. This is your journey, in perspective." />
       <div className="profile-hero card">
         <Mascot level={stats.levelNumber} mood="idle" size={130} />
         <div>
@@ -33,7 +35,7 @@ export default function ProfileView({ data, stats }) {
       </div>
 
       <motion.div className="card heatmap-card" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-        <h3>📅 Daily Activity</h3>
+        <div className="eyebrow">CONSISTENCY OVER INTENSITY</div><h3>📅 Daily Activity</h3>
         <ActivityHeatmap dailyLog={data.meta.dailyLog} />
       </motion.div>
     </div>

@@ -1,3 +1,4 @@
+import { useDialog } from "../utils/useDialog";
 import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ReactMarkdown from "react-markdown";
@@ -72,6 +73,10 @@ export default function Reader({
   removeHighlight,
   pushEvent,
 }) {
+  const [fontSize, setFontSize] = useState(17);
+  const [focusMode, setFocusMode] = useState(false);
+  const [readProgress, setReadProgress] = useState(0);
+  const dialogRef = useDialog(() => editingBlockId ? setEditingBlockId(null) : handleClose());
   const [rawContent, setRawContent] = useState(null);
   const [editingBlockId, setEditingBlockId] = useState(null);
   const containerRef = useRef(null);
@@ -151,6 +156,7 @@ export default function Reader({
     if (!el) return;
     const scrollable = el.scrollHeight - el.clientHeight;
     const pct = scrollable > 0 ? Math.min(1, Math.max(0, el.scrollTop / scrollable)) : 0;
+    setReadProgress(pct);
     if (scrollSaveTimer.current) clearTimeout(scrollSaveTimer.current);
     scrollSaveTimer.current = setTimeout(() => {
       if (target.scope === "book") {
@@ -214,7 +220,6 @@ export default function Reader({
     } else {
       updateChallengeProject(target.projectIndex, { [`${target.side}Status`]: "done" });
     }
-    pushEvent({ type: "complete", title: info.title });
   }
   function handleResetStatus() {
     if (target.scope === "book") {
@@ -592,7 +597,9 @@ export default function Reader({
   return (
     <motion.div className="reader-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <motion.div
-        className="reader-panel"
+        className={`reader-panel ${focusMode ? "reader-focus-mode" : ""}`}
+        ref={dialogRef} role="dialog" aria-modal="true" aria-label={info.title} tabIndex={-1}
+        style={{ "--reading-size": `${fontSize}px`, "--reading-accent": info.color }}
         // "Continue to Next" arrives as a page-turn slide from the right; every other way
         // of opening the reader (dashboard, nav, a cross-reference in a new tab) keeps the
         // original pop-up-from-below entrance.
@@ -624,6 +631,8 @@ export default function Reader({
           </div>
         </div>
 
+        <div className="reading-toolbar"><span className="reading-mode-label">THE READING ROOM</span><div className="reading-controls"><button aria-label="Decrease text size" disabled={fontSize <= 15} onClick={() => setFontSize(size => size - 1)}>A&minus;</button><span aria-live="polite">{fontSize}px</span><button aria-label="Increase text size" disabled={fontSize >= 23} onClick={() => setFontSize(size => size + 1)}>A+</button><button aria-pressed={focusMode} onClick={() => setFocusMode(value => !value)}>Focus mode</button></div></div>
+        <div className="reading-progress-track" role="progressbar" aria-label="Chapter reading progress" aria-valuenow={Math.round(readProgress * 100)} aria-valuemin={0} aria-valuemax={100}><span style={{ width: `${readProgress * 100}%` }}/></div>
         {ttsSupported && (
           <div className="reader-tts-bar">
             <button
