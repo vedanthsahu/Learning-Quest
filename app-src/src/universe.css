@@ -1,0 +1,61 @@
+﻿/* Personal atmosphere and the explorable universe. */
+:root[data-theme="nebula"] { --bg:#151320; --bg-elevated:#201c30; --card-bg:#201d2b; --card-border:#393249; --cyan:#ceb7fa; }
+:root[data-theme="ember"] { --bg:#1c1613; --bg-elevated:#2b211b; --card-bg:#29211c; --card-border:#47372a; --cyan:#efd298; }
+[data-theme="nebula"] body { background:#151320; } [data-theme="ember"] body { background:#1c1613; }
+[data-theme="nebula"] .nav-sidebar,[data-theme="nebula"] .reader-panel { background:#1c1927; }
+[data-theme="ember"] .nav-sidebar,[data-theme="ember"] .reader-panel { background:#251d17; }
+[data-theme="nebula"] .quest-hero,[data-theme="nebula"] .page-hero { background:radial-gradient(ellipse at right,#403451,#221e2e); }
+[data-theme="ember"] .quest-hero,[data-theme="ember"] .page-hero { background:radial-gradient(ellipse at right,#59442e,#2b2119); }
+[data-theme="nebula"] .card,[data-theme="ember"] .card { background-color:var(--card-bg); }
+.atmosphere-launch { display:flex; align-items:center; gap:8px; margin:0 0 22px auto; color:var(--text-dim); border:1px solid var(--card-border); border-radius:30px; padding:9px 13px; background:#ffffff03; font-size:10px; }
+.atmosphere-launch:hover { color:var(--cyan); border-color:var(--cyan); }
+.settings-backdrop { position:fixed; inset:0; display:grid; place-items:center; background:#050a0bc9; backdrop-filter:blur(12px); z-index:150; padding:20px; }
+.settings-panel { position:relative; width:min(520px,100%); max-height:90dvh; overflow:auto; padding:36px; border:1px solid var(--card-border); border-radius:24px; background:var(--bg-elevated); box-shadow:0 30px 100px #0008; }
+.settings-panel h2 { font-size:28px; font-weight:500; letter-spacing:-.035em; margin:15px 0; }
+.settings-panel p { color:var(--text-dim); font-size:12px; line-height:1.7; }
+.settings-close { position:absolute; right:15px; top:15px; }
+.settings-panel label { display:flex; align-items:center; justify-content:space-between; gap:15px; font-size:12px; margin:20px 0; }
+.settings-panel select,.activity-controls select { font:12px var(--sans); background:var(--bg); color:var(--text); border:1px solid var(--card-border); border-radius:8px; padding:10px; }
+.settings-panel .settings-hint { font-size:10px; }
+.settings-panel fieldset { border:0; padding:0; margin:25px 0; }.settings-panel legend { font-size:12px; margin-bottom:10px; }
+.companion-choices { display:flex; gap:5px; }.companion-choices button { display:flex; flex:1; align-items:center; flex-direction:column; padding:7px 0; min-width:0; border:1px solid transparent; border-radius:10px; background:#ffffff03; color:var(--text-dim); text-transform:capitalize; font-size:9px; }.companion-choices button[aria-pressed="true"] { border-color:var(--cyan); background:#bcf58809; }
+.settings-saved { color:var(--cyan); font-size:10px; border-top:1px solid var(--card-border); padding-top:15px; }
+.observatory { position:relative; width:100%; min-height:320px; display:flex; flex-direction:column; align-items:center; }
+.observatory-canvas { position:relative; width:100%; height:265px; }.observatory-canvas canvas { width:100%; height:100%; display:block; }
+.observatory-caption { color:#d2e8b6; font:8px var(--mono); letter-spacing:.15em; }
+.satellite-links { display:flex; gap:8px; justify-content:center; margin:14px 0 19px; flex-wrap:wrap; }
+.satellite-links button { width:26px; height:26px; border-radius:50%; border:1px solid var(--satellite); color:var(--satellite); background:#101a2180; font:8px var(--mono); transition:transform .2s; }
+.satellite-links button:hover { transform:translateY(-4px); background:#ffffff10; }
+.observatory-fallback { position:absolute; inset:0; display:grid; place-items:center; }.observatory-fallback span { width:140px; height:140px; border-radius:50%; background:radial-gradient(circle at 30% 25%,#e4fdb4,#709052 50%,#182d24 85%); box-shadow:0 0 50px #c4e9a020; }
+.world-art { width:100%; height:100%; filter:drop-shadow(0 12px 10px #0003); }.book-world { position:relative; width:240px; height:175px; }.book-world > .companion { position:absolute; bottom:-25px; right:-5px; }.book-world > .world-art { animation:world-breathe 7s ease-in-out infinite; }
+.book-cover .world-art { position:absolute; width:180px; height:120px; right:5px; top:23px; }.book-cover:has(.world-art) .cover-glyph { display:none; }.book-cover .cover-number,.book-cover .cover-caption { position:relative; z-index:1; }
+.tactile-book { position:relative; perspective:800px; }.tactile-book .book-cover { transform-origin:left center; transition:transform .45s,box-shadow .45s; border-left:6px solid color-mix(in srgb,var(--book-accent) 30%,#18201d); }.tactile-book:hover .book-cover { transform:rotateY(-9deg) rotateX(3deg); box-shadow:8px 10px 20px #0004; }.reading-bookmark { position:absolute; right:19px; top:10px; font:7px var(--mono) !important; padding:9px 5px 14px; background:#c7e8aa; color:#18231b !important; writing-mode:vertical-rl; letter-spacing:.12em; clip-path:polygon(0 0,100% 0,100% 100%,50% 91%,0 100%); }
+.book-layout-controls { display:flex; justify-content:space-between; align-items:center; margin:15px 0; gap:15px; flex-wrap:wrap; }
+.chapter-map { position:relative; width:100%; border:1px solid var(--card-border); border-radius:20px; background:radial-gradient(ellipse at center,#bde99306,transparent),#141d1d; overflow:hidden; }
+.chapter-map > svg { position:absolute; inset:0; width:100%; height:100%; }
+.map-node { position:absolute; transform:translate(-50%,-20px); width:28%; display:flex; flex-direction:column; align-items:center; gap:7px; border:0; padding:0; color:var(--text); background:none; }
+.map-node > span { width:39px; height:39px; display:grid; place-items:center; border:1px solid #677866; background:#1c2921; border-radius:50%; font:10px var(--mono); transition:box-shadow .25s,transform .25s; }
+.map-node strong { font-size:10px; line-height:1.4; font-weight:500; max-width:190px; padding:3px 5px; background:#141d1de6; }.map-node small { color:var(--text-dim); font-size:8px; }.map-node.done > span { background:color-mix(in srgb,var(--map-color) 20%,#14201b); color:var(--map-color); border-color:var(--map-color); box-shadow:0 0 18px color-mix(in srgb,var(--map-color) 20%,transparent); }.map-node.in_progress > span { animation:map-pulse 2.8s ease-in-out infinite; border-color:var(--map-color); }.map-node:hover > span { transform:scale(1.12); box-shadow:0 0 25px #bde99325; }
+.scroll-reveal { opacity:.25; translate:0 15px; transition:opacity .65s ease,translate .65s ease; }.scroll-reveal.revealed { opacity:1; translate:0 0; }
+.collectible-medal { width:110px; height:120px; color:#e5c98b; filter:drop-shadow(3px 8px 0 #80683944) drop-shadow(0 12px 15px #0004); transition:transform .45s; }
+.medal-display { perspective:500px; margin:0 auto 20px; }.achievement-card:hover .collectible-medal { transform:rotateY(25deg) rotateZ(-7deg); }.medal-locked { color:#91a196; filter:drop-shadow(0 8px 10px #0004); opacity:.6; }.achievement-card.unlocked .collectible-medal { animation:medal-arrive .7s ease both; }
+.journey-timeline { margin-top:25px; padding:30px; }.journey-timeline h2 { font-size:24px; font-weight:500; }.journey-timeline ol { list-style:none; margin:25px 0 0; padding:0; }.journey-timeline li { position:relative; display:flex; gap:30px; padding:0 0 28px 22px; border-left:1px solid #61744a55; }.journey-timeline li::before { content:''; position:absolute; left:-4px; top:5px; width:7px; height:7px; border-radius:50%; background:var(--milestone-color); box-shadow:0 0 14px var(--milestone-color); }.journey-timeline time { min-width:55px; color:#99ad93; font:10px var(--mono); padding-top:5px; }.journey-timeline strong { font-size:13px; font-weight:500; line-height:1.6; }.journey-timeline li span { display:block; font-size:10px; color:var(--text-dim); margin-top:7px; }.journey-timeline .btn-secondary { margin:8px; }
+.activity-controls { display:flex; align-items:center; justify-content:space-between; gap:15px; margin:0 0 20px; color:var(--text-dim); font-size:11px; }.activity-controls label { display:flex; gap:10px; align-items:center; }.activity-controls select { font-size:10px; }.activity-controls > span { font-size:10px; }.heatmap-cell { border:0; padding:0; flex-shrink:0; }.heatmap-cell[aria-pressed="true"] { outline:2px solid #e0efc7; outline-offset:2px; }.activity-detail { margin-top:20px; padding-top:15px; border-top:1px solid var(--card-border); color:var(--text-dim); font-size:11px; display:flex; gap:18px; flex-wrap:wrap; }.activity-detail strong { color:var(--text); font-weight:500; }
+.certificate-save { margin-top:12px; padding:7px 10px; font-size:10px; color:#e4c588; background:#e4c5880a; border:1px solid #e4c58844; border-radius:7px; }
+.xp-flight { position:fixed; right:80px; bottom:150px; z-index:140; color:#dbffb4; font:700 16px var(--mono); pointer-events:none; text-shadow:0 0 20px #bde993; }
+@keyframes world-breathe { 50% { transform:translateY(-7px) rotate(2deg); } }@keyframes map-pulse { 50% { box-shadow:0 0 0 8px #bde99309,0 0 20px #bde99320; } }@keyframes medal-arrive { from { transform:rotateY(-65deg) scale(.8); opacity:0; } to { transform:rotateY(0) scale(1); opacity:1; } }
+@media(max-width:760px) { .observatory { min-height:250px; }.observatory-canvas { height:220px; }.satellite-links { gap:6px; }.book-world { width:190px; height:125px; }.book-world .companion { width:75px!important; height:75px!important; }.book-world .world-art { width:165px; }.settings-panel { padding:30px 20px; }.companion-choices .companion { width:50px!important; height:50px!important; }.journey-timeline { padding:24px; }.journey-timeline li { gap:12px; }.activity-controls > span { max-width:110px; line-height:1.6; }.map-node strong { font-size:9px; }.map-node > span { width:30px; height:30px; font-size:9px; } }
+@media(max-width:480px) { .observatory { grid-row:1; min-height:230px; }.observatory-canvas { height:190px; }.hero-copy { padding-top:12px; }.atmosphere-launch { margin-bottom:18px; }.settings-panel h2 { font-size:24px; }.settings-panel label { font-size:11px; }.settings-panel select { font-size:11px; max-width:190px; } }
+[data-motion="quiet"] *,[data-motion="quiet"] *::before,[data-motion="quiet"] *::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; }
+[data-motion="quiet"] .scroll-reveal { opacity:1; translate:none; }[data-motion="quiet"] .completion-circle,[data-motion="quiet"] .completion-check { stroke-dashoffset:0; }[data-motion="quiet"] .celebration-time { display:none; }
+@media(prefers-reduced-motion:reduce) { .scroll-reveal { opacity:1; translate:none; }.world-art,.collectible-medal { animation:none!important; } }
+.learning-landscape { position:relative; color:var(--cyan); margin:-10px 0 25px; border-bottom:1px solid var(--card-border); }
+.learning-landscape svg { width:100%; height:140px; display:block; }.learning-landscape > span { position:absolute; right:10px; bottom:8px; font:8px var(--mono); letter-spacing:.12em; color:var(--text-dim); }
+.companion.is-focused .companion-float { animation-duration:8s; }.companion.is-focused .companion-eyes { opacity:.8; }
+.reading-mode-label { display:flex; align-items:center; gap:7px; }
+.loading-orbit { width:140px; height:3px; background:#ffffff0b; border-radius:4px; overflow:hidden; }.loading-orbit > span { display:block; width:40%; height:100%; background:var(--cyan); animation:loading-travel 1.5s ease-in-out infinite alternate; }
+.loading-screen h1 { font-size:25px; font-weight:500; text-align:center; }.loading-error { color:var(--text-dim); font-size:13px; text-align:center; padding:0 24px; }
+@keyframes loading-travel { to { transform:translateX(150%); } }
+@media(max-width:600px) { .learning-landscape svg { height:100px; }.learning-landscape > span { font-size:6px; }.reading-mode-label .companion { display:none; } }
+.nav-xp { display:flex; flex-wrap:wrap; justify-content:space-between; gap:6px; min-width:130px; margin-bottom:13px; color:#bed8a5; font-size:9px; }
+.nav-xp strong { font:9px var(--mono); animation:reward-pop .5s both; }.nav-xp > div { width:100%; height:3px; border-radius:4px; background:#ffffff09; overflow:hidden; }.nav-xp > div > i { display:block; height:100%; background:#bedf97; border-radius:4px; transition:width .8s; }

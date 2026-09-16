@@ -17,6 +17,7 @@ function nextId() {
 }
 
 export function useGameData() {
+  const [loadError, setLoadError] = useState(null);
   const [data, setData] = useState(null);
   const [events, setEvents] = useState([]);
   const [saveStatus, setSaveStatus] = useState("idle"); // idle | saving | saved | error
@@ -26,6 +27,7 @@ export function useGameData() {
   useEffect(() => {
     let cancelled = false;
     (async () => {
+      try {
       const raw = await fetchData();
       const stats = computeOverallStats(raw);
       // Silent achievement backfill at load (no toasts -- these are historical, not "just now")
@@ -37,6 +39,7 @@ export function useGameData() {
       if (cancelled) return;
       dataRef.current = raw;
       setData(raw);
+      } catch (error) { if (!cancelled) setLoadError(error.message || "The learning data could not be loaded."); }
     })();
     return () => {
       cancelled = true;
@@ -105,6 +108,9 @@ export function useGameData() {
     const next = structuredClone(dataRef.current);
     const book = next.books.find((b) => b.id === bookId);
     const topic = book.parts[partIndex].topics[topicIndex];
+    const previousStatus = topic.status;
+    const sectionWasDone = book.parts[partIndex].topics.every(t => t.status === "done");
+    const bookWasDone = book.parts.every(p => p.topics.every(t => t.status === "done"));
     Object.assign(topic, patch);
     if (patch.status === "done" && !topic.dateCompleted) {
       topic.dateCompleted = todayStr();
@@ -112,12 +118,25 @@ export function useGameData() {
     if (patch.status && patch.status !== "done") {
       topic.dateCompleted = null;
     }
-    return applyDataChange(next);
+    const result = applyDataChange(next);
+    if (patch.status === "done" && previousStatus !== "done") {
+      addEvent({ type: "complete", title: topic.title, label: "Chapter complete", xp: Math.max(0, result.nextStats.xp - result.prevStats.xp) });
+    }
+    if (patch.status === "done" && previousStatus !== "done") {
+      const section = book.parts[partIndex];
+      if (!bookWasDone && book.parts.every(p => p.topics.every(t => t.status === "done"))) {
+        addEvent({type:"finale",title:book.name,label:"HANDBOOK COMPLETE",subtitle:"Every chapter explored. A whole world unlocked."});
+      } else if (!sectionWasDone && section.topics.every(t => t.status === "done")) {
+        addEvent({type:"finale",title:section.name,label:"SECTION COMPLETE",subtitle:book.name});
+      }
+    }
+    return result;
   }
 
   function updateChallengeProject(index, patch) {
     const next = structuredClone(dataRef.current);
     const project = next.challengeSeries.projects[index];
+    const completedSides = ["challenge", "solution"].filter(side => patch[`${side}Status`] === "done" && project[`${side}Status`] !== "done");
     Object.assign(project, patch);
     if (
       project.challengeStatus === "done" &&
@@ -126,7 +145,11 @@ export function useGameData() {
     ) {
       project.dateCompleted = todayStr();
     }
-    return applyDataChange(next);
+    const result = applyDataChange(next);
+    if (completedSides.length) {
+      addEvent({ type: "complete", title: project.name, label: completedSides.length > 1 ? "Project complete" : `${completedSides[0] === "challenge" ? "Challenge" : "Solution"} complete`, xp: Math.max(0, result.nextStats.xp - result.prevStats.xp) });
+    }
+    return result;
   }
 
   // Records active reading seconds against a topic (scope "book") or a challenge/solution
@@ -233,7 +256,8 @@ export function useGameData() {
   return {
     data,
     stats,
-    loading: !data,
+    loading: !data && !loadError,
+    loadError,
     events,
     dismissEvent,
     pushEvent: addEvent,

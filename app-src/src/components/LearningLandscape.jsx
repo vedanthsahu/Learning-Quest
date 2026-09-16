@@ -1,0 +1,4 @@
+﻿export default function LearningLandscape({completed}) {
+ const trees=Math.min(12,Math.max(1,Math.floor(completed/5)+1));
+ return <div className="learning-landscape" aria-label={`Your learning garden: ${completed} chapters completed`}><svg viewBox="0 0 700 140" fill="none" aria-hidden="true"><path d="M0 110Q130 55 230 96T450 85 700 90V140H0Z" fill="currentColor" opacity=".07"/><path d="M0 125Q180 85 300 113T700 105" stroke="currentColor" opacity=".25"/>{Array.from({length:trees},(_,i)=>{const x=40+i*54,h=30+(i*17%50);return <g key={i} transform={`translate(${x},${108+(i%3)*5})`}><path d={`M0 0V-${h}`} stroke="currentColor" opacity=".6"/><path d={`M0 -${h*.3}Q-24 -${h*.8} -4 -${h}Q20 -${h*.7} 0 -${h*.3}Z`} fill="currentColor" opacity={.15+i*.035}/><circle cy={-h-7} r="3" fill="currentColor" opacity=".5"/></g>})}<circle cx="615" cy="35" r="17" fill="currentColor" opacity=".12"/></svg><span>YOUR GARDEN GROWS WITH EVERY FIVE CHAPTERS</span></div>;
+}

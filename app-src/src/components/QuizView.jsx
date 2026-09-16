@@ -1,3 +1,6 @@
+import { usePreferences } from "../utils/preferences";
+import { useDialog } from "../utils/useDialog";
+import Mascot from "./Mascot";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
@@ -5,6 +8,8 @@ import { quizById } from "../data/quizzes";
 import { playDing, playFanfare } from "../utils/sound";
 
 export default function QuizView({ quizId, onClose, onFinish }) {
+  const {reduced}=usePreferences();
+  const dialogRef = useDialog(onClose);
   const quiz = quizById(quizId);
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
@@ -34,7 +39,7 @@ export default function QuizView({ quizId, onClose, onFinish }) {
       setFinished(true);
       onFinish(quiz.id, scorePct);
       if (scorePct >= 80) {
-        confetti({ particleCount: 90, spread: 70, origin: { y: 0.5 } });
+        if (!reduced) confetti({ disableForReducedMotion: true, particleCount: 90, spread: 70, origin: { y: 0.5 } });
         playFanfare();
       }
     } else {
@@ -49,6 +54,7 @@ export default function QuizView({ quizId, onClose, onFinish }) {
     <motion.div className="reader-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <motion.div
         className="reader-panel quiz-panel"
+        ref={dialogRef} role="dialog" aria-modal="true" aria-label="Knowledge check" tabIndex={-1}
         initial={{ y: 24, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 24, opacity: 0 }}
@@ -73,6 +79,7 @@ export default function QuizView({ quizId, onClose, onFinish }) {
           )}
         </div>
 
+        <div className="quiz-step-track" aria-label={`Question ${index + 1} of ${quiz.questions.length}`}>{quiz.questions.map((_, i) => <span key={i} className={finished || i < index ? "complete" : i === index ? "current" : ""}/>)}</div>
         <div className="reader-content quiz-content">
           {!finished ? (
             <AnimatePresence mode="wait">
@@ -108,7 +115,7 @@ export default function QuizView({ quizId, onClose, onFinish }) {
             </AnimatePresence>
           ) : (
             <motion.div className="quiz-results" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}>
-              <div className="quiz-score-emoji">{scorePct >= 80 ? "🏆" : scorePct >= 50 ? "👍" : "📖"}</div>
+              <Mascot mood={scorePct >= 80 ? "levelup" : "happy"} size={170}/>
               <div className="quiz-score-text">{scorePct}%</div>
               <div className="quiz-score-sub">
                 {correctCount} / {quiz.questions.length} correct

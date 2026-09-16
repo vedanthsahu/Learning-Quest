@@ -1,68 +1,7 @@
-import { motion } from "framer-motion";
-
-const WEEKS = 18;
-const DAYS = WEEKS * 7;
-
-function levelFor(seconds) {
-  if (!seconds) return 0;
-  const minutes = seconds / 60;
-  if (minutes < 10) return 1;
-  if (minutes < 25) return 2;
-  if (minutes < 50) return 3;
-  return 4;
-}
-
-function toDateStr(d) {
-  return d.toISOString().slice(0, 10);
-}
-
-export default function ActivityHeatmap({ dailyLog }) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const start = new Date(today);
-  start.setDate(start.getDate() - (DAYS - 1));
-  // align start to a Sunday so the grid reads like a real calendar
-  const startDow = start.getDay();
-  start.setDate(start.getDate() - startDow);
-
-  const cells = [];
-  for (let i = 0; i < DAYS + 7; i++) {
-    const d = new Date(start);
-    d.setDate(start.getDate() + i);
-    if (d > today) break;
-    const key = toDateStr(d);
-    const seconds = dailyLog[key]?.seconds || 0;
-    cells.push({ date: d, key, seconds, level: levelFor(seconds), dow: d.getDay() });
-  }
-
-  const weeks = [];
-  for (let i = 0; i < cells.length; i += 7) weeks.push(cells.slice(i, i + 7));
-
-  return (
-    <div className="heatmap">
-      <div className="heatmap-grid">
-        {weeks.map((week, wi) => (
-          <div className="heatmap-col" key={wi}>
-            {week.map((cell) => (
-              <motion.div
-                key={cell.key}
-                className={`heatmap-cell level-${cell.level}`}
-                title={`${cell.key}: ${Math.round(cell.seconds / 60)} min${cell.seconds ? "" : " (no activity)"}`}
-                initial={{ opacity: 0, scale: 0.6 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.2 }}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
-      <div className="heatmap-legend">
-        <span>Less</span>
-        {[0, 1, 2, 3, 4].map((l) => (
-          <span key={l} className={`heatmap-cell level-${l}`} />
-        ))}
-        <span>More</span>
-      </div>
-    </div>
-  );
+import { useState } from "react";
+export default function ActivityHeatmap({dailyLog={}}) {
+ const [selected,setSelected]=useState(null);const [weeks,setWeeks]=useState(18);const today=new Date();today.setUTCHours(0,0,0,0);const start=new Date(today);start.setUTCDate(start.getUTCDate()-(weeks*7-1));start.setUTCDate(start.getUTCDate()-start.getUTCDay());
+ const cells=[];for(let i=0;i<weeks*7+7;i++){const d=new Date(start);d.setUTCDate(start.getUTCDate()+i);if(d>today)break;const key=d.toISOString().slice(0,10);const seconds=dailyLog[key]?.seconds||0;const m=seconds/60;cells.push({key,seconds,level:!m?0:m<10?1:m<25?2:m<50?3:4});}
+ const columns=[];for(let i=0;i<cells.length;i+=7)columns.push(cells.slice(i,i+7));
+ return <><div className="activity-controls"><label>Show<select aria-label="Activity time range" value={weeks} onChange={e=>setWeeks(Number(e.target.value))}><option value={8}>8 weeks</option><option value={18}>18 weeks</option><option value={52}>One year</option></select></label><span>Choose a day to explore your activity.</span></div><div className="heatmap"><div className="heatmap-grid">{columns.map((week,i)=><div className="heatmap-col" key={i}>{week.map(cell=><button key={cell.key} className={`heatmap-cell level-${cell.level}`} aria-pressed={selected?.key===cell.key} aria-label={`${cell.key}: ${Math.round(cell.seconds/60)} minutes`} title={`${cell.key}: ${Math.round(cell.seconds/60)} min`} onClick={()=>setSelected(cell)}/>)}</div>)}</div><div className="heatmap-legend"><span>Less</span>{[0,1,2,3,4].map(l=><span key={l} className={`heatmap-cell level-${l}`}/>)}<span>More</span></div></div><div className="activity-detail" role="status">{selected?<><strong>{new Date(selected.key+"T12:00:00").toLocaleDateString(undefined,{month:"long",day:"numeric",year:"numeric"})}</strong><span>{Math.round(selected.seconds/60)} minutes of focused learning</span></>:"Your learning rhythm, one day at a time."}</div></>;
 }

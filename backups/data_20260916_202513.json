@@ -1,10 +1,10 @@
 {
   "meta": {
     "createdAt": "2026-07-24T00:45:13.254367",
-    "lastActiveDate": "2026-08-25",
-    "streak": 2,
-    "longestStreak": 4,
-    "totalActiveSeconds": 1557,
+    "lastActiveDate": "2026-09-16",
+    "streak": 1,
+    "longestStreak": 5,
+    "totalActiveSeconds": 5306,
     "dailyLog": {
       "2026-08-10": {
         "seconds": 49,
@@ -48,9 +48,53 @@
         ]
       },
       "2026-08-25": {
-        "seconds": 377,
+        "seconds": 2462,
         "chapters": [
-          "How Java Actually Runs (JVM, Compilation, Memory, Threads)"
+          "How Java Actually Runs (JVM, Compilation, Memory, Threads)",
+          "Records as Immutable DTOs",
+          "The Journey of a Request: DNS, TLS, and What Happens When You Hit Enter",
+          "Java Syntax and Keyword Self-Study Checklist"
+        ]
+      },
+      "2026-08-26": {
+        "seconds": 25,
+        "chapters": [
+          "Java Syntax and Keyword Self-Study Checklist"
+        ]
+      },
+      "2026-08-27": {
+        "seconds": 997,
+        "chapters": [
+          "Java Syntax and Keyword Self-Study Checklist",
+          "Foundations: AI/ML/DL/GenAI, LLMs, Model Selection",
+          "How This Handbook Works",
+          "Target Audience & Prerequisites",
+          "The Continuous Capstone Project Preview ('Nova')",
+          "Notation, Python Snippet Conventions, Decision Tree Format"
+        ]
+      },
+      "2026-08-28": {
+        "seconds": 431,
+        "chapters": [
+          "Foundations: AI/ML/DL/GenAI, LLMs, Model Selection",
+          "Mental Model: Transformers & LLMs"
+        ]
+      },
+      "2026-09-10": {
+        "seconds": 103,
+        "chapters": [
+          "Mental Model: Transformers & LLMs"
+        ]
+      },
+      "2026-09-16": {
+        "seconds": 108,
+        "chapters": [
+          "EC2",
+          "How This Handbook Works",
+          "Mental Model: Transformers & LLMs",
+          "Mental Model: Embeddings & Retrieval",
+          "Mental Model: Search & Retrieval",
+          "Mental Model: Vector Databases"
         ]
       }
     }
@@ -120,7 +164,7 @@
             {
               "num": "0.1",
               "title": "How This Handbook Works (Spiral Learning Model, four passes)",
-              "status": "not_started",
+              "status": "in_progress",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/ssh/front_matter.md",
@@ -1774,49 +1818,49 @@
             {
               "num": "0.1",
               "title": "How This Handbook Works",
-              "status": "not_started",
+              "status": "done",
               "notes": "",
-              "dateCompleted": null,
+              "dateCompleted": "2026-08-27",
               "contentFile": "content/ai/front_matter.md",
               "estMinutes": 4,
-              "scrollPct": 0,
-              "activeSeconds": 0,
+              "scrollPct": 1,
+              "activeSeconds": 30,
               "highlights": []
             },
             {
               "num": "0.2",
               "title": "Target Audience & Prerequisites",
-              "status": "not_started",
+              "status": "done",
               "notes": "",
-              "dateCompleted": null,
+              "dateCompleted": "2026-08-27",
               "contentFile": "content/ai/front_matter.md",
               "estMinutes": 4,
-              "scrollPct": 0,
-              "activeSeconds": 0,
+              "scrollPct": 1,
+              "activeSeconds": 43,
               "highlights": []
             },
             {
               "num": "0.3",
               "title": "The Continuous Capstone Project Preview ('Nova')",
-              "status": "not_started",
+              "status": "done",
               "notes": "",
-              "dateCompleted": null,
+              "dateCompleted": "2026-08-27",
               "contentFile": "content/ai/front_matter.md",
               "estMinutes": 4,
-              "scrollPct": 0,
-              "activeSeconds": 0,
+              "scrollPct": 0.3945528156054472,
+              "activeSeconds": 13,
               "highlights": []
             },
             {
               "num": "0.4",
               "title": "Notation, Python Snippet Conventions, Decision Tree Format",
-              "status": "not_started",
+              "status": "done",
               "notes": "",
-              "dateCompleted": null,
+              "dateCompleted": "2026-08-27",
               "contentFile": "content/ai/front_matter.md",
               "estMinutes": 4,
-              "scrollPct": 0,
-              "activeSeconds": 0,
+              "scrollPct": 0.5465587044534413,
+              "activeSeconds": 17,
               "highlights": []
             }
           ]
@@ -1827,61 +1871,68 @@
             {
               "num": "1",
               "title": "Foundations: AI/ML/DL/GenAI, LLMs, Model Selection",
-              "status": "in_progress",
+              "status": "done",
               "notes": "",
-              "dateCompleted": null,
+              "dateCompleted": "2026-08-28",
               "contentFile": "content/ai/part1_ch001_foundations.md",
               "estMinutes": 10,
-              "scrollPct": 0.006717671207314798,
-              "activeSeconds": 65,
-              "highlights": []
+              "scrollPct": 0.9646688864224935,
+              "activeSeconds": 1294,
+              "highlights": [
+                {
+                  "blockId": 17,
+                  "note": "",
+                  "imagePath": null,
+                  "updatedAt": "2026-08-28T10:58:34.374Z"
+                }
+              ]
             },
             {
               "num": "2",
               "title": "Mental Model: Transformers & LLMs",
-              "status": "not_started",
+              "status": "done",
               "notes": "",
-              "dateCompleted": null,
+              "dateCompleted": "2026-09-16",
               "contentFile": "content/ai/part1_ch002_transformers_llms_mental_model.md",
               "estMinutes": 8,
-              "scrollPct": 0,
-              "activeSeconds": 0,
+              "scrollPct": 0.2133850630455868,
+              "activeSeconds": 183,
               "highlights": []
             },
             {
               "num": "3",
               "title": "Mental Model: Embeddings & Retrieval",
-              "status": "not_started",
+              "status": "done",
               "notes": "",
-              "dateCompleted": null,
+              "dateCompleted": "2026-09-16",
               "contentFile": "content/ai/part1_ch003_embeddings_mental_model.md",
               "estMinutes": 6,
               "scrollPct": 0,
-              "activeSeconds": 0,
+              "activeSeconds": 1,
               "highlights": []
             },
             {
               "num": "4",
               "title": "Mental Model: Search & Retrieval",
-              "status": "not_started",
+              "status": "in_progress",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/ai/part1_ch004_search_retrieval_mental_model.md",
               "estMinutes": 6,
-              "scrollPct": 0,
-              "activeSeconds": 0,
+              "scrollPct": 0.36487472634395524,
+              "activeSeconds": 54,
               "highlights": []
             },
             {
               "num": "5",
               "title": "Mental Model: Vector Databases",
-              "status": "not_started",
+              "status": "in_progress",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/ai/part1_ch005_vector_databases_mental_model.md",
               "estMinutes": 5,
               "scrollPct": 0,
-              "activeSeconds": 0,
+              "activeSeconds": 21,
               "highlights": []
             },
             {
@@ -4493,8 +4544,8 @@
               "dateCompleted": null,
               "contentFile": "content/cep/part1_ch001_ec2.md",
               "estMinutes": 8,
-              "scrollPct": 0.12385558818448782,
-              "activeSeconds": 49,
+              "scrollPct": 0.34856700232378,
+              "activeSeconds": 54,
               "highlights": [
                 {
                   "blockId": 1,
@@ -6097,8 +6148,8 @@
               "dateCompleted": null,
               "contentFile": "content/peg/part1_ch001_request_journey_dns_tls.md",
               "estMinutes": 3,
-              "scrollPct": 0.34512115258677145,
-              "activeSeconds": 456,
+              "scrollPct": 0.06353240152477764,
+              "activeSeconds": 472,
               "highlights": [
                 {
                   "blockId": 0,
@@ -8425,8 +8476,8 @@
               "dateCompleted": null,
               "contentFile": "content/java/part1_ch001_records_as_immutable_dtos.md",
               "estMinutes": 10,
-              "scrollPct": 0.968284789644013,
-              "activeSeconds": 270,
+              "scrollPct": 0.5339598462195643,
+              "activeSeconds": 285,
               "highlights": []
             },
             {
@@ -9006,13 +9057,13 @@
             {
               "num": "A",
               "title": "How Java Actually Runs (JVM, Compilation, Memory, Threads)",
-              "status": "in_progress",
+              "status": "done",
               "notes": "",
-              "dateCompleted": null,
+              "dateCompleted": "2026-08-25",
               "contentFile": "content/java/appendix_a_how_java_runs.md",
               "estMinutes": 22,
-              "scrollPct": 0.44892286309937457,
-              "activeSeconds": 639,
+              "scrollPct": 1,
+              "activeSeconds": 2667,
               "highlights": []
             },
             {
@@ -9023,8 +9074,8 @@
               "dateCompleted": null,
               "contentFile": "content/java/appendix_b_syntax_checklist.md",
               "estMinutes": 15,
-              "scrollPct": 0.008904109589041096,
-              "activeSeconds": 51,
+              "scrollPct": 0.25954370905805285,
+              "activeSeconds": 145,
               "highlights": []
             }
           ]
