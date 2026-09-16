@@ -1,5 +1,3 @@
 import Companion from "./Companion";
-
-export default function Mascot(props) {
-  return <Companion {...props} kind="owl" />;
-}
+import { usePreferences } from "../utils/preferences";
+export default function Mascot(props) { const {prefs}=usePreferences(); return <Companion {...props} kind={prefs.companion}/>; }

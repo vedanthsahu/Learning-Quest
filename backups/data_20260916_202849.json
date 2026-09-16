@@ -4,7 +4,7 @@
     "lastActiveDate": "2026-09-16",
     "streak": 1,
     "longestStreak": 5,
-    "totalActiveSeconds": 5249,
+    "totalActiveSeconds": 5306,
     "dailyLog": {
       "2026-08-10": {
         "seconds": 49,
@@ -87,13 +87,14 @@
         ]
       },
       "2026-09-16": {
-        "seconds": 51,
+        "seconds": 108,
         "chapters": [
           "EC2",
           "How This Handbook Works",
           "Mental Model: Transformers & LLMs",
           "Mental Model: Embeddings & Retrieval",
-          "Mental Model: Search & Retrieval"
+          "Mental Model: Search & Retrieval",
+          "Mental Model: Vector Databases"
         ]
       }
     }
@@ -163,9 +164,9 @@
             {
               "num": "0.1",
               "title": "How This Handbook Works (Spiral Learning Model, four passes)",
-              "status": "not_started",
+              "status": "done",
               "notes": "",
-              "dateCompleted": null,
+              "dateCompleted": "2026-09-16",
               "contentFile": "content/ssh/front_matter.md",
               "estMinutes": 7,
               "scrollPct": 0,
@@ -175,9 +176,9 @@
             {
               "num": "0.2",
               "title": "How to Read This Book at Different Career Stages",
-              "status": "not_started",
+              "status": "done",
               "notes": "",
-              "dateCompleted": null,
+              "dateCompleted": "2026-09-16",
               "contentFile": "content/ssh/front_matter.md",
               "estMinutes": 7,
               "scrollPct": 0,
@@ -187,7 +188,7 @@
             {
               "num": "0.3",
               "title": "The Continuous Project (capstone app preview)",
-              "status": "not_started",
+              "status": "in_progress",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/ssh/front_matter.md",
@@ -1918,20 +1919,20 @@
               "dateCompleted": null,
               "contentFile": "content/ai/part1_ch004_search_retrieval_mental_model.md",
               "estMinutes": 6,
-              "scrollPct": 0.12162490878131842,
-              "activeSeconds": 18,
+              "scrollPct": 0.36487472634395524,
+              "activeSeconds": 54,
               "highlights": []
             },
             {
               "num": "5",
               "title": "Mental Model: Vector Databases",
-              "status": "not_started",
+              "status": "in_progress",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/ai/part1_ch005_vector_databases_mental_model.md",
               "estMinutes": 5,
               "scrollPct": 0,
-              "activeSeconds": 0,
+              "activeSeconds": 21,
               "highlights": []
             },
             {

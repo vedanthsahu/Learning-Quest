@@ -4,7 +4,7 @@
     "lastActiveDate": "2026-09-16",
     "streak": 1,
     "longestStreak": 5,
-    "totalActiveSeconds": 5234,
+    "totalActiveSeconds": 5285,
     "dailyLog": {
       "2026-08-10": {
         "seconds": 49,
@@ -87,7 +87,7 @@
         ]
       },
       "2026-09-16": {
-        "seconds": 36,
+        "seconds": 87,
         "chapters": [
           "EC2",
           "How This Handbook Works",
@@ -1901,9 +1901,9 @@
             {
               "num": "3",
               "title": "Mental Model: Embeddings & Retrieval",
-              "status": "in_progress",
+              "status": "done",
               "notes": "",
-              "dateCompleted": null,
+              "dateCompleted": "2026-09-16",
               "contentFile": "content/ai/part1_ch003_embeddings_mental_model.md",
               "estMinutes": 6,
               "scrollPct": 0,
@@ -1918,19 +1918,19 @@
               "dateCompleted": null,
               "contentFile": "content/ai/part1_ch004_search_retrieval_mental_model.md",
               "estMinutes": 6,
-              "scrollPct": 0,
-              "activeSeconds": 3,
+              "scrollPct": 0.36487472634395524,
+              "activeSeconds": 54,
               "highlights": []
             },
             {
               "num": "5",
               "title": "Mental Model: Vector Databases",
-              "status": "not_started",
+              "status": "in_progress",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/ai/part1_ch005_vector_databases_mental_model.md",
               "estMinutes": 5,
-              "scrollPct": 0,
+              "scrollPct": 0.08314855875831485,
               "activeSeconds": 0,
               "highlights": []
             },

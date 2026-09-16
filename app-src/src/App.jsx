@@ -1,5 +1,8 @@
+import { useScrollReveals } from "./utils/useScrollReveals";
+import { PreferencesProvider } from "./utils/preferences";
+import Atmosphere from "./components/Atmosphere";
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, MotionConfig } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { useGameData } from "./utils/useGameData";
 import { parseReaderHash } from "./utils/crossref";
 import Nav from "./components/Nav";
@@ -14,11 +17,14 @@ import QuizView from "./components/QuizView";
 import NotificationCenter from "./components/NotificationCenter";
 import Mascot from "./components/Mascot";
 
-export default function App() {
+export default function App() { return <PreferencesProvider><LearningApp /></PreferencesProvider>; }
+
+function LearningApp() {
   const {
     data,
     stats,
     loading,
+    loadError,
     events,
     dismissEvent,
     pushEvent,
@@ -36,6 +42,7 @@ export default function App() {
   const [view, setView] = useState({ view: "dashboard" });
   const [readerState, setReaderState] = useState(null); // { target, anchor }
   const [activeQuizId, setActiveQuizId] = useState(null);
+  useScrollReveals(`${view.view}-${view.bookId || ""}-${loading}`);
 
   // Cross-reference links open in a NEW tab (see crossref.js / Reader.jsx's `a` component)
   // so jumping to an earlier chapter never costs you your place in the one you're reading.
@@ -57,11 +64,13 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
+  if (loadError) return <div className="loading-screen"><Mascot mood="sleepy" size={140}/><h1>Your observatory is taking a moment.</h1><p className="loading-error" role="alert">{loadError}</p><button className="btn-primary" onClick={()=>window.location.reload()}>Try again</button></div>;
+
   if (loading) {
     return (
       <div className="loading-screen">
         <Mascot level={1} mood="idle" size={120} />
-        <div className="loading-text">Loading your quest…</div>
+        <div className="loading-text" role="status">Preparing your universe...</div><div className="loading-orbit" aria-hidden="true"><span/></div>
       </div>
     );
   }
@@ -90,11 +99,12 @@ export default function App() {
   }
 
   return (
-    <MotionConfig reducedMotion="user"><div className="app-shell">
+    <div className="app-shell">
       <a className="skip-link" href="#main-content">Skip to content</a>
-      <Nav view={view} data={data} onNavigate={navigate} saveStatus={saveStatus} />
+      <Nav stats={stats} view={view} data={data} onNavigate={navigate} saveStatus={saveStatus} />
 
       <main className="app-main" id="main-content">
+        <Atmosphere />
         {view.view === "dashboard" && (
           <Dashboard data={data} stats={stats} onOpenReader={openReader} onNavigateView={navigate} />
         )}
@@ -147,6 +157,6 @@ export default function App() {
       </AnimatePresence>
 
       <NotificationCenter events={events} dismissEvent={dismissEvent} />
-    </div></MotionConfig>
+    </div>
   );
 }

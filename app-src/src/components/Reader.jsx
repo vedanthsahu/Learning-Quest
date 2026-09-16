@@ -1,3 +1,4 @@
+import Mascot from "./Mascot";
 import { useDialog } from "../utils/useDialog";
 import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -250,6 +251,7 @@ export default function Reader({
     highlights: info.highlights,
     toggleHighlight,
     saveHighlightDetails,
+    pushEvent,
     removeHighlight,
     scope: target.scope,
     highlightRef,
@@ -262,6 +264,7 @@ export default function Reader({
   const handleSaveHighlight = useCallback((entry) => {
     const l = latest.current;
     l.saveHighlightDetails(l.scope, l.highlightRef, entry.blockId, { note: entry.note, imagePath: entry.imagePath });
+    l.pushEvent({type:"note",title:"Saved to Notes & Diagrams"});
   }, []);
   const handleRemoveHighlight = useCallback((blockId) => {
     const l = latest.current;
@@ -631,7 +634,7 @@ export default function Reader({
           </div>
         </div>
 
-        <div className="reading-toolbar"><span className="reading-mode-label">THE READING ROOM</span><div className="reading-controls"><button aria-label="Decrease text size" disabled={fontSize <= 15} onClick={() => setFontSize(size => size - 1)}>A&minus;</button><span aria-live="polite">{fontSize}px</span><button aria-label="Increase text size" disabled={fontSize >= 23} onClick={() => setFontSize(size => size + 1)}>A+</button><button aria-pressed={focusMode} onClick={() => setFocusMode(value => !value)}>Focus mode</button></div></div>
+        <div className="reading-toolbar"><span className="reading-mode-label"><Mascot mood={info.status === "done" ? "happy" : "focus"} size={36}/>THE READING ROOM</span><div className="reading-controls"><button aria-label="Decrease text size" disabled={fontSize <= 15} onClick={() => setFontSize(size => size - 1)}>A&minus;</button><span aria-live="polite">{fontSize}px</span><button aria-label="Increase text size" disabled={fontSize >= 23} onClick={() => setFontSize(size => size + 1)}>A+</button><button aria-pressed={focusMode} onClick={() => setFocusMode(value => !value)}>Focus mode</button></div></div>
         <div className="reading-progress-track" role="progressbar" aria-label="Chapter reading progress" aria-valuenow={Math.round(readProgress * 100)} aria-valuemin={0} aria-valuemax={100}><span style={{ width: `${readProgress * 100}%` }}/></div>
         {ttsSupported && (
           <div className="reader-tts-bar">
@@ -692,7 +695,7 @@ export default function Reader({
           <motion.div className="reader-nudge" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }}>
             ⏳ You've spent a good while here — ready to mark this complete?
             <button className="btn-mini" onClick={handleMarkComplete}>
-              ✅ Mark Complete
+              <CompletionIcon /> Mark Complete
             </button>
           </motion.div>
         )}
@@ -741,7 +744,8 @@ export default function Reader({
               disabled={info.status === "done"}
               whileTap={info.status === "done" ? undefined : { scale: 0.9 }}
             >
-              {info.status === "done" ? "✅ Completed" : "✅ Mark Complete"}
+              <CompletionIcon complete={info.status === "done"} />
+              {info.status === "done" ? "Completed" : "Mark Complete"}
             </motion.button>
             {showNext && (
               <button className="btn-next" onClick={handleNext}>
@@ -763,4 +767,11 @@ function StatusPill({ status }) {
   };
   const s = map[status] || map.not_started;
   return <span className={`status-pill ${s.cls}`}>{s.label}</span>;
+}
+
+function CompletionIcon({ complete = false }) {
+  return <svg className="completion-button-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="9" opacity={complete ? 1 : .55}/>
+    <path d="m8 12 3 3 5-6"/>
+  </svg>;
 }

@@ -1,3 +1,4 @@
+import Medal from "./Medal";
 import { useState } from "react";
 import PageHero from "./PageHero";
 import ProgressRing from "./ProgressRing";
@@ -26,7 +27,7 @@ export default function AchievementsView({ data, stats }) {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: Math.min(i * 0.02, 0.3) }}
             >
-              <div className="achievement-emoji">{unlocked ? a.emoji : "🔒"}</div>
+              <div className="medal-display"><Medal index={ACHIEVEMENTS.findIndex(item=>item.id===a.id)} locked={!unlocked}/></div>
               <div className="achievement-state-label">{unlocked ? "EARNED" : "IN YOUR FUTURE"}</div>
               <div className="achievement-name">{a.name}</div>
               <div className="achievement-desc">{a.description}</div>

@@ -1,3 +1,5 @@
+import LearningLandscape from "./LearningLandscape";
+import JourneyTimeline from "./JourneyTimeline";
 import PageHero from "./PageHero";
 import { motion } from "framer-motion";
 import Mascot from "./Mascot";
@@ -23,6 +25,7 @@ export default function ProfileView({ data, stats }) {
         </div>
       </div>
 
+      <LearningLandscape completed={stats.totalDone}/>
       <div className="profile-stats-grid">
         <StatCard emoji="🔥" label="Current Streak" value={`${data.meta.streak || 0} days`} />
         <StatCard emoji="🏆" label="Longest Streak" value={`${data.meta.longestStreak || 0} days`} />
@@ -38,6 +41,7 @@ export default function ProfileView({ data, stats }) {
         <div className="eyebrow">CONSISTENCY OVER INTENSITY</div><h3>📅 Daily Activity</h3>
         <ActivityHeatmap dailyLog={data.meta.dailyLog} />
       </motion.div>
+      <JourneyTimeline data={data}/>
     </div>
   );
 }

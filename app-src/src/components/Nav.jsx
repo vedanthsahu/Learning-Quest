@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { setSoundEnabled, isSoundEnabled } from "../utils/sound";
 
 const ICONS = {
@@ -15,7 +15,7 @@ const ICONS = {
 };
 function Icon({ name }) { return <svg className="nav-line-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{ICONS[name] || ICONS.book}</svg>; }
 
-export default function Nav({ view, data, onNavigate, saveStatus }) {
+export default function Nav({ view, data, onNavigate, saveStatus, stats }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [soundOn, setSoundOn] = useState(isSoundEnabled());
   function navigate(target) { setMenuOpen(false); onNavigate(target); }
@@ -45,7 +45,7 @@ export default function Nav({ view, data, onNavigate, saveStatus }) {
     </div>
     <div className="nav-footer">
       <button className="sound-toggle" onClick={toggleSound} aria-label={soundOn ? "Mute sound effects" : "Enable sound effects"} aria-pressed={soundOn} title={soundOn ? "Mute sound effects" : "Enable sound effects"}><Icon name={soundOn ? "volume" : "mute"}/></button>
-      <div><span className="nav-footer-label">YOUR LEARNING SPACE</span><span role="status" className={`save-indicator save-${saveStatus}`}><i/>{saveLabel}</span></div>
+      <div>{stats && <div id="xp-destination" className="nav-xp"><span>Level {stats.levelNumber}</span><strong key={stats.xp}>{stats.xp} XP</strong><div><i style={{width:`${Math.min(100,stats.levelProgressPct*100)}%`}}/></div></div>}<span className="nav-footer-label">YOUR LEARNING SPACE</span><span role="status" className={`save-indicator save-${saveStatus}`}><i/>{saveLabel}</span></div>
     </div>
   </nav>;
 }

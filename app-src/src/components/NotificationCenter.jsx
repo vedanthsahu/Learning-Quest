@@ -1,4 +1,6 @@
-﻿import { useEffect, useRef, useState } from "react";
+import { downloadCompletion } from "../utils/completionCard";
+import { usePreferences } from "../utils/preferences";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import confetti from "canvas-confetti";
 import Mascot from "./Mascot";
@@ -18,7 +20,9 @@ export default function NotificationCenter({ events, dismissEvent }) {
 }
 
 function Celebration({ event, remaining, onDismiss }) {
-  const reduceMotion = useReducedMotion();
+  const systemReduced = useReducedMotion();
+  const {reduced} = usePreferences();
+  const reduceMotion = reduced || systemReduced;
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const [hidden, setHidden] = useState(document.hidden);
@@ -27,12 +31,13 @@ function Celebration({ event, remaining, onDismiss }) {
   const played = useRef(false);
   const timeLeft = useRef(6500);
   const paused = hovered || focused || hidden;
-  const levelup = event.type === "levelup";
+  const finale = event.type === "finale";
+  const levelup = event.type === "levelup" || finale;
   const achievement = event.type === "achievement";
   const complete = event.type === "complete";
-  const title = levelup ? `Hello, Level ${event.levelNumber}.` : achievement ? "A new milestone, earned." : complete ? "One step further." : "Time well invested.";
-  const detail = levelup ? event.level.title : achievement ? event.achievement.name : event.title;
-  const label = levelup ? "LEVEL UP" : achievement ? "ACHIEVEMENT UNLOCKED" : complete ? (event.label || "Chapter complete").toUpperCase() : `${event.minutes} MIN READING SESSION`;
+  const title = event.type === "note" ? "An idea, kept." : finale ? "A whole new horizon." : levelup ? `Hello, Level ${event.levelNumber}.` : achievement ? "A new milestone, earned." : complete ? "One step further." : "Time well invested.";
+  const detail = finale ? event.title : levelup ? event.level.title : achievement ? event.achievement.name : event.title;
+  const label = event.type === "note" ? "NOTE SAVED" : finale ? event.label : levelup ? "LEVEL UP" : achievement ? "ACHIEVEMENT UNLOCKED" : complete ? (event.label || "Chapter complete").toUpperCase() : `${event.minutes} MIN READING SESSION`;
 
   useEffect(() => {
     const visibility = () => setHidden(document.hidden);
@@ -45,8 +50,12 @@ function Celebration({ event, remaining, onDismiss }) {
     if (!reduceMotion && (complete || achievement || levelup)) {
       confetti({ disableForReducedMotion: true, particleCount: levelup ? 85 : 42, spread: 65, startVelocity: 24, gravity: .85, ticks: 160, colors: ["#bde993", "#e4c588", "#c3b0ec"], origin: { x: .75, y: .75 }, zIndex: 120 });
     }
+    if (complete && event.xp > 0 && !reduceMotion) {
+      const destination=document.getElementById("xp-destination");
+      if(destination && destination.getClientRects().length){const r=destination.getBoundingClientRect();const flight=document.createElement("span");flight.className="xp-flight";flight.textContent=`+${event.xp} XP`;document.body.appendChild(flight);const animation=flight.animate([{transform:"translate(0,0)",opacity:1},{transform:`translate(${r.left-innerWidth+100}px,${Math.max(30,r.top)-innerHeight+150}px) scale(.6)`,opacity:0}],{duration:1000,easing:"cubic-bezier(.2,.7,.3,1)"});animation.onfinish=()=>flight.remove();}
+    }
     if (levelup) playFanfare(); else if (achievement) playUnlock(); else if (complete) playComplete(); else playDing();
-  }, [reduceMotion, complete, achievement, levelup]);
+  }, [reduceMotion, complete, achievement, levelup, event.xp]);
   useEffect(() => {
     if (paused) return;
     const started = Date.now();
@@ -57,8 +66,8 @@ function Celebration({ event, remaining, onDismiss }) {
   return <motion.section className={`celebration-card ${levelup || achievement ? "celebration-gold" : ""}`} initial={{ opacity: 0, y: reduceMotion ? 0 : 30, scale: reduceMotion ? 1 : .94 }} animate={{opacity:1,y:0,scale:1}} exit={{opacity:0,y:reduceMotion ? 0 : 15}} transition={{type:"spring",damping:24,stiffness:280}}
     onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} onFocusCapture={() => setFocused(true)} onBlurCapture={e => { if (!e.currentTarget.contains(e.relatedTarget)) setFocused(false); }}>
     <button className="celebration-dismiss" aria-label="Dismiss notification" onClick={onDismiss}>&times;</button>
-    <div className="celebration-art" aria-hidden="true">{levelup ? <Mascot mood="levelup" level={event.levelNumber} size={100}/> : <div className="completion-seal"><svg viewBox="0 0 64 64" fill="none"><circle className="completion-circle" cx="32" cy="32" r="28" stroke="currentColor" strokeWidth="1.5"/>{achievement ? <path className="completion-check" d="m32 15 5 11 12 2-9 9 2 12-10-6-10 6 2-12-9-9 12-2Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/> : <path className="completion-check" d="m19 33 9 9 18-21" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>}</svg><i/><i/><i/></div>}</div>
-    <div className="celebration-copy"><div className="eyebrow">{label}</div><h2>{title}</h2><p>{detail}</p><div className="celebration-meta">{complete && event.xp > 0 && <span className="xp-reward">+{event.xp} XP</span>}<span>{remaining ? `${remaining} more milestone${remaining === 1 ? "" : "s"}` : complete ? "Keep that curiosity going." : "Progress worth celebrating."}</span></div></div>
+    <div className="celebration-art" aria-hidden="true">{levelup ? <Mascot mood="levelup" level={event.levelNumber || 5} size={100}/> : <div className="completion-seal"><svg viewBox="0 0 64 64" fill="none"><circle className="completion-circle" cx="32" cy="32" r="28" stroke="currentColor" strokeWidth="1.5"/>{achievement ? <path className="completion-check" d="m32 15 5 11 12 2-9 9 2 12-10-6-10 6 2-12-9-9 12-2Z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/> : <path className="completion-check" d="m19 33 9 9 18-21" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>}</svg><i/><i/><i/></div>}</div>
+    <div className="celebration-copy"><div className="eyebrow">{label}</div><h2>{title}</h2><p>{detail}</p>{finale && <button className="certificate-save" onClick={()=>downloadCompletion({title:event.title,subtitle:event.subtitle})}>Save completion card</button>}<div className="celebration-meta">{complete && event.xp > 0 && <span className="xp-reward">+{event.xp} XP</span>}<span>{remaining ? `${remaining} more milestone${remaining === 1 ? "" : "s"}` : complete ? "Keep that curiosity going." : "Progress worth celebrating."}</span></div></div>
     <div className="celebration-time" style={{animationPlayState:paused ? "paused" : "running"}}/>
   </motion.section>;
 }

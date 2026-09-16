@@ -1,3 +1,4 @@
+import { usePreferences } from "../utils/preferences";
 import { useId, useState } from "react";
 
 const PALETTES = {
@@ -11,15 +12,17 @@ const PALETTES = {
 // Shared vector construction keeps the companions crisp at every size. All idle
 // and reaction motion is CSS driven, including the reduced-motion alternative.
 export default function Companion({ kind = "owl", level = 1, mood = "idle", size = 140 }) {
+  const {reduced} = usePreferences();
+  const [look,setLook] = useState({x:0,y:0});
   const id = useId().replace(/:/g, "");
   const [greet, setGreet] = useState(false);
   const [light, shade, glow] = PALETTES[kind] || PALETTES.owl;
   const happy = greet || mood === "happy" || mood === "levelup";
   return (
-    <div className={`companion companion-${kind} ${happy ? "is-happy" : ""} ${mood === "sleepy" ? "is-sleepy" : ""}`}
+    <div className={`companion companion-${kind} ${happy ? "is-happy" : ""} ${mood === "sleepy" ? "is-sleepy" : mood === "focus" ? "is-focused" : ""}`}
       style={{ width: size, height: size, "--companion-glow": glow }}
-      onPointerEnter={() => setGreet(true)} onPointerLeave={() => setGreet(false)}
-      role="img" aria-label={`${kind} learning companion${happy ? ", celebrating" : mood === "sleepy" ? ", resting" : ""}`}>
+      onPointerMove={e => { if(reduced)return;const r=e.currentTarget.getBoundingClientRect();setLook({x:(e.clientX-r.left-r.width/2)/r.width*7,y:(e.clientY-r.top-r.height/2)/r.height*5}); }} onPointerEnter={() => setGreet(true)} onPointerLeave={() => {setGreet(false);setLook({x:0,y:0});}}
+      role="img" aria-label={`${kind} learning companion${happy ? ", celebrating" : mood === "sleepy" ? ", resting" : mood === "focus" ? ", concentrating" : ""}`}>
       <svg viewBox="0 0 220 220" aria-hidden="true">
         <defs>
           <radialGradient id={`${id}-body`} cx="32%" cy="20%" r="85%"><stop stopColor={light}/><stop offset=".6" stopColor={shade}/><stop offset="1" stopColor="#253936"/></radialGradient>
@@ -37,8 +40,9 @@ export default function Companion({ kind = "owl", level = 1, mood = "idle", size
           <path d="M66 78Q107 52 147 77" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" opacity=".28"/>
           <rect x="60" y="82" width="100" height="62" rx="29" fill={`url(#${id}-glass)`} stroke={light} strokeOpacity=".45" strokeWidth="2"/>
           <path d="M73 91Q103 82 134 90" stroke="#fff" opacity=".12" strokeWidth="4" fill="none" strokeLinecap="round"/>
-          <g className="companion-eyes" fill={glow}>
+          <g style={{translate:`${look.x}px ${look.y}px`}}><g className="companion-eyes" fill={glow}>
             {happy ? <g fill="none" stroke={glow} strokeWidth="5" strokeLinecap="round"><path d="M78 113Q86 99 94 113"/><path d="M126 113Q134 99 142 113"/></g> : <><rect x="81" y="102" width="11" height="19" rx="5.5"/><rect x="128" y="102" width="11" height="19" rx="5.5"/></>}
+          </g>
           </g>
           <ellipse cx="76" cy="124" rx="7" ry="3" fill="#f7b3a4" opacity=".5"/><ellipse cx="144" cy="124" rx="7" ry="3" fill="#f7b3a4" opacity=".5"/>
           <path d="M103 125Q110 132 117 125" stroke={glow} strokeWidth="2" strokeLinecap="round" fill="none"/>

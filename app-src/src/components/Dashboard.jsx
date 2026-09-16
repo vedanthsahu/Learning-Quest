@@ -1,3 +1,5 @@
+import Observatory from "./Observatory";
+import WorldArt from "./WorldArt";
 import { motion } from "framer-motion";
 import Mascot from "./Mascot";
 import ProgressRing from "./ProgressRing";
@@ -27,7 +29,7 @@ export default function Dashboard({ data, stats, onOpenReader, onNavigateView })
           <p>{next ? `${next.bookName} · ${next.partName}` : "Explore your handbooks and keep your curiosity alive."}</p>
           <div className="hero-actions"><button className="quest-primary" onClick={() => next ? onOpenReader({ scope: "book", bookId: next.bookId, partIndex: next.partIndex, topicIndex: next.topicIndex }) : onNavigateView({ view: "challenges" })}>{next ? "Continue learning" : "Explore challenges"}<span aria-hidden="true">↗</span></button>{next && <span className="hero-duration">◷ About {next.topic.estMinutes} min</span>}</div>
         </div>
-        <div className="quest-art" aria-hidden="true"><div className="orbital orbital-one" /><div className="orbital orbital-two" /><div className="planet"><div className="planet-grid" /></div><span className="art-spark spark-one">✦</span><span className="art-spark spark-two">+</span><div className="floating-code">&lt; / &gt;</div><div className="art-caption">STAY CURIOUS. KEEP EXPLORING.</div></div>
+        <Observatory books={data.books} onOpen={bookId => onNavigateView({view:"book",bookId})}/>
       </section>
       <div className="section-heading"><h2>Your momentum</h2><span>Small steps. Lasting progress.</span></div>
       <div className="dash-top-grid">
@@ -69,14 +71,14 @@ export default function Dashboard({ data, stats, onOpenReader, onNavigateView })
             <motion.button
               type="button"
               key={b.id}
-              className="card book-summary-card"
+              className="card book-summary-card tactile-book"
               style={{ "--book-accent": b.color }}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 + i * 0.05 }}
               onClick={() => onNavigateView({ view: "book", bookId: b.id })}
             >
-              <div className="book-cover" aria-hidden="true"><span className="cover-number">FIELD GUIDE / {String(i + 1).padStart(2, "0")}</span><span className="cover-glyph">{["{ }", "✳", "⌘", "λ"][i % 4]}</span><span className="cover-caption">LEARNING QUEST <span>↗</span></span></div><div className="book-progress"><ProgressRing pct={b.pct} color={b.color} size={42} strokeWidth={3} /><span>{b.done} of {b.total} chapters</span></div>
+              <div className="book-cover" aria-hidden="true"><WorldArt bookId={b.id}/><span className="cover-number">FIELD GUIDE / {String(i + 1).padStart(2, "0")}</span><span className="cover-glyph">{["{ }", "✳", "⌘", "λ"][i % 4]}</span><span className="cover-caption">LEARNING QUEST <span>↗</span></span></div><div className="book-progress">{b.pct > 0 && b.pct < 1 && <span className="reading-bookmark">READING</span>}<ProgressRing pct={b.pct} color={b.color} size={42} strokeWidth={3} /><span>{b.done} of {b.total} chapters</span></div>
               <div className="book-summary-info">
                 <div className="book-summary-name" style={{ color: b.color }}>
                   {b.name}

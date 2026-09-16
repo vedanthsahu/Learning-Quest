@@ -1,3 +1,4 @@
+import { usePreferences } from "../utils/preferences";
 import { useDialog } from "../utils/useDialog";
 import Mascot from "./Mascot";
 import { useState } from "react";
@@ -7,6 +8,7 @@ import { quizById } from "../data/quizzes";
 import { playDing, playFanfare } from "../utils/sound";
 
 export default function QuizView({ quizId, onClose, onFinish }) {
+  const {reduced}=usePreferences();
   const dialogRef = useDialog(onClose);
   const quiz = quizById(quizId);
   const [index, setIndex] = useState(0);
@@ -37,7 +39,7 @@ export default function QuizView({ quizId, onClose, onFinish }) {
       setFinished(true);
       onFinish(quiz.id, scorePct);
       if (scorePct >= 80) {
-        confetti({ disableForReducedMotion: true, particleCount: 90, spread: 70, origin: { y: 0.5 } });
+        if (!reduced) confetti({ disableForReducedMotion: true, particleCount: 90, spread: 70, origin: { y: 0.5 } });
         playFanfare();
       }
     } else {
