@@ -1,4 +1,3 @@
-import Observatory from "./Observatory";
 import WorldArt from "./WorldArt";
 import { motion } from "framer-motion";
 import Mascot from "./Mascot";
@@ -35,7 +34,7 @@ export default function Dashboard({ data, stats, onOpenReader, onNavigateView })
           <p>{next ? `${next.bookName} · ${next.partName}` : "Explore your handbooks and keep your curiosity alive."}</p>
           <div className="hero-actions"><button className="quest-primary" onClick={() => next ? onOpenReader({ scope: "book", bookId: next.bookId, partIndex: next.partIndex, topicIndex: next.topicIndex }) : onNavigateView({ view: "challenges" })}>{next ? "Continue learning" : "Explore challenges"}<span aria-hidden="true">↗</span></button>{next && <span className="hero-duration">◷ About {next.topic.estMinutes} min</span>}</div>
         </div>
-        <Observatory books={data.books} onOpen={bookId => onNavigateView({view:"book",bookId})}/>
+        <div className="dashboard-flight-window"><div className="dashboard-globe" aria-hidden="true"/><button onClick={() => onNavigateView({view:'journey'})}>Return to the flight ↗</button></div>
       </section>
       <div className="section-heading"><h2>Your momentum</h2><span>Small steps. Lasting progress.</span></div>
       <div className="dash-top-grid">

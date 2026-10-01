@@ -49,6 +49,13 @@ MIME_TYPES = {
     ".jpeg": "image/jpeg",
     ".gif": "image/gif",
     ".webp": "image/webp",
+    ".txt": "text/plain; charset=utf-8",
+    ".glb": "model/gltf-binary",
+    ".hdr": "application/octet-stream",
+    ".wasm": "application/wasm",
+    ".woff": "font/woff",
+    ".woff2": "font/woff2",
+    ".ttf": "font/ttf",
 }
 
 

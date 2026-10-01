@@ -1,0 +1,263 @@
+/*
+ * Space flight styles. The overlay markup keeps the space-portfolio's Tailwind
+ * classes, prefixed `tw:` so nothing collides with LearningQuest's own CSS.
+ * No preflight is imported: the rest of the app keeps its existing base
+ * styles. Utilities stay unlayered so they win over the app's element rules.
+ */
+@import "tailwindcss/theme.css" layer(theme) prefix(tw);
+@import "tailwindcss/utilities.css" prefix(tw) source(none);
+@source "./";
+
+@theme inline {
+  --color-space: #050310;
+  --color-space-deep: #02010a;
+  --color-nebula: #7c3aed;
+  --color-nebula-soft: #a78bfa;
+  --color-cyan: #4cc9f0;
+  --color-cyan-bright: #7df9ff;
+  --color-pink: #f0abfc;
+  --color-hud: #9adcff;
+  --color-star: #eef2ff;
+  --font-display: "Space Grotesk", "Arial", sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Menlo", monospace;
+  --animate-blink: blink 1.6s ease-in-out infinite;
+  --animate-scroll-dot: scroll-dot 1.8s ease-in-out infinite;
+  --animate-spin-slow: spin 14s linear infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+@keyframes scroll-dot {
+  0% { transform: translateY(0); opacity: 0; }
+  25% { opacity: 1; }
+  75% { opacity: 1; }
+  100% { transform: translateY(14px); opacity: 0; }
+}
+
+/* ---- Shell: the flight takes the whole viewport ----------------------- */
+
+html:has(.flight-root),
+body:has(.flight-root) {
+  background: #02010a;
+}
+
+.flight-root {
+  position: relative;
+  color: #eef2ff;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+.flight-root ::selection {
+  background: rgba(124, 58, 237, 0.55);
+  color: #fff;
+}
+
+/* Scoped slice of Tailwind's preflight. It lives in a cascade layer so every
+   unlayered `tw:` utility still wins, while it still beats browser defaults
+   (gray buttons, list bullets, heading margins) that preflight normally
+   removes. Nothing outside .flight-root is touched. */
+@layer flight-base {
+  .flight-root *,
+  .flight-root ::before,
+  .flight-root ::after {
+    box-sizing: border-box;
+    border: 0 solid;
+  }
+  .flight-root :is(h1, h2, h3, h4, p, ul, ol, figure) {
+    margin: 0;
+  }
+  .flight-root :is(ul, ol) {
+    list-style: none;
+    padding: 0;
+  }
+  .flight-root :is(button, input, select, textarea) {
+    font: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
+  }
+  .flight-root button {
+    cursor: pointer;
+  }
+  .flight-root a {
+    color: inherit;
+    text-decoration: inherit;
+  }
+  .flight-root :is(svg, canvas) {
+    display: block;
+  }
+  .flight-root summary {
+    list-style: none;
+  }
+  .flight-root summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* Book/milestone rows inside the HUD panels */
+  .flight-root .flight-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 4px;
+    border-bottom: 1px solid rgba(154, 220, 255, 0.14);
+    color: #eef2ff;
+    text-align: left;
+    transition: background 160ms ease, color 160ms ease;
+  }
+  .flight-root .flight-row:hover {
+    background: rgba(76, 201, 240, 0.08);
+    color: #7df9ff;
+  }
+}
+
+.flight-root :is(button, a):focus-visible {
+  outline: 2px solid #7df9ff;
+  outline-offset: 3px;
+}
+
+/* --- HUD utilities ---------------------------------------------------- */
+
+/* Frosted glass panel used by overlays, nav, cards */
+.flight-root .glass {
+  background: linear-gradient(
+    135deg,
+    rgba(124, 58, 237, 0.10),
+    rgba(10, 12, 32, 0.55) 45%,
+    rgba(76, 201, 240, 0.08)
+  );
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(154, 220, 255, 0.18);
+  box-shadow:
+    0 0 24px rgba(76, 201, 240, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Corner brackets like the reference HUD frames */
+.flight-root .hud-corners {
+  position: relative;
+}
+.flight-root .hud-corners::before,
+.flight-root .hud-corners::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid rgba(154, 220, 255, 0.75);
+  pointer-events: none;
+}
+.flight-root .hud-corners::before {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+}
+.flight-root .hud-corners::after {
+  bottom: 0;
+  right: 0;
+  border-left: none;
+  border-top: none;
+}
+
+.flight-root .tracking-hud {
+  letter-spacing: 0.34em;
+}
+
+/* Thin technical divider line with gradient falloff */
+.flight-root .hud-line {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(154, 220, 255, 0.6) 20%,
+    rgba(154, 220, 255, 0.6) 80%,
+    transparent
+  );
+  height: 1px;
+}
+
+.flight-root .panel-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(154, 220, 255, 0.3) transparent;
+}
+
+/* The sidebar becomes a drawer while flying (LearningQuest navigation stays
+   one click away). */
+.journey-shell .nav-sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 56;
+  height: 100vh;
+  transform: translateX(-105%);
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  visibility: hidden;
+}
+.journey-shell.flight-menu-open .nav-sidebar {
+  transform: none;
+  visibility: visible;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.6);
+}
+.journey-shell .app-main {
+  padding: 0;
+  max-width: none;
+}
+.journey-shell .atmosphere-launch {
+  display: none;
+}
+.flight-menu-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  background: rgba(2, 1, 10, 0.55);
+  backdrop-filter: blur(4px);
+  border: 0;
+  padding: 0;
+}
+
+@media (max-width: 760px) {
+  .journey-shell .nav-sidebar {
+    width: min(320px, 86vw);
+    height: 100vh;
+    overflow-y: auto;
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+  .journey-shell .nav-sidebar .nav-links {
+    display: flex !important;
+    flex-direction: column;
+  }
+  .journey-shell .nav-sidebar > .nav-footer {
+    display: flex !important;
+  }
+  .journey-shell .mobile-menu-toggle {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .journey-shell .nav-sidebar {
+    transition: none;
+  }
+}
+[data-motion="quiet"] .journey-shell .nav-sidebar {
+  transition: none;
+}
+
+/* Touch (coarse-pointer) devices: vertical finger scroll drives the flight
+   (the rAF loop reads window.scrollY). pan-y keeps that working while still
+   reserving horizontal drags for free-look; overscroll-behavior:none contains
+   the URL-bar rubber band that made the scene flicker. */
+@media (pointer: coarse) {
+  html:has(.flight-root),
+  body:has(.flight-root) {
+    touch-action: pan-y;
+    overscroll-behavior: none;
+  }
+}

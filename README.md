@@ -46,6 +46,8 @@ kept automatically) — so an accidental bad edit or a corrupted save is always 
 
 ## Changing the app itself (optional)
 
+The current local UI includes a rocket-space journey prototype. See [SPACE_JOURNEY.md](SPACE_JOURNEY.md) for navigation, asset credits, tests, and the pushed pre-space checkpoint. Your learning data is preserved separately from visual changes.
+
 The app is a normal Vite + React project in `app-src/`. If you want to tweak it:
 
 ```

@@ -33,6 +33,7 @@ export default function Nav({ view, data, onNavigate, saveStatus, stats }) {
       <button className="mobile-menu-toggle" aria-expanded={menuOpen} aria-controls="nav-links" aria-label="Toggle navigation" onClick={() => setMenuOpen(!menuOpen)}><Icon name={menuOpen ? "close" : "menu"}/></button>
     </div>
     <div className="nav-links" id="nav-links">
+      {item("Space journey", "home", {view:"journey"})}
       {item("Dashboard", "home", {view:"dashboard"})}
       <div className="nav-section-label">Your library<span>{data.books.length}</span></div>
       {data.books.map((book, i) => item(book.name, "book", {view:"book",bookId:book.id}, book.color, String(i + 1).padStart(2,"0")))}
