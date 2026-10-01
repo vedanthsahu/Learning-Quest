@@ -37,6 +37,7 @@ export default function Nav({ view, data, onNavigate, saveStatus, stats }) {
       <div className="nav-section-label">Your library<span>{data.books.length}</span></div>
       {data.books.map((book, i) => item(book.name, "book", {view:"book",bookId:book.id}, book.color, String(i + 1).padStart(2,"0")))}
       <div className="nav-section-label">Put it into practice</div>
+      {item("Incident Command", "code", {view:"incident-project"}, "#8edddd", "BUILD")}
       {item("Challenge Series", "code", {view:"challenges"}, data.challengeSeries.color)}
       <div className="nav-section-label">Your collection</div>
       {item("Notes & Diagrams", "notes", {view:"revision"})}

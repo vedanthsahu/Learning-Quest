@@ -1,0 +1,4 @@
+# Local design review captures and Python runtime caches
+.impeccable/
+__pycache__/
+*.pyc

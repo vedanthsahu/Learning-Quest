@@ -5,10 +5,12 @@ import Mascot from "./Mascot";
 import ProgressRing from "./ProgressRing";
 import { suggestNextTopic, rankTitle, formatMinutesShort } from "../utils/xp";
 import { ACHIEVEMENTS } from "../data/achievements";
+import { projectSummary } from "../data/incidentProject";
 
 export default function Dashboard({ data, stats, onOpenReader, onNavigateView }) {
   const next = suggestNextTopic(data);
   const isSleepy = (data.meta.streak || 0) === 0;
+  const build = projectSummary(data.buildProjects?.['incident-command']);
 
   const recentUnlocks = Object.entries(data.achievementState)
     .filter(([, v]) => v.unlocked)
@@ -22,6 +24,10 @@ export default function Dashboard({ data, stats, onOpenReader, onNavigateView })
         <div><div className="eyebrow">YOUR PERSONAL LEARNING SPACE</div><h1>A little curiosity.<br /><span>A whole new horizon.</span></h1><p>Build your knowledge, one chapter at a time.</p></div>
         <div className="today-label"><span className="status-dot" />{new Intl.DateTimeFormat("en", { month: "short", day: "numeric", weekday: "short" }).format(new Date())}</div>
       </header>
+      <button className="build-dashboard-entry" onClick={() => onNavigateView({ view: 'incident-project' })}>
+        <span><small>YOUR BUILD WORKSPACE</small><strong>Incident Command AI</strong><span>{build.next ? `Next: ${build.next.title}` : 'Core journey complete · review your evidence'}</span></span>
+        <span><strong>{build.done}/{build.total}</strong><span>core steps verified ↗</span></span>
+      </button>
       <section className="quest-hero">
         <div className="hero-copy">
           <div className="eyebrow">✦ YOUR NEXT ADVENTURE</div>

@@ -16,6 +16,7 @@ import Reader from "./components/Reader";
 import QuizView from "./components/QuizView";
 import NotificationCenter from "./components/NotificationCenter";
 import Mascot from "./components/Mascot";
+import IncidentProject from "./components/IncidentProject";
 
 export default function App() { return <PreferencesProvider><LearningApp /></PreferencesProvider>; }
 
@@ -29,6 +30,8 @@ function LearningApp() {
     dismissEvent,
     pushEvent,
     updateTopic,
+    updateBuildTask,
+    retrySave,
     updateChallengeProject,
     logActiveTime,
     updateScrollPct,
@@ -39,7 +42,7 @@ function LearningApp() {
     saveStatus,
   } = useGameData();
 
-  const [view, setView] = useState({ view: "dashboard" });
+  const [view, setView] = useState(() => ({ view: window.location.hash === '#/projects/incident-command' ? 'incident-project' : 'dashboard' }));
   const [readerState, setReaderState] = useState(null); // { target, anchor }
   const [activeQuizId, setActiveQuizId] = useState(null);
   useScrollReveals(`${view.view}-${view.bookId || ""}-${loading}`);
@@ -86,6 +89,11 @@ function LearningApp() {
   }
   function navigate(next) {
     setView(next);
+    if (next.view === 'incident-project' || window.location.hash === '#/projects/incident-command') {
+      const url = new URL(window.location.href);
+      url.hash = next.view === 'incident-project' ? '/projects/incident-command' : '';
+      window.history.replaceState(null, '', url);
+    }
     window.scrollTo({ top: 0, behavior: "instant" });
   }
   function cycleBookStatus(bookId, partIndex, topicIndex, newStatus) {
@@ -105,6 +113,7 @@ function LearningApp() {
 
       <main className="app-main" id="main-content">
         <Atmosphere />
+        {view.view === "incident-project" && <IncidentProject progress={data.buildProjects?.["incident-command"] || {}} onUpdate={updateBuildTask} saveStatus={saveStatus} onRetrySave={retrySave} />}
         {view.view === "dashboard" && (
           <Dashboard data={data} stats={stats} onOpenReader={openReader} onNavigateView={navigate} />
         )}

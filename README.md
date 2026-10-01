@@ -1,5 +1,11 @@
 # Learning Quest
 
+## Incident Command project workspace
+
+Select **Incident Command** in the sidebar or dashboard to work through 19 core implementation steps and 3 optional AWS steps. Each has an evidence checklist, status, notes and supporting references. The complete 43-document project library is readable in the app. **Explore architecture** opens an interactive 3D view of the four components.
+
+Progress is saved with the rest of LearningQuest; imported docs are a portable snapshot rather than a live link. See [workspace guide](INCIDENT_COMMAND_WORKSPACE.md) and [design notes](DESIGN_NOTES.md). After starting the app, bookmark `http://localhost:8642/#/projects/incident-command`.
+
 A self-contained, gamified reader + progress tracker for the Software Systems Handbook,
 AI Systems Handbook, Python Backend Handbook, and the Engineering Challenge Series — the
 actual chapter content lives inside this folder, so reading and tracking are the same action.

@@ -23,6 +23,15 @@ export function useGameData() {
   const [saveStatus, setSaveStatus] = useState("idle"); // idle | saving | saved | error
   const saveTimer = useRef(null);
   const dataRef = useRef(null);
+  const saveChain = useRef(Promise.resolve());
+  const saveVersion = useRef(0);
+
+  useEffect(() => {
+    if (saveStatus !== 'saving' && saveStatus !== 'error') return;
+    const warn = event => { event.preventDefault(); event.returnValue = ''; };
+    window.addEventListener('beforeunload', warn);
+    return () => window.removeEventListener('beforeunload', warn);
+  }, [saveStatus]);
 
   useEffect(() => {
     let cancelled = false;
@@ -56,14 +65,19 @@ export function useGameData() {
 
   function scheduleSave(next, immediate) {
     if (saveTimer.current) clearTimeout(saveTimer.current);
-    const doSave = async () => {
-      setSaveStatus("saving");
-      try {
-        await saveData(next);
-        setSaveStatus("saved");
-      } catch (e) {
-        setSaveStatus("error");
-      }
+    const version = ++saveVersion.current;
+    setSaveStatus("saving");
+    const doSave = () => {
+      // Serialize snapshots so a slow earlier request cannot overwrite newer progress.
+      saveChain.current = saveChain.current.then(async () => {
+        if (version !== saveVersion.current) return;
+        try {
+          await saveData(next);
+          if (version === saveVersion.current) setSaveStatus("saved");
+        } catch {
+          if (version === saveVersion.current) setSaveStatus("error");
+        }
+      });
     };
     if (immediate) doSave();
     else saveTimer.current = setTimeout(doSave, 600);
@@ -131,6 +145,21 @@ export function useGameData() {
       }
     }
     return result;
+  }
+
+  function updateBuildTask(projectId, taskId, patch) {
+    const next = structuredClone(dataRef.current);
+    next.buildProjects ??= {};
+    next.buildProjects[projectId] ??= {};
+    next.buildProjects[projectId][taskId] = {
+      ...next.buildProjects[projectId][taskId], ...patch,
+      updatedAt: new Date().toISOString(),
+    };
+    applyLightweightChange(next);
+  }
+
+  function retrySave() {
+    if (dataRef.current) scheduleSave(dataRef.current, true);
   }
 
   function updateChallengeProject(index, patch) {
@@ -262,6 +291,8 @@ export function useGameData() {
     dismissEvent,
     pushEvent: addEvent,
     updateTopic,
+    updateBuildTask,
+    retrySave,
     updateChallengeProject,
     logActiveTime,
     updateScrollPct,
