@@ -1,4 +1,4 @@
-import LearningLandscape from "./LearningLandscape";
+import AstronautBay from './AstronautBay';
 import JourneyTimeline from "./JourneyTimeline";
 import PageHero from "./PageHero";
 import { motion } from "framer-motion";
@@ -25,7 +25,7 @@ export default function ProfileView({ data, stats }) {
         </div>
       </div>
 
-      <LearningLandscape completed={stats.totalDone}/>
+      <AstronautBay data={data} stats={stats} />
       <div className="profile-stats-grid">
         <StatCard emoji="🔥" label="Current Streak" value={`${data.meta.streak || 0} days`} />
         <StatCard emoji="🏆" label="Longest Streak" value={`${data.meta.longestStreak || 0} days`} />

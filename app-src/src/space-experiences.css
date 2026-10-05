@@ -1,0 +1,87 @@
+/* Local extensions of LearningQuest's orbital palette and native controls. */
+.space-experience { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+.station-panel, .astronaut-bay, .failure-lab { margin-block: 28px 40px; }
+.station-panel { padding: 24px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; }
+.station-panel .section-heading, .failure-lab .section-heading { margin-top: 0; align-items: start; gap: 20px; }
+.station-panel p, .failure-lab p, .astronaut-bay p { color: var(--text-dim); line-height: 1.65; max-width: 70ch; }
+.space-artifact { min-width: 0; }
+.artifact-canvas { height: 350px; background: #080f1d; border-radius: 12px; overflow: hidden; }
+.artifact-render { height: 100%; position: relative; }
+.artifact-fallback { height: 100%; min-height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; text-align: center; color: var(--text-dim); }
+.artifact-loading { position: absolute; inset: auto 12px 12px; text-align: center; color: var(--text-dim); }
+.artifact-turn { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 8px; padding-top: 10px; }
+.artifact-turn span, .artifact-caption { font-size: 12px; color: var(--text-dim); }
+.artifact-turn svg { display: block; }
+.artifact-caption { margin-top: 12px; line-height: 1.65; }
+.space-experience button, .equipment-toggle, .failure-lab button, .station-panel > .section-heading button, .dock-manifest button { border: 1px solid var(--card-border); background: var(--bg-elevated); color: var(--text); border-radius: 6px; padding: 10px 12px; min-height: 42px; cursor: pointer; font: inherit; }
+.space-experience button:focus-visible, .equipment-toggle:focus-visible, .failure-lab :focus-visible, .chapter-relationships :focus-visible, .rocket-dock button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+.space-experience button:hover, .equipment-toggle:hover, .failure-lab button:hover, .dock-manifest button:hover { border-color: var(--cyan); }
+.space-experience button[aria-pressed="true"] { border-color: var(--cyan); background: #1c3449; }
+.artifact-inspector { min-width: 0; padding-block: 4px; }
+.artifact-inspector h3 { font-size: 26px; line-height: 1.2; margin: 24px 0 12px; }
+.artifact-inspector h4 { margin: 24px 0 8px; font-size: 14px; }
+.station-modules { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.station-modules button { text-align: left; display: flex; gap: 9px; align-items: center; font-size: 13px; }
+.station-modules i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.station-task-list, .station-documents ul { list-style: none; padding: 0; margin: 0; }
+.station-task-list li { border-bottom: 1px solid var(--card-border); }
+.station-task-list button { display: flex; justify-content: space-between; width: 100%; gap: 14px; border: 0; border-radius: 0; padding: 12px 0; background: transparent; text-align: left; font-size: 14px; }
+.station-task-list button span { flex-shrink: 0; font-size: 11px; color: var(--cyan); align-self: center; }
+.station-documents { margin-top: 20px; }
+.station-documents summary, .failure-lab summary { cursor: pointer; padding-block: 10px; color: var(--cyan); }
+.station-documents button { background: transparent; border: 0; text-align: left; font-size: 13px; overflow-wrap: anywhere; }
+.failure-lab { border-block: 1px solid var(--card-border); padding-block: 24px; }
+.simulation-notice { font-size: 13px; }
+.lab-controls, .lab-actions { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-block: 20px; }
+.lab-controls label, .chapter-relationships label { display: flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer; }
+.lab-controls input, .chapter-relationships input { width: 18px; height: 18px; accent-color: var(--cyan); }
+.request-flow { display: grid; grid-template-columns: 1fr 32px 1fr 32px 1fr 32px 1fr; align-items: center; margin-block: 28px; }
+.request-flow > div { display: flex; flex-direction: column; gap: 9px; align-items: center; justify-content: center; min-height: 150px; border: 1px solid var(--card-border); border-radius: 12px; background: var(--card-bg); padding: 16px 8px; text-align: center; }
+.request-flow strong { font-size: clamp(20px, 2.1vw, 30px); font-variant-numeric: tabular-nums; }
+.request-flow small { font-size: 12px; color: var(--text-dim); }
+.request-flow div[data-warning="true"] { border-color: var(--flight-orange); color: var(--flight-orange); }
+.request-flow meter { width: 90%; accent-color: var(--flight-orange); }
+.flow-pipe { height: 2px; position: relative; background: var(--card-border); overflow: hidden; }
+.flow-pipe::after { content: ''; position: absolute; width: 10px; height: 2px; background: var(--cyan); transform: translateX(-10px); }
+.request-flow[data-flowing="true"] .flow-pipe::after { animation: request-packet 1200ms linear infinite; }
+@keyframes request-packet { to { transform: translateX(32px); } }
+.failure-lab button:disabled { opacity: .5; cursor: not-allowed; }
+.lab-result { min-height: 115px; font-variant-numeric: tabular-nums; }
+.patch-inspection { padding-block: 24px; }
+.patch-inspection h3 { margin-top: 16px; }
+.patch-inspection p { margin: 6px 0; }
+.equipment-toggle { margin-block: 20px 0; }
+.globe-region-heading { display: flex; flex-direction: column; gap: 6px; padding: 18px 20px 0; }
+.globe-region-heading span { font-size: 12px; color: var(--text-dim); }
+.chapter-relationships { margin-top: 24px; border-top: 1px solid var(--card-border); padding-top: 12px; }
+.chapter-relationships p { font-size: 12px; line-height: 1.6; color: var(--text-dim); }
+.chapter-relationships ol { padding-left: 0; list-style: none; }
+.chapter-relationships button { color: var(--text-dim); background: transparent; text-align: left; padding: 10px 4px; border: 0; cursor: pointer; font: inherit; font-size: 13px; }
+.chapter-relationships button[aria-current] { color: var(--cyan); text-decoration: underline; text-underline-offset: 4px; }
+.chapter-globe .globe-reset { position: static; margin: 0 0 16px 20px; }
+.rocket-dock { min-width: 0; width: 100%; max-width: 360px; justify-self: end; padding: 14px 14px 20px; }
+.rocket-dock .artifact-canvas { height: 245px; background: transparent; }
+.rocket-dock .artifact-turn { font-size: 11px; }
+.rocket-dock .artifact-turn button { min-height: 36px; padding: 6px 10px; color: var(--text); border: 1px solid var(--card-border); background: var(--bg-elevated); border-radius: 6px; cursor: pointer; }
+.dock-manifest { padding: 16px 12px 0; display: flex; flex-direction: column; gap: 10px; font-size: 13px; }
+.dock-manifest label { display: block; color: var(--text-dim); }
+.dock-manifest label span { float: right; font-variant-numeric: tabular-nums; }
+.dock-manifest progress { display: block; width: 100%; height: 5px; margin-top: 8px; accent-color: var(--cyan); }
+.dock-manifest small { color: var(--text-dim); }
+@media (max-width: 1000px) { .space-experience { grid-template-columns: 1fr; gap: 20px; } .artifact-canvas { height: 320px; } }
+@media (max-width: 760px) {
+  .station-panel { padding: 16px; }
+  .station-panel .section-heading, .failure-lab .section-heading { flex-direction: column; }
+  .request-flow { grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr); gap: 12px 0; }
+  .request-flow > .flow-pipe:nth-child(4) { display: none; }
+  .quest-hero:has(.rocket-dock) { grid-template-columns: 1fr; }
+  .rocket-dock { max-width: none; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 12px; }
+  .rocket-dock .artifact-canvas { height: 220px; }
+  .rocket-dock .artifact-turn span { display: none; }
+  .rocket-dock .artifact-turn { gap: 4px; }
+  .dock-manifest { padding: 0; }
+  .station-task-list button { flex-direction: column; gap: 6px; }
+  .station-task-list button span { align-self: start; }
+}
+@media (prefers-reduced-motion: reduce) { .request-flow .flow-pipe::after { animation: none; } }
+[data-motion="quiet"] .request-flow .flow-pipe::after { animation: none; }

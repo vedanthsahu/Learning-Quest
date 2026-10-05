@@ -1,6 +1,7 @@
 import WorldArt from "./WorldArt";
 import { useState } from 'react';
 import OrbitalLibrary from './OrbitalLibrary';
+import RocketDock from './RocketDock';
 import { motion } from "framer-motion";
 import Mascot from "./Mascot";
 import ProgressRing from "./ProgressRing";
@@ -37,7 +38,7 @@ export default function Dashboard({ data, stats, onOpenReader, onNavigateView })
           <p>{next ? `${next.bookName} · ${next.partName}` : "Explore your handbooks and keep your curiosity alive."}</p>
           <div className="hero-actions"><button className="quest-primary" onClick={() => next ? onOpenReader({ scope: "book", bookId: next.bookId, partIndex: next.partIndex, topicIndex: next.topicIndex }) : onNavigateView({ view: "challenges" })}>{next ? "Continue learning" : "Explore challenges"}<span aria-hidden="true">↗</span></button>{next && <span className="hero-duration">◷ About {next.topic.estMinutes} min</span>}</div>
         </div>
-        <div className="dashboard-flight-window"><div className="dashboard-globe" aria-hidden="true"/><button onClick={() => onNavigateView({view:'journey'})}>Return to the flight ↗</button></div>
+        <RocketDock next={next} onReturn={() => onNavigateView({ view: 'journey' })} />
       </section>
       <div className="section-heading"><h2>Your momentum</h2><span>Small steps. Lasting progress.</span></div>
       <div className="dash-top-grid">

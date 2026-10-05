@@ -20,6 +20,7 @@ import IncidentProject from "./components/IncidentProject";
 import SpaceJourney from "./components/SpaceJourney";
 import './space.css';
 import './learning-navigation.css';
+import './space-experiences.css';
 
 export default function App() { return <PreferencesProvider><LearningApp /></PreferencesProvider>; }
 

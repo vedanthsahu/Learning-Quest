@@ -10,6 +10,8 @@
     "test:project": "node --test src/data/incidentProject.test.mjs",
     "test:navigation": "node --test src/utils/chapterNavigation.test.mjs",
     "test:navigation:browser": "node tests/learning-navigation.browser.mjs",
+    "test:space": "node --test src/data/spaceExperiences.test.mjs",
+    "test:space:browser": "node tests/space-experiences.browser.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { usePreferences } from '../utils/preferences';
 import { chapterEntries, chapterPoint, STATUS_LABEL, STATUS_NEXT, scrollFraction } from '../utils/chapterNavigation';
 import { quizForPart, quizResultFor } from '../data/quizzes';
+import { sectionRoute } from '../data/spaceExperiences';
 
 const LearningScene = lazy(() => import('./LearningScene'));
 
@@ -74,30 +75,36 @@ export default function ChapterExplorer({ book, parts, mode, quizResults, onOpen
   const { reduced } = usePreferences();
   const chapters = useMemo(() => chapterEntries(book.id, parts), [book.id, parts]);
   const [selection, setSelection] = useState(null);
+  const [showRoute, setShowRoute] = useState(true);
   const region = useRef(null);
   const selected = chapters.find(chapter => chapter.id === selection) || chapters.find(chapter => chapter.status !== 'done') || chapters[0];
   const index = chapters.indexOf(selected);
   const nodes = useMemo(() => chapters.map(chapter => ({
-    id: chapter.id, status: chapter.status,
+    id: chapter.id, status: chapter.status, partIndex: chapter.partIndex,
     position: chapterPoint(chapter.partIndex, chapter.topicIndex, book.parts.length, book.parts[chapter.partIndex].topics.length),
     color: chapter.status === 'done' ? '#abd9bd' : chapter.status === 'in_progress' ? '#f4a077' : '#7db9d4',
   })), [chapters, book.parts]);
   if (!selected) return null;
+  const route = sectionRoute(chapters, selected);
+  const routeIds = showRoute ? route.map(chapter => chapter.id) : [];
   if (mode === 'globe') return <section className="chapter-globe" aria-label="Chapter globe explorer">
     <div className="globe-visual">
+      <div className="globe-region-heading"><strong>{selected.partName}</strong><span>{route.length} visible chapters in this region</span></div>
       <Suspense fallback={<div className="learning-scene-fallback" role="status">Loading chapter globe…</div>}>
-        <LearningScene nodes={nodes} selectedId={selected.id} onSelect={setSelection} />
+        <LearningScene nodes={nodes} selectedId={selected.id} onSelect={setSelection} routeIds={routeIds} />
       </Suspense>
       <p className="scene-instruction">Drag to rotate. Select a node to inspect a chapter.</p>
       <div className="globe-legend"><span><i className="node-unread" />Not started</span><span><i className="node-reading" />In progress</span><span><i className="node-done" />Completed</span></div>
     </div>
     <div className="globe-detail">
+      <label className="explorer-select">Explore a section region<select value={selected.partIndex} onChange={event => { const first = chapters.find(chapter => chapter.partIndex === Number(event.target.value)); if (first) setSelection(first.id); }}>{parts.filter(part => chapters.some(chapter => chapter.partIndex === part.partIndex)).map(part => <option key={part.partIndex} value={part.partIndex}>{part.name}</option>)}</select></label>
       <label className="explorer-select">Choose a chapter<select value={selected.id} onChange={event => setSelection(event.target.value)}>{parts.map(part => <optgroup key={part.partIndex} label={part.name}>{chapters.filter(chapter => chapter.partIndex === part.partIndex).map(chapter => <option key={chapter.id} value={chapter.id}>{chapter.num} · {chapter.title}</option>)}</optgroup>)}</select></label>
       <div className="globe-selection" aria-live="polite"><p>{selected.partName}</p><h2>{selected.title}</h2><p>Chapter {selected.num} &middot; {selected.estMinutes} min read</p></div>
       <StatusButton chapter={selected} bookId={book.id} onCycleStatus={onCycleStatus} />
       <button className="btn-primary" onClick={() => onOpenReader(selected.target)}>Read chapter &rarr;</button>
       <div className="explorer-stepper"><button disabled={index === 0} onClick={() => setSelection(chapters[index - 1].id)}>Previous</button><span>{index + 1} / {chapters.length}</span><button disabled={index === chapters.length - 1} onClick={() => setSelection(chapters[index + 1].id)}>Next</button></div>
       <SectionQuiz bookId={book.id} partIndex={selected.partIndex} quizResults={quizResults} onOpenQuiz={onOpenQuiz} />
+      <div className="chapter-relationships"><label><input type="checkbox" checked={showRoute} onChange={event => setShowRoute(event.target.checked)} />Show section reading route</label><p>Connections follow the visible chapters in this section’s reading order. They are not prerequisites.</p><ol>{route.slice(Math.max(0, route.indexOf(selected) - 1), route.indexOf(selected) + 3).map(chapter => <li key={chapter.id}><button aria-current={chapter.id === selected.id ? 'step' : undefined} onClick={() => setSelection(chapter.id)}>{chapter.num} · {chapter.title}</button></li>)}</ol></div>
     </div>
   </section>;
   return <div className={`chapter-explorer ${mode === 'rocket' ? 'has-rocket' : ''}`}>

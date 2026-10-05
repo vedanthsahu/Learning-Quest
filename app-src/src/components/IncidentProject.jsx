@@ -4,7 +4,7 @@ import remarkGfm from 'remark-gfm';
 import { milestones, allTasks, INCIDENT_PROJECT_ID, projectSummary, taskComplete } from '../data/incidentProject';
 import documents from '../data/incidentDocuments.json';
 import { usePreferences } from '../utils/preferences';
-import BuildArchitecture from './BuildArchitecture';
+import StationArchitecture from './StationArchitecture';
 import '../build-project.css';
 
 const docRoot = '/content/incident-command/';
@@ -97,7 +97,7 @@ export default function IncidentProject({ progress, onUpdate, saveStatus, onRetr
       <div className="build-hero-actions"><button className="build-primary" onClick={() => selectTask(summary.next?.id || allTasks[0].id, true)}>{summary.next ? 'Continue building' : 'Review your work'}</button><button onClick={() => setShowArchitecture(v => !v)} aria-expanded={showArchitecture} aria-controls="build-architecture-panel">{showArchitecture ? 'Hide architecture' : 'Explore architecture'}</button></div>
       <div className="build-progress"><div className="build-progress-label"><strong>{summary.done} of {summary.total} core steps verified</strong><span>{summary.percent}%</span></div><progress max="100" value={summary.percent} aria-label="Core implementation progress" /></div>
     </header>
-    {showArchitecture && <div id="build-architecture-panel" className="build-architecture-panel"><div><h2>Four components. One recovery loop.</h2><p>The workspace shows the evidence. Spring Boot controls actions. Python investigates. The simulator makes failure reproducible.</p><p>Select a layer to explore its responsibility.</p><button onClick={() => updatePreferences({ motion: reduced ? 'full' : 'quiet' })} aria-pressed={reduced}>Quiet motion {reduced ? 'on' : 'off'}</button></div><BuildArchitecture /></div>}
+    {showArchitecture && <div id="build-architecture-panel" className="station-panel"><div className="section-heading"><div><h2>Your architecture, on station.</h2><p>Explore the four subsystems, then open the work that makes each one real.</p></div><button onClick={() => updatePreferences({ motion: reduced ? 'full' : 'quiet' })} aria-pressed={reduced}>Quiet motion {reduced ? 'on' : 'off'}</button></div><StationArchitecture progress={progress} onSelectTask={id => selectTask(id, true)} onOpenDocument={setDoc} /></div>}
     <div className="build-toolbar"><div aria-label="Workspace views">{[['journey', 'Build journey'], ['library', `Document library · ${documents.length}`]].map(([id, label]) => <button key={id} aria-pressed={tab === id} onClick={() => { setTab(id); setQuery(''); }}>{label}</button>)}</div><button onClick={exportProgress}>Export progress ↓</button></div>
     {saveStatus === 'error' && <p className="build-save-error" role="alert">Progress could not be saved. Keep this page open and <button onClick={onRetrySave}>retry saving</button>, or export a snapshot.</p>}
     <p className="build-sr-only" role="status">{announcement}</p>

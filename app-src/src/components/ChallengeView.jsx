@@ -1,4 +1,5 @@
 import PageHero from "./PageHero";
+import FailureLab from './FailureLab';
 import { motion } from "framer-motion";
 import Mascot from "./Mascot";
 
@@ -10,6 +11,7 @@ export default function ChallengeView({ series, onOpenReader, onCycleStatus }) {
     <div className="view challenge-view">
       <PageHero eyebrow="THE BUILD LAB" title="Turn understanding into craft." description={series.subtitle} accent={series.color}><Mascot mood="happy" size={170}/></PageHero>
       <div className="lab-summary"><div><strong>{series.projects.length}</strong><span>real-world projects</span></div><div><strong>{series.projects.filter(p => p.challengeStatus === "done").length}</strong><span>challenges completed</span></div><div><strong>{series.projects.filter(p => p.solutionStatus === "done").length}</strong><span>solutions explored</span></div></div>
+      <FailureLab />
       <div className="section-heading"><h2>{series.name}</h2><span>Try it. Build it. Understand it.</span></div>
 
       <div className="challenge-grid">

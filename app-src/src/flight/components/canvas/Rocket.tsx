@@ -180,7 +180,7 @@ function makeLiveryTexture(): THREE.CanvasTexture {
 
 /* ------------------------------------------------------------------ */
 
-export default function Rocket() {
+export default function Rocket({ preview = false }: { preview?: boolean } = {}) {
   const rootRef = useRef<THREE.Group>(null);
   const lightRef = useRef<THREE.PointLight>(null);
   const trailRef = useRef<THREE.InstancedMesh>(null);
@@ -476,6 +476,16 @@ export default function Rocket() {
   useFrame((state, delta) => {
     const root = rootRef.current;
     if (!root) return;
+    // A docked preview reuses the real flight geometry without reading or
+    // mutating the flight's scroll/impact state or running its particle trail.
+    if (preview) {
+      root.position.set(0, 0, 0);
+      root.quaternion.identity();
+      root.scale.setScalar(1);
+      if (trailRef.current) trailRef.current.visible = false;
+      if (lightRef.current) lightRef.current.intensity = 0;
+      return;
+    }
     const d = Math.min(delta, 0.05);
     const t = state.clock.elapsedTime;
 

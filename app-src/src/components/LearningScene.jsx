@@ -1,6 +1,7 @@
-import { Component, useState } from 'react';
+import { Component, useMemo, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { DoubleSide } from 'three';
+import { DoubleSide, Vector3 } from 'three';
+import { Line } from '@react-three/drei';
 import { facingRotation } from '../utils/chapterNavigation';
 
 class SceneBoundary extends Component {
@@ -9,8 +10,14 @@ class SceneBoundary extends Component {
   render() { return this.state.failed ? this.props.fallback : this.props.children; }
 }
 
-function Geometry({ nodes, selectedId, onSelect, orbit, rotation }) {
+function Geometry({ nodes, selectedId, onSelect, orbit, rotation, routeIds }) {
+  const route = useMemo(() => routeIds.map(id => nodes.find(node => node.id === id)).filter(Boolean), [routeIds, nodes]);
+  const arcs = useMemo(() => route.slice(1).map((node, i) => {
+    const from = new Vector3(...route[i].position), to = new Vector3(...node.position);
+    return Array.from({ length: 17 }, (_, step) => from.clone().lerp(to, step / 16).normalize().multiplyScalar(1.73 + .1 * Math.sin(Math.PI * step / 16)).toArray());
+  }), [route]);
   return <group rotation={rotation}>
+    {!orbit && arcs.map((points, i) => <Line key={route[i].id} points={points} color="#f4a077" lineWidth={1.4} />)}
     <mesh onClick={event => event.stopPropagation()}>
       <sphereGeometry args={[orbit ? .85 : 1.61, 48, 32]} />
       <meshStandardMaterial color={orbit ? '#253d58' : '#10293e'} roughness={.72} metalness={.25} />
@@ -34,7 +41,8 @@ function Geometry({ nodes, selectedId, onSelect, orbit, rotation }) {
   </group>;
 }
 
-export default function LearningScene({ nodes, selectedId, onSelect, orbit = false, angle = 0 }) {
+const NO_ROUTE = [];
+export default function LearningScene({ nodes, selectedId, onSelect, orbit = false, angle = 0, routeIds = NO_ROUTE }) {
   const [lost, setLost] = useState(false);
   const [ready, setReady] = useState(false);
   const [dragState, setDrag] = useState({ id: selectedId, angles: [0, 0] });
@@ -64,7 +72,7 @@ export default function LearningScene({ nodes, selectedId, onSelect, orbit = fal
         <ambientLight intensity={1.4} />
         <directionalLight position={[3, 4, 5]} intensity={3} color="#dcf2ff" />
         <directionalLight position={[-3, -2, -2]} intensity={1.2} color="#5b8bad" />
-        <Geometry nodes={nodes} selectedId={selectedId} orbit={orbit} rotation={rotation} onSelect={id => { setDrag({ id, angles: [0, 0] }); onSelect(id); }} />
+        <Geometry nodes={nodes} selectedId={selectedId} orbit={orbit} rotation={rotation} routeIds={routeIds} onSelect={id => { setDrag({ id, angles: [0, 0] }); onSelect(id); }} />
       </Canvas>
     </div>
     {!orbit && <button className="globe-reset" onClick={() => setDrag({ id: selectedId, angles: [0, 0] })}>Centre selected chapter</button>}
