@@ -19,6 +19,7 @@ import Mascot from "./components/Mascot";
 import IncidentProject from "./components/IncidentProject";
 import SpaceJourney from "./components/SpaceJourney";
 import './space.css';
+import './learning-navigation.css';
 
 export default function App() { return <PreferencesProvider><LearningApp /></PreferencesProvider>; }
 
@@ -139,7 +140,8 @@ function LearningApp() {
             onOpenReader={openReader}
             onCycleStatus={cycleBookStatus}
             onOpenQuiz={setActiveQuizId}
-            onBack={() => navigate({ view: "journey" })}
+            onBack={() => navigate({ view: "dashboard" })}
+            paused={!!readerState || !!activeQuizId}
           />
         )}
         {view.view === "challenges" && (

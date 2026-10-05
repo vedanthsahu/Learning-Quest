@@ -1,10 +1,10 @@
 {
   "meta": {
     "createdAt": "2026-07-24T00:45:13.254367",
-    "lastActiveDate": "2026-09-16",
-    "streak": 1,
+    "lastActiveDate": "2026-09-17",
+    "streak": 2,
     "longestStreak": 5,
-    "totalActiveSeconds": 5306,
+    "totalActiveSeconds": 5361,
     "dailyLog": {
       "2026-08-10": {
         "seconds": 49,
@@ -87,14 +87,22 @@
         ]
       },
       "2026-09-16": {
-        "seconds": 108,
+        "seconds": 134,
         "chapters": [
           "EC2",
           "How This Handbook Works",
           "Mental Model: Transformers & LLMs",
           "Mental Model: Embeddings & Retrieval",
           "Mental Model: Search & Retrieval",
-          "Mental Model: Vector Databases"
+          "Mental Model: Vector Databases",
+          "The Continuous Project (capstone app preview)",
+          "Notation, Diagram Conventions, and Numbering"
+        ]
+      },
+      "2026-09-17": {
+        "seconds": 29,
+        "chapters": [
+          "Notation, Diagram Conventions, and Numbering"
         ]
       }
     }
@@ -176,9 +184,9 @@
             {
               "num": "0.2",
               "title": "How to Read This Book at Different Career Stages",
-              "status": "not_started",
+              "status": "done",
               "notes": "",
-              "dateCompleted": null,
+              "dateCompleted": "2026-09-16",
               "contentFile": "content/ssh/front_matter.md",
               "estMinutes": 7,
               "scrollPct": 0,
@@ -188,25 +196,25 @@
             {
               "num": "0.3",
               "title": "The Continuous Project (capstone app preview)",
-              "status": "not_started",
+              "status": "done",
               "notes": "",
-              "dateCompleted": null,
+              "dateCompleted": "2026-09-16",
               "contentFile": "content/ssh/front_matter.md",
               "estMinutes": 7,
-              "scrollPct": 0,
-              "activeSeconds": 0,
+              "scrollPct": 1,
+              "activeSeconds": 24,
               "highlights": []
             },
             {
               "num": "0.4",
               "title": "Notation, Diagram Conventions, and Numbering",
-              "status": "not_started",
+              "status": "done",
               "notes": "",
-              "dateCompleted": null,
+              "dateCompleted": "2026-09-17",
               "contentFile": "content/ssh/front_matter.md",
               "estMinutes": 7,
-              "scrollPct": 0,
-              "activeSeconds": 0,
+              "scrollPct": 1,
+              "activeSeconds": 31,
               "highlights": []
             }
           ]
@@ -1914,9 +1922,9 @@
             {
               "num": "4",
               "title": "Mental Model: Search & Retrieval",
-              "status": "in_progress",
+              "status": "done",
               "notes": "",
-              "dateCompleted": null,
+              "dateCompleted": "2026-09-17",
               "contentFile": "content/ai/part1_ch004_search_retrieval_mental_model.md",
               "estMinutes": 6,
               "scrollPct": 0.36487472634395524,
@@ -1926,9 +1934,9 @@
             {
               "num": "5",
               "title": "Mental Model: Vector Databases",
-              "status": "in_progress",
+              "status": "done",
               "notes": "",
-              "dateCompleted": null,
+              "dateCompleted": "2026-09-17",
               "contentFile": "content/ai/part1_ch005_vector_databases_mental_model.md",
               "estMinutes": 5,
               "scrollPct": 0,

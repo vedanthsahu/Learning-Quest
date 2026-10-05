@@ -8,6 +8,8 @@
     "build": "vite build",
     "lint": "oxlint",
     "test:project": "node --test src/data/incidentProject.test.mjs",
+    "test:navigation": "node --test src/utils/chapterNavigation.test.mjs",
+    "test:navigation:browser": "node tests/learning-navigation.browser.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

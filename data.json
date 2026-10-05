@@ -1,10 +1,10 @@
 {
   "meta": {
     "createdAt": "2026-07-24T00:45:13.254367",
-    "lastActiveDate": "2026-09-17",
-    "streak": 2,
+    "lastActiveDate": "2026-10-03",
+    "streak": 1,
     "longestStreak": 5,
-    "totalActiveSeconds": 5361,
+    "totalActiveSeconds": 5366,
     "dailyLog": {
       "2026-08-10": {
         "seconds": 49,
@@ -103,6 +103,12 @@
         "seconds": 29,
         "chapters": [
           "Notation, Diagram Conventions, and Numbering"
+        ]
+      },
+      "2026-10-03": {
+        "seconds": 5,
+        "chapters": [
+          "EC2"
         ]
       }
     }
@@ -4552,8 +4558,8 @@
               "dateCompleted": null,
               "contentFile": "content/cep/part1_ch001_ec2.md",
               "estMinutes": 8,
-              "scrollPct": 0.34856700232378,
-              "activeSeconds": 54,
+              "scrollPct": 0.34858490566037736,
+              "activeSeconds": 59,
               "highlights": [
                 {
                   "blockId": 1,

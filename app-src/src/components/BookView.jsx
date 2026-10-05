@@ -1,4 +1,5 @@
 import ChapterMap from "./ChapterMap";
+import ChapterExplorer from "./ChapterExplorer";
 import { downloadCompletion } from "../utils/completionCard";
 import WorldArt from "./WorldArt";
 import {worldFor} from "../data/worlds";
@@ -14,8 +15,11 @@ const STATUS_CYCLE = { not_started: "in_progress", in_progress: "done", done: "n
 const STATUS_LABEL = { not_started: "Not started", in_progress: "In progress", done: "Completed" };
 const STATUS_ICON = { not_started: "\u25cb", in_progress: "\u25d0", done: "\u2713" };
 
-export default function BookView({ book, xpRules, quizResults, onOpenReader, onCycleStatus, onOpenQuiz, onBack }) {
-  const [layout,setLayout]=useState("cards");
+export default function BookView({ book, xpRules, quizResults, onOpenReader, onCycleStatus, onOpenQuiz, onBack, paused }) {
+  const [layout,setLayout]=useState(() => {
+    try { const saved = localStorage.getItem('lq-chapter-view'); return ['list','rocket','globe','cards','map'].includes(saved) ? saved : 'list'; } catch { return 'list'; }
+  });
+  function chooseLayout(next) { setLayout(next); try { localStorage.setItem('lq-chapter-view', next); } catch { /* Available for this session. */ } }
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState("all");
   const stats = bookStats(book, xpRules);
@@ -37,10 +41,11 @@ export default function BookView({ book, xpRules, quizResults, onOpenReader, onC
         <label className="search-field"><span aria-hidden="true">&#8981;</span><input type="search" aria-label="Search chapters" placeholder="Find a chapter or concept..." value={query} onChange={e => setQuery(e.target.value)}/></label>
         <div className="filter-tabs" aria-label="Filter chapters">{[["all", "All chapters"], ["in_progress", "In progress"], ["done", "Completed"], ["not_started", "Not started"]].map(([value,label]) => <button key={value} aria-pressed={filter === value} onClick={() => setFilter(value)}>{label}</button>)}</div>
       </div>
-      <div className="book-layout-controls"><div className="filter-tabs"><button aria-pressed={layout==="cards"} onClick={()=>setLayout("cards")}>Chapter cards</button><button aria-pressed={layout==="map"} onClick={()=>setLayout("map")}>Constellation map</button></div>{stats.pct >= 1 && <button className="btn-primary" onClick={()=>downloadCompletion({title:book.name,subtitle:`${stats.total} chapters explored`})}>Save completion card</button>}</div>
+      <div className="book-layout-controls"><div className="filter-tabs chapter-view-tabs" role="group" aria-label="Chapter view">{[['list','List'],['rocket','Rocket route'],['globe','Chapter globe'],['cards','Chapter cards'],['map','Constellation map']].map(([value,label]) => <button key={value} aria-pressed={layout === value} onClick={() => chooseLayout(value)}>{label}</button>)}</div>{stats.pct >= 1 && <button className="btn-primary" onClick={()=>downloadCompletion({title:book.name,subtitle:`${stats.total} chapters explored`})}>Save completion card</button>}</div>
       <div className="collection-count" role="status">{count} chapters {query || filter !== "all" ? "match your filters" : "to explore"}</div>
       {parts.length === 0 && <div className="designed-empty"><span className="empty-orbit" aria-hidden="true">&#8981;</span><h2>No chapters found</h2><p>Try another concept or change your status filter.</p><button className="btn-secondary" onClick={() => { setQuery(""); setFilter("all"); }}>Clear filters</button></div>}
-      {parts.map((part) => {
+      {['list','rocket','globe'].includes(layout) && <ChapterExplorer book={book} parts={parts} mode={layout} quizResults={quizResults} onOpenReader={onOpenReader} onCycleStatus={onCycleStatus} onOpenQuiz={onOpenQuiz} paused={paused} />}
+      {['cards','map'].includes(layout) && parts.map((part) => {
         const {partIndex} = part;
         const quiz = quizForPart(book.id, partIndex);
         const result = quiz ? quizResultFor(quizResults, quiz.id) : null;

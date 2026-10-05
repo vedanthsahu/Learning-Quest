@@ -1,4 +1,6 @@
 import WorldArt from "./WorldArt";
+import { useState } from 'react';
+import OrbitalLibrary from './OrbitalLibrary';
 import { motion } from "framer-motion";
 import Mascot from "./Mascot";
 import ProgressRing from "./ProgressRing";
@@ -7,6 +9,7 @@ import { ACHIEVEMENTS } from "../data/achievements";
 import { projectSummary } from "../data/incidentProject";
 
 export default function Dashboard({ data, stats, onOpenReader, onNavigateView }) {
+  const [libraryView, setLibraryView] = useState('shelf');
   const next = suggestNextTopic(data);
   const isSleepy = (data.meta.streak || 0) === 0;
   const build = projectSummary(data.buildProjects?.['incident-command']);
@@ -69,8 +72,10 @@ export default function Dashboard({ data, stats, onOpenReader, onNavigateView })
       </div>
 
       <div className="section-heading"><div><div className="eyebrow">CHOOSE YOUR PATH</div><h2>Your learning library</h2></div><span>{stats.perBook.length + 1} paths to explore</span></div>
+      <div className="library-view-controls"><div className="filter-tabs" role="group" aria-label="Library view"><button aria-pressed={libraryView === 'shelf'} onClick={() => setLibraryView('shelf')}>Bookshelf</button><button aria-pressed={libraryView === 'orbit'} onClick={() => setLibraryView('orbit')}>Orbital library</button></div></div>
+      {libraryView === 'orbit' && <OrbitalLibrary books={stats.perBook} onNavigateView={onNavigateView} />}
       <div className="dash-books-grid">
-        {stats.perBook.map((b, i) => {
+        {libraryView === 'shelf' && stats.perBook.map((b, i) => {
           const rank = rankTitle(b.pct);
           return (
             <motion.button
