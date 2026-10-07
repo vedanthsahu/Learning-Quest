@@ -4,7 +4,7 @@
     "lastActiveDate": "2026-10-06",
     "streak": 1,
     "longestStreak": 5,
-    "totalActiveSeconds": 6503,
+    "totalActiveSeconds": 6453,
     "dailyLog": {
       "2026-08-10": {
         "seconds": 49,
@@ -112,7 +112,7 @@
         ]
       },
       "2026-10-06": {
-        "seconds": 1137,
+        "seconds": 1087,
         "chapters": [
           "Challenge: URL Shortener",
           "How to Use This Handbook",
@@ -9138,8 +9138,8 @@
               "dateCompleted": null,
               "contentFile": "content/ccdvf/ch01_api_fundamentals.md",
               "estMinutes": 7,
-              "scrollPct": 0.2953909311438701,
-              "activeSeconds": 806,
+              "scrollPct": 0.18790819182683335,
+              "activeSeconds": 756,
               "highlights": []
             },
             {
