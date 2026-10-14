@@ -1,4 +1,3 @@
-import Mascot from "./Mascot";
 import { useDialog } from "../utils/useDialog";
 import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -31,6 +30,8 @@ function resolveRef(data, target) {
       num: topic.num,
       status: topic.status,
       contentFile: topic.contentFile,
+      // An interactive page (e.g. a mock exam) shown in place of the markdown chapter.
+      embedUrl: topic.embedUrl || null,
       estMinutes: topic.estMinutes,
       scrollPct: topic.scrollPct || 0,
       highlights: topic.highlights || [],
@@ -222,6 +223,22 @@ export default function Reader({
       updateChallengeProject(target.projectIndex, { [`${target.side}Status`]: "done" });
     }
   }
+  // Embedded pages (mock exams) live in an iframe, so their clicks and keys never reach this
+  // window: they post "lq-activity" pings to keep the active-time timer running, and
+  // "lq-exam-finished" once submitted, which completes the chapter like Mark Complete does.
+  const embedFinishRef = useRef(handleMarkComplete);
+  embedFinishRef.current = handleMarkComplete;
+  useEffect(() => {
+    if (!info.embedUrl) return;
+    const onMessage = (event) => {
+      if (event.origin !== window.location.origin || !event.data) return;
+      if (event.data.type === "lq-activity") window.dispatchEvent(new Event("lq-activity"));
+      if (event.data.type === "lq-exam-finished") embedFinishRef.current();
+    };
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, [info.embedUrl]);
+
   function handleResetStatus() {
     if (target.scope === "book") {
       updateTopic(target.bookId, target.partIndex, target.topicIndex, { status: "not_started" });
@@ -611,38 +628,32 @@ export default function Reader({
         exit={{ y: 24, opacity: 0 }}
         transition={{ type: "spring", damping: 28, stiffness: 280 }}
       >
+        {/* One slim header row (title + all reading controls) so the chapter text gets the
+            height: the old layout stacked header, toolbar and Read Aloud bars and left
+            barely half the screen for content on laptop-sized windows. */}
         <div className="reader-header" style={{ borderColor: info.color }}>
           <div className="reader-header-left">
             <button className="icon-btn" onClick={handleClose} aria-label="Close">
               ✕
             </button>
-            <div>
+            <div className="reader-heading">
               <div className="reader-breadcrumb" style={{ color: info.color }}>
                 {info.bookName} · {info.partName}
               </div>
-              <div className="reader-title">
+              <div className="reader-title" title={info.title}>
                 §{info.num} {info.title}
               </div>
             </div>
           </div>
           <div className="reader-header-right">
-            <span className={`reader-timer ${elapsedSeconds > 0 ? "ticking" : ""}`}>
-              ⏱ {formatDuration(elapsedSeconds)}
-            </span>
-            <span className="reader-est">~{info.estMinutes} min read</span>
-            <StatusPill status={info.status} />
-          </div>
-        </div>
-
-        <div className="reading-toolbar"><span className="reading-mode-label"><Mascot mood={info.status === "done" ? "happy" : "focus"} size={36}/>THE READING ROOM</span><div className="reading-controls"><button aria-label="Decrease text size" disabled={fontSize <= 15} onClick={() => setFontSize(size => size - 1)}>A&minus;</button><span aria-live="polite">{fontSize}px</span><button aria-label="Increase text size" disabled={fontSize >= 23} onClick={() => setFontSize(size => size + 1)}>A+</button><button aria-pressed={focusMode} onClick={() => setFocusMode(value => !value)}>Focus mode</button></div></div>
-        <div className="reading-progress-track" role="progressbar" aria-label="Chapter reading progress" aria-valuenow={Math.round(readProgress * 100)} aria-valuemin={0} aria-valuemax={100}><span style={{ width: `${readProgress * 100}%` }}/></div>
-        {ttsSupported && (
+            {!info.embedUrl && ttsSupported && (
           <div className="reader-tts-bar">
             <button
               className="tts-play-btn"
               onClick={ttsState === "playing" ? handleTtsPause : handleTtsPlay}
+              title="Read aloud"
             >
-              {ttsState === "playing" ? "⏸ Pause" : ttsState === "paused" ? "▶ Resume" : "🔊 Read Aloud"}
+              {ttsState === "playing" ? "⏸ Pause" : ttsState === "paused" ? "▶ Resume" : "🔊 Read"}
             </button>
             {ttsState !== "idle" && (
               <button className="tts-stop-btn" onClick={handleTtsStop}>
@@ -689,18 +700,36 @@ export default function Reader({
               )}
             </div>
           </div>
-        )}
-
-        {showNudge && (
-          <motion.div className="reader-nudge" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }}>
-            ⏳ You've spent a good while here — ready to mark this complete?
-            <button className="btn-mini" onClick={handleMarkComplete}>
-              <CompletionIcon /> Mark Complete
-            </button>
-          </motion.div>
+            )}
+            {!info.embedUrl && (
+              <div className="reading-controls">
+                <button aria-label="Decrease text size" disabled={fontSize <= 15} onClick={() => setFontSize(size => size - 1)}>A&minus;</button>
+                <span aria-live="polite">{fontSize}px</span>
+                <button aria-label="Increase text size" disabled={fontSize >= 23} onClick={() => setFontSize(size => size + 1)}>A+</button>
+                <button aria-pressed={focusMode} onClick={() => setFocusMode(value => !value)}>Focus</button>
+              </div>
+            )}
+            <span className="reader-meta">
+              <span className={`reader-timer ${elapsedSeconds > 0 ? "ticking" : ""}`}>
+                ⏱ {formatDuration(elapsedSeconds)}
+              </span>
+              <span className="reader-est">~{info.estMinutes} min</span>
+            </span>
+            <StatusPill status={info.status} />
+          </div>
+        </div>
+        {!info.embedUrl && (
+          <div className="reading-progress-track" role="progressbar" aria-label="Chapter reading progress" aria-valuenow={Math.round(readProgress * 100)} aria-valuemin={0} aria-valuemax={100}><span style={{ width: `${readProgress * 100}%` }}/></div>
         )}
 
         <div className="reader-body">
+          {info.embedUrl ? (
+            <iframe
+              className="reader-embed"
+              src={`/${info.embedUrl}${info.embedUrl.includes("?") ? "&" : "?"}embed=1`}
+              title={info.title}
+            />
+          ) : (
           <div className="reader-content" ref={containerRef} onScroll={handleScroll}>
             {rawContent === null ? (
               <div className="reader-loading">Loading chapter…</div>
@@ -712,8 +741,9 @@ export default function Reader({
               </motion.div>
             )}
           </div>
+          )}
 
-          {outline.length > 0 && (
+          {!info.embedUrl && outline.length > 0 && (
             <nav className="reader-outline" aria-label="On this page">
               <div className="reader-outline-label">On this page</div>
               {outline.map((item) => (
@@ -729,17 +759,21 @@ export default function Reader({
           )}
         </div>
 
-        <button className="jump-top-btn" onClick={() => containerRef.current?.scrollTo({ top: 0, behavior: "smooth" })}>
-          ↑ Top
-        </button>
+        {!info.embedUrl && (
+          <button className="jump-top-btn" onClick={() => containerRef.current?.scrollTo({ top: 0, behavior: "smooth" })}>
+            ↑ Top
+          </button>
+        )}
 
         <div className="reader-footer">
           <button className="btn-secondary" onClick={handleResetStatus}>
             Reset to Not Started
           </button>
           <div className="reader-footer-right">
+            {/* Was a full-width banner under the header; a hint beside the button costs no height. */}
+            {showNudge && <span className="reader-nudge-hint">⏳ Been here a while. Done with this one?</span>}
             <motion.button
-              className="btn-primary"
+              className={`btn-primary${showNudge ? " nudge-pulse" : ""}`}
               onClick={handleMarkComplete}
               disabled={info.status === "done"}
               whileTap={info.status === "done" ? undefined : { scale: 0.9 }}

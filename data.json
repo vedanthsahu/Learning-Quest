@@ -1,10 +1,10 @@
 {
   "meta": {
     "createdAt": "2026-07-24T00:45:13.254367",
-    "lastActiveDate": "2026-10-06",
+    "lastActiveDate": "2026-10-14",
     "streak": 1,
     "longestStreak": 5,
-    "totalActiveSeconds": 6503,
+    "totalActiveSeconds": 7768,
     "dailyLog": {
       "2026-08-10": {
         "seconds": 49,
@@ -117,6 +117,14 @@
           "Challenge: URL Shortener",
           "How to Use This Handbook",
           "Claude API Fundamentals"
+        ]
+      },
+      "2026-10-14": {
+        "seconds": 1265,
+        "chapters": [
+          "Claude API Fundamentals",
+          "Mock Exam Set 1: Question Paper",
+          "Mental Model: Data Storage"
         ]
       }
     }
@@ -299,13 +307,13 @@
             {
               "num": "6",
               "title": "Mental Model: Data Storage",
-              "status": "not_started",
+              "status": "in_progress",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/ssh/part1_ch06_data_storage.md",
               "estMinutes": 7,
-              "scrollPct": 0,
-              "activeSeconds": 0,
+              "scrollPct": 0.6024096385542169,
+              "activeSeconds": 32,
               "highlights": []
             },
             {
@@ -9138,8 +9146,8 @@
               "dateCompleted": null,
               "contentFile": "content/ccdvf/ch01_api_fundamentals.md",
               "estMinutes": 7,
-              "scrollPct": 0.2953909311438701,
-              "activeSeconds": 806,
+              "scrollPct": 0.8829953198127926,
+              "activeSeconds": 2029,
               "highlights": []
             },
             {
@@ -9345,6 +9353,148 @@
               "dateCompleted": null,
               "contentFile": "content/ccdvf/ch17_final_revision.md",
               "estMinutes": 9,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            }
+          ]
+        },
+        {
+          "name": "PART 5 -- Mock Exams (5 Practice Sets)",
+          "topics": [
+            {
+              "num": "M0",
+              "title": "Mock Exams: How to Use the Five Practice Sets",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/mock_exams_guide.md",
+              "estMinutes": 4,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "M1",
+              "title": "Mock Exam Set 1: Timed Exam",
+              "status": "in_progress",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/mock_exam_set1_paper.md",
+              "estMinutes": 120,
+              "scrollPct": 0.021475818228674514,
+              "activeSeconds": 10,
+              "highlights": [],
+              "embedUrl": "content/ccdvf/mock-exams/index.html?set=1"
+            },
+            {
+              "num": "M1K",
+              "title": "Mock Exam Set 1: Answer Key and Explanations",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/mock_exam_set1_key.md",
+              "estMinutes": 35,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "M2",
+              "title": "Mock Exam Set 2: Timed Exam",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/mock_exam_set2_paper.md",
+              "estMinutes": 120,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": [],
+              "embedUrl": "content/ccdvf/mock-exams/index.html?set=2"
+            },
+            {
+              "num": "M2K",
+              "title": "Mock Exam Set 2: Answer Key and Explanations",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/mock_exam_set2_key.md",
+              "estMinutes": 35,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "M3",
+              "title": "Mock Exam Set 3: Timed Exam",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/mock_exam_set3_paper.md",
+              "estMinutes": 120,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": [],
+              "embedUrl": "content/ccdvf/mock-exams/index.html?set=3"
+            },
+            {
+              "num": "M3K",
+              "title": "Mock Exam Set 3: Answer Key and Explanations",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/mock_exam_set3_key.md",
+              "estMinutes": 35,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "M4",
+              "title": "Mock Exam Set 4: Timed Exam",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/mock_exam_set4_paper.md",
+              "estMinutes": 120,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": [],
+              "embedUrl": "content/ccdvf/mock-exams/index.html?set=4"
+            },
+            {
+              "num": "M4K",
+              "title": "Mock Exam Set 4: Answer Key and Explanations",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/mock_exam_set4_key.md",
+              "estMinutes": 35,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "M5",
+              "title": "Mock Exam Set 5: Timed Exam",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/mock_exam_set5_paper.md",
+              "estMinutes": 120,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": [],
+              "embedUrl": "content/ccdvf/mock-exams/index.html?set=5"
+            },
+            {
+              "num": "M5K",
+              "title": "Mock Exam Set 5: Answer Key and Explanations",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/mock_exam_set5_key.md",
+              "estMinutes": 35,
               "scrollPct": 0,
               "activeSeconds": 0,
               "highlights": []
