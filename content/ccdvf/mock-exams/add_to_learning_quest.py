@@ -11,12 +11,15 @@ saves its whole in-memory copy of data.json, so a stale open tab could overwrite
 
 Usage:  python add_to_learning_quest.py
 """
+
 import json
 import os
 import shutil
 import time
 
-ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+ROOT = os.path.abspath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..")
+)
 DATA_FILE = os.path.join(ROOT, "data.json")
 BACKUP_DIR = os.path.join(ROOT, "backups")
 BOOK_ID = "ccdvf"
@@ -26,19 +29,46 @@ SETS = 5
 
 def topic(num, title, content_file, minutes):
     return {
-        "num": num, "title": title, "status": "not_started", "notes": "", "dateCompleted": None,
-        "contentFile": content_file, "estMinutes": minutes, "scrollPct": 0, "activeSeconds": 0, "highlights": [],
+        "num": num,
+        "title": title,
+        "status": "not_started",
+        "notes": "",
+        "dateCompleted": None,
+        "contentFile": content_file,
+        "estMinutes": minutes,
+        "scrollPct": 0,
+        "activeSeconds": 0,
+        "highlights": [],
     }
 
 
 def wanted_topics():
-    topics = [topic("M0", "Mock Exams: How to Use the Five Practice Sets", "content/ccdvf/mock_exams_guide.md", 4)]
+    topics = [
+        topic(
+            "M0",
+            "Mock Exams: How to Use the Five Practice Sets",
+            "content/ccdvf/mock_exams_guide.md",
+            4,
+        )
+    ]
     for n in range(1, SETS + 1):
-        exam = topic(f"M{n}", f"Mock Exam Set {n}: Timed Exam", f"content/ccdvf/mock_exam_set{n}_paper.md", 120)
+        exam = topic(
+            f"M{n}",
+            f"Mock Exam Set {n}: Timed Exam",
+            f"content/ccdvf/mock_exam_set{n}_paper.md",
+            120,
+        )
         # The Reader shows this interactive page instead of the markdown paper.
         exam["embedUrl"] = f"content/ccdvf/mock-exams/index.html?set={n}"
         topics.append(exam)
-        topics.append(topic(f"M{n}K", f"Mock Exam Set {n}: Answer Key and Explanations", f"content/ccdvf/mock_exam_set{n}_key.md", 35))
+        topics.append(
+            topic(
+                f"M{n}K",
+                f"Mock Exam Set {n}: Answer Key and Explanations",
+                f"content/ccdvf/mock_exam_set{n}_key.md",
+                35,
+            )
+        )
     return topics
 
 
@@ -60,7 +90,9 @@ def main():
     for t in wanted_topics():
         path = os.path.join(ROOT, t["contentFile"])
         if not os.path.isfile(path):
-            raise SystemExit(f"missing {t['contentFile']}; run build_mock_exams.py first")
+            raise SystemExit(
+                f"missing {t['contentFile']}; run build_mock_exams.py first"
+            )
 
     with open(DATA_FILE, encoding="utf-8") as f:
         data = json.load(f)
@@ -73,7 +105,9 @@ def main():
     missing = [t for t in wanted_topics() if t["contentFile"] not in existing]
 
     os.makedirs(BACKUP_DIR, exist_ok=True)
-    backup = os.path.join(BACKUP_DIR, f"manual_pre_ccdvf_mocks_{time.strftime('%Y%m%d_%H%M%S')}.json")
+    backup = os.path.join(
+        BACKUP_DIR, f"manual_pre_ccdvf_mocks_{time.strftime('%Y%m%d_%H%M%S')}.json"
+    )
     shutil.copyfile(DATA_FILE, backup)
 
     upgraded = upgrade_existing(book)
@@ -92,8 +126,10 @@ def main():
     with open(tmp, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
     os.replace(tmp, DATA_FILE)
-    print(f"Added {len(missing)} topic(s), upgraded {upgraded} to the interactive exam. "
-          f"Backup: {os.path.relpath(backup, ROOT)}")
+    print(
+        f"Added {len(missing)} topic(s), upgraded {upgraded} to the interactive exam. "
+        f"Backup: {os.path.relpath(backup, ROOT)}"
+    )
 
 
 if __name__ == "__main__":

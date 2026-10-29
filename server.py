@@ -14,6 +14,7 @@ Then open http://localhost:8642 (a browser tab opens automatically).
 Copy this whole LearningQuest folder to any other PC and run the same command --
 everything (app, content, and your progress) travels together.
 """
+
 import base64
 import http.server
 import json
@@ -34,7 +35,9 @@ DATA_FILE = os.path.join(ROOT, "data.json")
 BACKUP_DIR = os.path.join(ROOT, "backups")
 UPLOADS_DIR = os.path.join(ROOT, "uploads")
 MAX_BACKUPS = 20
-MAX_UPLOAD_BYTES = 15 * 1024 * 1024  # 15 MB, generous for a hand-drawn diagram screenshot
+MAX_UPLOAD_BYTES = (
+    15 * 1024 * 1024
+)  # 15 MB, generous for a hand-drawn diagram screenshot
 
 MIME_TYPES = {
     ".html": "text/html; charset=utf-8",
@@ -75,10 +78,58 @@ def backup_data_file():
     except OSError:
         return
     backups = sorted(
-        (f for f in os.listdir(BACKUP_DIR) if f.startswith("data_") and f.endswith(".json"))
+        (
+            f
+            for f in os.listdir(BACKUP_DIR)
+            if f.startswith("data_") and f.endswith(".json")
+        )
     )
     while len(backups) > MAX_BACKUPS:
         os.remove(os.path.join(BACKUP_DIR, backups.pop(0)))
+
+
+def preserve_catalog_entries(payload):
+    """Keep chapters that a stale, already-open browser does not know about yet.
+
+    Progress is intentionally client-owned, so matching topics from the incoming payload
+    still win. Only missing books, parts, or content-file entries are restored from the
+    server's current catalog before the save replaces data.json.
+    """
+    if not os.path.exists(DATA_FILE):
+        return payload
+    try:
+        with open(DATA_FILE, "r", encoding="utf-8") as f:
+            current = json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return payload
+
+    incoming_books = {book.get("id"): book for book in payload.get("books", [])}
+    for current_book in current.get("books", []):
+        incoming_book = incoming_books.get(current_book.get("id"))
+        if incoming_book is None:
+            payload.setdefault("books", []).append(current_book)
+            continue
+
+        incoming_parts = {
+            part.get("name"): part for part in incoming_book.get("parts", [])
+        }
+        for current_part in current_book.get("parts", []):
+            incoming_part = incoming_parts.get(current_part.get("name"))
+            if incoming_part is None:
+                incoming_book.setdefault("parts", []).append(current_part)
+                continue
+
+            known_files = {
+                topic.get("contentFile")
+                for topic in incoming_part.get("topics", [])
+                if topic.get("contentFile")
+            }
+            for current_topic in current_part.get("topics", []):
+                content_file = current_topic.get("contentFile")
+                if content_file and content_file not in known_files:
+                    incoming_part.setdefault("topics", []).append(current_topic)
+                    known_files.add(content_file)
+    return payload
 
 
 class Handler(http.server.BaseHTTPRequestHandler):
@@ -153,6 +204,7 @@ class Handler(http.server.BaseHTTPRequestHandler):
             self._send_json(400, {"error": "invalid JSON"})
             return
 
+        payload = preserve_catalog_entries(payload)
         backup_data_file()
         tmp_path = DATA_FILE + ".tmp"
         with open(tmp_path, "w", encoding="utf-8") as f:

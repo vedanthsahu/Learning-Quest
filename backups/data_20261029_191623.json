@@ -1,10 +1,10 @@
 {
   "meta": {
     "createdAt": "2026-07-24T00:45:13.254367",
-    "lastActiveDate": "2026-10-14",
+    "lastActiveDate": "2026-10-29",
     "streak": 1,
     "longestStreak": 5,
-    "totalActiveSeconds": 7673,
+    "totalActiveSeconds": 8290,
     "dailyLog": {
       "2026-08-10": {
         "seconds": 49,
@@ -120,11 +120,26 @@
         ]
       },
       "2026-10-14": {
-        "seconds": 1170,
+        "seconds": 1265,
         "chapters": [
           "Claude API Fundamentals",
           "Mock Exam Set 1: Question Paper",
           "Mental Model: Data Storage"
+        ]
+      },
+      "2026-10-15": {
+        "seconds": 443,
+        "chapters": [
+          "Claude API Fundamentals",
+          "Prompt Engineering",
+          "Secondary Topics: Recognition Only",
+          "Complete Quick Reference"
+        ]
+      },
+      "2026-10-29": {
+        "seconds": 79,
+        "chapters": [
+          "Notation, Diagram Conventions, and Numbering"
         ]
       }
     }
@@ -235,8 +250,8 @@
               "dateCompleted": "2026-09-17",
               "contentFile": "content/ssh/front_matter.md",
               "estMinutes": 7,
-              "scrollPct": 1,
-              "activeSeconds": 31,
+              "scrollPct": 0.5421063109695401,
+              "activeSeconds": 110,
               "highlights": []
             }
           ]
@@ -9141,25 +9156,25 @@
             {
               "num": "1",
               "title": "Claude API Fundamentals",
-              "status": "in_progress",
+              "status": "done",
               "notes": "",
-              "dateCompleted": null,
+              "dateCompleted": "2026-10-15",
               "contentFile": "content/ccdvf/ch01_api_fundamentals.md",
               "estMinutes": 7,
-              "scrollPct": 0.06396255850234009,
-              "activeSeconds": 1934,
+              "scrollPct": 0.9479329173166927,
+              "activeSeconds": 2038,
               "highlights": []
             },
             {
               "num": "2",
               "title": "Prompt Engineering",
-              "status": "not_started",
+              "status": "in_progress",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/ccdvf/ch02_prompt_engineering.md",
               "estMinutes": 4,
-              "scrollPct": 0,
-              "activeSeconds": 0,
+              "scrollPct": 0.0484375,
+              "activeSeconds": 3,
               "highlights": []
             },
             {
@@ -9336,13 +9351,13 @@
             {
               "num": "16",
               "title": "Secondary Topics: Recognition Only",
-              "status": "not_started",
+              "status": "in_progress",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/ccdvf/ch16_tier3_tier4.md",
               "estMinutes": 4,
-              "scrollPct": 0,
-              "activeSeconds": 0,
+              "scrollPct": 1,
+              "activeSeconds": 8,
               "highlights": []
             },
             {
@@ -9355,6 +9370,18 @@
               "estMinutes": 9,
               "scrollPct": 0,
               "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "QR",
+              "title": "Complete Quick Reference",
+              "status": "in_progress",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/CCDVF_COMPLETE_QUICK_REFERENCE.md",
+              "estMinutes": 45,
+              "scrollPct": 0.051771793054571226,
+              "activeSeconds": 423,
               "highlights": []
             }
           ]
