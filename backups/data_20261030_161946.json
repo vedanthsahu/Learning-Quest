@@ -1,10 +1,10 @@
 {
   "meta": {
     "createdAt": "2026-07-24T00:45:13.254367",
-    "lastActiveDate": "2026-10-29",
-    "streak": 1,
+    "lastActiveDate": "2026-10-30",
+    "streak": 2,
     "longestStreak": 5,
-    "totalActiveSeconds": 8290,
+    "totalActiveSeconds": 9688,
     "dailyLog": {
       "2026-08-10": {
         "seconds": 49,
@@ -137,9 +137,16 @@
         ]
       },
       "2026-10-29": {
-        "seconds": 79,
+        "seconds": 848,
         "chapters": [
-          "Notation, Diagram Conventions, and Numbering"
+          "Notation, Diagram Conventions, and Numbering",
+          "Foundations: Why Systems Fail and What Engineering Judgment Means"
+        ]
+      },
+      "2026-10-30": {
+        "seconds": 629,
+        "chapters": [
+          "Foundations: Why Systems Fail and What Engineering Judgment Means"
         ]
       }
     }
@@ -250,8 +257,8 @@
               "dateCompleted": "2026-09-17",
               "contentFile": "content/ssh/front_matter.md",
               "estMinutes": 7,
-              "scrollPct": 0.5421063109695401,
-              "activeSeconds": 110,
+              "scrollPct": 1,
+              "activeSeconds": 178,
               "highlights": []
             }
           ]
@@ -262,14 +269,33 @@
             {
               "num": "1",
               "title": "Foundations: Why Systems Fail and What Engineering Judgment Means",
-              "status": "not_started",
+              "status": "in_progress",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/ssh/part1_ch01_foundations.md",
               "estMinutes": 13,
-              "scrollPct": 0,
-              "activeSeconds": 0,
-              "highlights": []
+              "scrollPct": 0.2418209485163581,
+              "activeSeconds": 1330,
+              "highlights": [
+                {
+                  "blockId": 2,
+                  "note": "",
+                  "imagePath": null,
+                  "updatedAt": "2026-10-29T13:55:45.162Z"
+                },
+                {
+                  "blockId": 3,
+                  "note": "",
+                  "imagePath": null,
+                  "updatedAt": "2026-10-29T13:55:45.710Z"
+                },
+                {
+                  "blockId": 4,
+                  "note": "",
+                  "imagePath": null,
+                  "updatedAt": "2026-10-29T13:55:46.236Z"
+                }
+              ]
             },
             {
               "num": "2",
