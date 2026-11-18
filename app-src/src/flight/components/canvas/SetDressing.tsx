@@ -14,13 +14,17 @@ import { makeGlowTexture, makeTextTexture } from "@/lib/textures";
  * corridor. They read as silhouettes, keeping the art style coherent.
  */
 
+// "/" for local dev/the local server, or the configured --base (e.g.
+// "/Learning-Quest/") for the GitHub Pages build -- see package.json.
+const BASE = import.meta.env.BASE_URL;
+
 // LearningQuest runs offline: decode Draco with the decoder bundled from
 // three/examples (public/draco) instead of drei's default CDN download.
-const DRACO = "/draco/";
-useGLTF.preload("/models/astronaut.glb", DRACO);
-useGLTF.preload("/models/spaceship.glb", DRACO);
+const DRACO = `${BASE}draco/`;
+useGLTF.preload(`${BASE}models/astronaut.glb`, DRACO);
+useGLTF.preload(`${BASE}models/spaceship.glb`, DRACO);
 // NASA ISS — Draco + quantized; same local decoder
-useGLTF.preload("/models/iss.glb", DRACO);
+useGLTF.preload(`${BASE}models/iss.glb`, DRACO);
 
 /* Spaceship flyby path (world space) — stays far from the camera corridor */
 const SHIP_FROM = new THREE.Vector3(70, 18, -190);
@@ -52,7 +56,7 @@ function prepScene(scene: THREE.Group) {
 function Astronaut() {
   const groupRef = useRef<THREE.Group>(null);
   const inner = useRef<THREE.Group>(null);
-  const { scene } = useGLTF("/models/astronaut.glb", DRACO);
+  const { scene } = useGLTF(`${BASE}models/astronaut.glb`, DRACO);
   const prepped = useMemo(() => prepScene(scene), [scene]);
 
   const glowMat = useMemo(
@@ -93,7 +97,7 @@ function Astronaut() {
 
 function ShipFlyby() {
   const groupRef = useRef<THREE.Group>(null);
-  const { scene } = useGLTF("/models/spaceship.glb", DRACO);
+  const { scene } = useGLTF(`${BASE}models/spaceship.glb`, DRACO);
   const prepped = useMemo(() => prepScene(scene), [scene]);
 
   const { glowMat, trailMat } = useMemo(() => {
@@ -148,7 +152,7 @@ function ShipFlyby() {
 function WorkStation({ labelText }: { labelText: string }) {
   const groupRef = useRef<THREE.Group>(null);
   const spinRef = useRef<THREE.Group>(null);
-  const { scene: issScene } = useGLTF("/models/iss.glb", DRACO);
+  const { scene: issScene } = useGLTF(`${BASE}models/iss.glb`, DRACO);
 
   // Compute the recenter offset without mutating or reparenting the GLTF
   // scene (both break under Strict Mode's double-invoked memos). The

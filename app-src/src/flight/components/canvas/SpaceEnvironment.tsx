@@ -11,8 +11,12 @@ import {
 import { prefersReducedMotion, scrollState } from "@/lib/scroll";
 import { makeGlowTexture } from "@/lib/textures";
 
-useTexture.preload("/textures/6k_stars_milky_way.webp");
-useTexture.preload("/textures/2k_moon.webp");
+// "/" for local dev/the local server, or the configured --base (e.g.
+// "/Learning-Quest/") for the GitHub Pages build -- see package.json.
+const BASE = import.meta.env.BASE_URL;
+
+useTexture.preload(`${BASE}textures/6k_stars_milky_way.webp`);
+useTexture.preload(`${BASE}textures/2k_moon.webp`);
 
 /**
  * SpaceEnvironment — the atmosphere of the whole voyage.
@@ -161,7 +165,7 @@ export default function SpaceEnvironment() {
 
   /* -------- Milky Way skybox (real panorama) -------- */
   const [milkyWay, moonTex] = useTexture(
-    ["/textures/6k_stars_milky_way.webp", "/textures/2k_moon.webp"],
+    [`${BASE}textures/6k_stars_milky_way.webp`, `${BASE}textures/2k_moon.webp`],
     (t) => {
       for (const tex of Array.isArray(t) ? t : [t]) {
         tex.colorSpace = THREE.SRGBColorSpace;

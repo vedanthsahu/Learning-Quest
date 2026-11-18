@@ -18,6 +18,10 @@ import Planets from "./Planets";
 import SpaceEnvironment from "./SpaceEnvironment";
 import SkillCards from "./SkillCards";
 import ProjectOrbit from "./ProjectOrbit";
+
+// "/" for local dev/the local server, or the configured --base (e.g.
+// "/Learning-Quest/") for the GitHub Pages build -- see package.json.
+const BASE = import.meta.env.BASE_URL;
 import SetDressing from "./SetDressing";
 import SunImpact from "./SunImpact";
 
@@ -201,7 +205,7 @@ export default function Experience({
           {/* HDRI reflections stay in the hero load — set before materials
               compile, so no later shader recompile when models stream in. */}
           <Environment
-            files="/hdri/dikhololo_night_1k.hdr"
+            files={`${BASE}hdri/dikhololo_night_1k.hdr`}
             environmentIntensity={0.5}
           />
 

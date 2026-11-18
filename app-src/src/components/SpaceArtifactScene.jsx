@@ -6,8 +6,10 @@ import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js';
 import Rocket from '../flight/components/canvas/Rocket';
 import { STATION_MODULES } from '../data/spaceExperiences';
 
+const BASE = import.meta.env.BASE_URL;
+
 function Asset({ kind, onReady }) {
-  const { scene, animations } = useGLTF(`/models/${kind === 'station' ? 'iss' : 'astronaut'}.glb`, '/draco/');
+  const { scene, animations } = useGLTF(`${BASE}models/${kind === 'station' ? 'iss' : 'astronaut'}.glb`, `${BASE}draco/`);
   const model = useMemo(() => {
     // A separate hierarchy prevents stealing the object from the original flight.
     const object = clone(scene);
