@@ -80,9 +80,11 @@ h1, h2, h3, h4 {
   flex-direction: column;
   padding: 22px 16px;
   gap: 4px;
+  /* Sticks near the top while scrolling, but no fixed height/overflow here --
+     it must never trap the mouse wheel in its own scroll region. The whole
+     page (nav + content) scrolls as one, even if the nav list runs long. */
   position: sticky;
   top: 0;
-  height: 100vh;
   backdrop-filter: blur(12px);
 }
 

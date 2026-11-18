@@ -5,7 +5,7 @@ button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
 button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid #bcf588; outline-offset: 5px; }
 ::selection { background: #bcf588; color: #101416; }
 .app-main { max-width: 1600px; padding: 42px clamp(24px, 4vw, 72px) 60px; min-width: 0; }
-.nav-sidebar { width: 244px; padding: 32px 18px 22px; background: #151a1c; overflow-y: auto; }
+.nav-sidebar { width: 244px; padding: 32px 18px 22px; background: #151a1c; }
 .nav-logo { background: none; -webkit-text-fill-color: var(--text); font-size: 18px; gap: 11px; padding: 0 8px 27px; margin-bottom: 12px; border-bottom: 1px solid var(--card-border); }
 .nav-logo-icon { display: grid; place-items: center; background: #bcf588; color: #172019; -webkit-text-fill-color: #172019; border-radius: 12px; width: 37px; height: 40px; font-size: 28px; }
 .nav-logo small { display: block; font-size: 8px; letter-spacing: .19em; color: var(--text-dim); -webkit-text-fill-color: var(--text-dim); margin-top: 5px; }
