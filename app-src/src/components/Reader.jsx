@@ -105,7 +105,7 @@ export default function Reader({
     setRawContent(null);
     setEditingBlockId(null);
     restoredScrollRef.current = false;
-    fetch(`/${info.contentFile}`)
+    fetch(`${import.meta.env.BASE_URL}${info.contentFile}`)
       .then((r) => r.text())
       .then((text) => {
         if (!cancelled) setRawContent(text);
@@ -726,7 +726,7 @@ export default function Reader({
           {info.embedUrl ? (
             <iframe
               className="reader-embed"
-              src={`/${info.embedUrl}${info.embedUrl.includes("?") ? "&" : "?"}embed=1`}
+              src={`${import.meta.env.BASE_URL}${info.embedUrl}${info.embedUrl.includes("?") ? "&" : "?"}embed=1`}
               title={info.title}
             />
           ) : (

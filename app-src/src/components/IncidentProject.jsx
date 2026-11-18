@@ -7,7 +7,7 @@ import { usePreferences } from '../utils/preferences';
 import StationArchitecture from './StationArchitecture';
 import '../build-project.css';
 
-const docRoot = '/content/incident-command/';
+const docRoot = `${import.meta.env.BASE_URL}content/incident-command/`;
 const statuses = { todo: 'Not started', active: 'In progress', blocked: 'Blocked', done: 'Complete' };
 
 function ProjectDocument({ path, onSelect, onClose }) {

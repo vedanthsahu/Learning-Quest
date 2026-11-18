@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:pages": "vite build --base=/Learning-Quest/ --outDir=../dist-pages",
     "lint": "oxlint",
     "test:project": "node --test src/data/incidentProject.test.mjs",
     "test:navigation": "node --test src/utils/chapterNavigation.test.mjs",
