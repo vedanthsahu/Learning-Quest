@@ -176,6 +176,11 @@ class Handler(http.server.BaseHTTPRequestHandler):
         if rel.startswith("content/") or rel.startswith("uploads/"):
             self._send_file(os.path.join(ROOT, rel))
             return
+        if rel == "data.seed.json":
+            # Catalog-only seed (see scripts/make_seed.py) -- used when there's
+            # no save yet, e.g. a brand-new login with nothing in the DB yet.
+            self._send_file(os.path.join(ROOT, rel))
+            return
         if rel.startswith("assets/"):
             self._send_file(os.path.join(DIST_DIR, rel))
             return

@@ -53,8 +53,21 @@ const PANEL_STYLE: CSSProperties = {
   backdropFilter: "blur(18px)",
 };
 
-const PANEL =
-  "hud-corners panel-scroll tw:pointer-events-auto tw:max-h-[calc(100svh-16rem)] tw:lg:max-h-[80vh] tw:max-w-[calc(100vw-5rem)] tw:overflow-y-auto tw:overscroll-contain tw:rounded-2xl tw:border tw:border-hud/25 tw:p-5 tw:sm:p-8";
+// Panels sit over a scroll-driven 3D scene: the page's own scroll/wheel
+// input is what flies the rocket. A panel's content only claims that input
+// for itself once the person clicks into it -- otherwise scrolling over a
+// panel (even a tall one) keeps driving the flight instead of getting stuck
+// inside the panel's own list. Unclaimed overflow is masked (soft fade, not
+// hard-clipped) as a hint that there's more to see by clicking in. Tailwind
+// arbitrary-value syntax escapes spaces as underscores.
+const FADE_MASK_CLASSES =
+  "tw:[mask-image:linear-gradient(to_bottom,black_calc(100%-40px),transparent_100%)] tw:[-webkit-mask-image:linear-gradient(to_bottom,black_calc(100%-40px),transparent_100%)]";
+
+function panelClasses(engaged: boolean) {
+  return `hud-corners panel-scroll tw:pointer-events-auto tw:max-h-[calc(100svh-16rem)] tw:lg:max-h-[80vh] tw:max-w-[calc(100vw-5rem)] tw:rounded-2xl tw:border tw:border-hud/25 tw:p-5 tw:sm:p-8 ${
+    engaged ? "tw:overflow-y-auto tw:overscroll-contain" : `tw:overflow-hidden ${FADE_MASK_CLASSES}`
+  }`;
+}
 
 const CTA =
   "tw:block tw:w-full tw:rounded-full tw:border-0 tw:bg-gradient-to-r tw:from-cyan tw:to-nebula tw:py-3.5 tw:text-center tw:font-display tw:text-lg tw:font-semibold tw:tracking-wide tw:text-space tw:transition tw:hover:brightness-110 tw:active:scale-[0.98]";
@@ -95,6 +108,16 @@ export default function SectionOverlays() {
   const skillsRef = useRef<HTMLDivElement>(null);
   const projectsRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
+
+  // Which scrollable panel (if any) the person has clicked into. Only that
+  // one captures wheel/touch input for itself; leaving it releases it.
+  const [engagedPanel, setEngagedPanel] = useState<"about" | "experience" | "contact" | null>(null);
+  function engagePanel(id: "about" | "experience" | "contact") {
+    setEngagedPanel(id);
+  }
+  function releasePanel(id: "about" | "experience" | "contact") {
+    setEngagedPanel((current) => (current === id ? null : current));
+  }
   const lastAbout = useRef(-1);
   const lastExperience = useRef(-1);
   const lastSkills = useRef(-1);
@@ -158,9 +181,11 @@ export default function SectionOverlays() {
         <section
           ref={aboutRef}
           aria-label="Library"
-          data-lenis-prevent
+          data-lenis-prevent={engagedPanel === "about" || undefined}
           style={PANEL_STYLE}
-          className={`${PANEL} tw:ml-4 tw:w-[470px] tw:lg:ml-16`}
+          className={`${panelClasses(engagedPanel === "about")} tw:ml-4 tw:w-[470px] tw:lg:ml-16`}
+          onClick={() => engagePanel("about")}
+          onMouseLeave={() => releasePanel("about")}
         >
           <Kicker>01 // Library</Kicker>
           <h2 className="tw:m-0 tw:mt-3 tw:font-display tw:text-[28px] tw:font-bold tw:leading-[1.08] tw:text-star tw:sm:text-[40px] tw:sm:leading-[1.05]">
@@ -219,9 +244,11 @@ export default function SectionOverlays() {
         <section
           ref={experienceRef}
           aria-label="Practice lab"
-          data-lenis-prevent
+          data-lenis-prevent={engagedPanel === "experience" || undefined}
           style={PANEL_STYLE}
-          className={`${PANEL} tw:mr-14 tw:w-[560px] tw:lg:mr-24`}
+          className={`${panelClasses(engagedPanel === "experience")} tw:mr-14 tw:w-[560px] tw:lg:mr-24`}
+          onClick={() => engagePanel("experience")}
+          onMouseLeave={() => releasePanel("experience")}
         >
           <Kicker>02 // Practice lab</Kicker>
 
@@ -413,9 +440,11 @@ export default function SectionOverlays() {
         <section
           ref={contactRef}
           aria-label="Arrival"
-          data-lenis-prevent
+          data-lenis-prevent={engagedPanel === "contact" || undefined}
           style={PANEL_STYLE}
-          className={`${PANEL} tw:mr-14 tw:w-[460px] tw:lg:mr-24`}
+          className={`${panelClasses(engagedPanel === "contact")} tw:mr-14 tw:w-[460px] tw:lg:mr-24`}
+          onClick={() => engagePanel("contact")}
+          onMouseLeave={() => releasePanel("contact")}
         >
           <Kicker>04 // Arrival</Kicker>
           <h2 className="tw:m-0 tw:mt-2 tw:font-display tw:text-[26px] tw:font-bold tw:leading-[1.1] tw:text-star tw:sm:text-[34px] tw:sm:leading-[1.08]">

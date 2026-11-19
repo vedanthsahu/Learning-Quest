@@ -1,3 +1,5 @@
+import { supabase } from "./supabaseClient";
+
 // import.meta.env.BASE_URL is "/" for local dev/the local server, or the
 // configured --base (e.g. "/Learning-Quest/") for the GitHub Pages build --
 // see package.json's build:pages script.
@@ -7,6 +9,15 @@ const UPLOAD_URL = `${ROOT}api/upload`;
 const LS_KEY = "lq_data_v1";
 const SEED_URL = `${ROOT}data.seed.json`;
 
+// getSession() reads the cached session from localStorage (no network round
+// trip) -- fine here since this app has no real security requirement; every
+// save/load is debounced and shouldn't wait on an auth-server call.
+async function currentUserId() {
+  if (!supabase) return null;
+  const { data } = await supabase.auth.getSession();
+  return data.session?.user.id || null;
+}
+
 // Tracks whether the local Python server (server.py) is actually reachable this
 // session. Starts unknown; fetchData()/saveData() set it on their first real
 // attempt. Once false, we stop retrying the network on every save -- go straight
@@ -15,6 +26,22 @@ const SEED_URL = `${ROOT}data.seed.json`;
 let apiAvailable = null;
 
 export async function fetchData() {
+  const userId = await currentUserId();
+  if (userId) {
+    const { data: row, error } = await supabase
+      .from("progress")
+      .select("data")
+      .eq("user_id", userId)
+      .maybeSingle();
+    if (error) throw error;
+    if (row?.data) return row.data;
+    // Logged in but nothing saved under this account yet -- fresh start from
+    // the catalog-only seed, same as an anonymous first visit.
+    const seedRes = await fetch(SEED_URL, { cache: "no-store" });
+    if (!seedRes.ok) throw new Error(`No seed data available (${seedRes.status})`);
+    return await seedRes.json();
+  }
+
   try {
     const res = await fetch(BASE, { cache: "no-store" });
     if (!res.ok) throw new Error(`status ${res.status}`);
@@ -35,6 +62,15 @@ export async function fetchData() {
 }
 
 export async function saveData(data) {
+  const userId = await currentUserId();
+  if (userId) {
+    const { error } = await supabase
+      .from("progress")
+      .upsert({ user_id: userId, data, updated_at: new Date().toISOString() });
+    if (error) throw error;
+    return { ok: true, remote: true };
+  }
+
   if (apiAvailable !== false) {
     try {
       const res = await fetch(BASE, {

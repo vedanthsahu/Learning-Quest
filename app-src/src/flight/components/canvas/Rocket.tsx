@@ -190,6 +190,14 @@ export default function Rocket({ preview = false }: { preview?: boolean } = {}) 
   // LearningQuest: start where the flight resumes, not back on the pad.
   const smoothP = useRef(scrollState.progress);
   const yaw = useRef(0);
+  // Which way the rocket is currently facing/thrusting: +1 forward, -1
+  // reversed. Sticky across near-zero velocity (a pause or settle) so it
+  // doesn't flicker; only an actual scroll the other way flips it.
+  const dirSign = useRef<1 | -1>(1);
+  // Smoothed BASE travel orientation only (no idle sway baked in) -- the
+  // idle sway is re-applied fresh on top every frame, so it must never be
+  // part of what gets smoothed/remembered or it compounds frame over frame.
+  const smoothQuat = useRef(new THREE.Quaternion());
 
   const trail = useRef({
     pos: new Float32Array(TRAIL_N * 3),
@@ -498,9 +506,22 @@ export default function Rocket({ preview = false }: { preview?: boolean } = {}) 
     );
     const p = smoothP.current;
 
-    const thrust = sampleRocket(p, _pos, _quat);
+    // Flip which way the rocket faces the moment scroll direction actually
+    // reverses; a small deadzone around zero velocity keeps a pause from
+    // flickering it.
+    const DIR_DEADZONE = 0.015;
+    if (scrollState.velocity > DIR_DEADZONE) dirSign.current = 1;
+    else if (scrollState.velocity < -DIR_DEADZONE) dirSign.current = -1;
+
+    const thrust = sampleRocket(p, _pos, _quat, dirSign.current);
     root.position.copy(_pos);
-    root.quaternion.copy(_quat);
+    // Slerp the base orientation rather than snap it: position already
+    // follows smoothly-damped progress, but a direction flip is a discrete
+    // ±1 sign change -- without this it'd pop the facing instantly instead
+    // of visibly turning around. Idle sway is multiplied on top below, fresh
+    // every frame, so it's kept out of what gets smoothed here.
+    smoothQuat.current.slerp(_quat, 1 - Math.exp(-6 * d));
+    root.quaternion.copy(smoothQuat.current);
 
     // Idle hover on the hero pad, faded out through launch
     const w = 1 - THREE.MathUtils.smoothstep(p, 0.1, 0.2);

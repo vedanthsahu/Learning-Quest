@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { setSoundEnabled, isSoundEnabled } from "../utils/sound";
+import AuthWidget from "./AuthWidget";
 
 const ICONS = {
   home: <><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></>,
@@ -47,7 +48,7 @@ export default function Nav({ view, data, onNavigate, saveStatus, stats }) {
     </div>
     <div className="nav-footer">
       <button className="sound-toggle" onClick={toggleSound} aria-label={soundOn ? "Mute sound effects" : "Enable sound effects"} aria-pressed={soundOn} title={soundOn ? "Mute sound effects" : "Enable sound effects"}><Icon name={soundOn ? "volume" : "mute"}/></button>
-      <div>{stats && <div id="xp-destination" className="nav-xp"><span>Level {stats.levelNumber}</span><strong key={stats.xp}>{stats.xp} XP</strong><div><i style={{width:`${Math.min(100,stats.levelProgressPct*100)}%`}}/></div></div>}<span className="nav-footer-label">YOUR LEARNING SPACE</span><span role="status" className={`save-indicator save-${saveStatus}`}><i/>{saveLabel}</span></div>
+      <div>{stats && <div id="xp-destination" className="nav-xp"><span>Level {stats.levelNumber}</span><strong key={stats.xp}>{stats.xp} XP</strong><div><i style={{width:`${Math.min(100,stats.levelProgressPct*100)}%`}}/></div></div>}<span className="nav-footer-label">YOUR LEARNING SPACE</span><span role="status" className={`save-indicator save-${saveStatus}`}><i/>{saveLabel}</span><AuthWidget/></div>
     </div>
   </nav>;
 }

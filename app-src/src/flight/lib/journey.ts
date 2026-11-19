@@ -273,19 +273,27 @@ const _qBank = new THREE.Quaternion();
  * space; this quaternion rotates local +Y onto the direction of travel.
  * During the hero the rocket stands vertical (identity-ish, gentle idle
  * motion should be layered on top by the component).
+ *
+ * `dirSign` is +1 while scrolling forward, -1 while scrolling back -- the
+ * curve's own tangent only ever points toward increasing progress, so
+ * without this the rocket would slide backward along the path while still
+ * facing (and thrusting) forward. Flipping it turns the rocket around to
+ * actually face the way it's currently travelling.
  */
 export function sampleRocket(
   p: number,
   outPos: THREE.Vector3,
-  outQuat: THREE.Quaternion
+  outQuat: THREE.Quaternion,
+  dirSign: 1 | -1 = 1
 ): number {
   const u = progressToU(p, rocketCurve.stops);
   rocketCurve.curve.getPoint(u, outPos);
 
-  // Direction of travel from the curve tangent
+  // Direction of travel from the curve tangent, flipped to match the
+  // direction actually being scrolled right now.
   rocketCurve.curve.getTangent(Math.min(u, 0.9999), _dir);
   if (_dir.lengthSq() < 1e-6) _dir.set(0, 0, -1);
-  _dir.normalize();
+  _dir.normalize().multiplyScalar(dirSign);
 
   // Projects lap: circle the ring plane just outside the card lanes,
   // running ahead of the camera so each card is flown past in turn.
@@ -302,11 +310,13 @@ export function sampleRocket(
       .add(PROJECTS_PLANET.position);
     outPos.lerp(_orb, ob);
 
-    // Travel direction follows the circle's tangent
+    // Travel direction follows the circle's tangent (flipped the same way
+    // while reversing, so the lap itself visibly runs backward too).
     _orbDir
       .set(-Math.sin(th), 0, Math.cos(th))
       .applyEuler(PROJECTS_RING_TILT)
-      .normalize();
+      .normalize()
+      .multiplyScalar(dirSign);
     _dir.lerp(_orbDir, ob).normalize();
   }
 
@@ -318,9 +328,12 @@ export function sampleRocket(
   outQuat.copy(_qPitch).slerp(_qFace, pitchT);
 
   // Bank into turns: roll around the travel axis by lateral curvature,
-  // plus a steady lean into the circle while lapping the planet.
-  const uAhead = Math.min(u + 0.012, 1);
+  // plus a steady lean into the circle while lapping the planet. "Ahead"
+  // means ahead in the actual direction of travel, which is behind in u
+  // while reversing.
+  const uAhead = THREE.MathUtils.clamp(u + 0.012 * dirSign, 0, 1);
   rocketCurve.curve.getTangent(uAhead, _ahead);
+  _ahead.multiplyScalar(dirSign);
   // Lateral curvature = x-component of (ahead - dir); dot with (1,0,0)
   const lateral = _ahead.x - _dir.x;
   const bank =
