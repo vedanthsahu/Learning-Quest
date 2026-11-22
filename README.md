@@ -10,6 +10,13 @@ A self-contained, gamified reader + progress tracker for the Software Systems Ha
 AI Systems Handbook, Python Backend Handbook, and the Engineering Challenge Series — the
 actual chapter content lives inside this folder, so reading and tracking are the same action.
 
+## Try it online
+
+The app is also published at **[vedanthsahu.github.io/Learning-Quest](https://vedanthsahu.github.io/Learning-Quest/)**,
+rebuilt automatically from `main` on every push. No install needed, but without logging in
+(see below) progress only saves to that browser's local storage — it won't follow you to
+another device.
+
 ## Running it
 
 Double-click **`run.bat`** (or run `python server.py` from this folder). Your browser opens
@@ -24,6 +31,18 @@ Python from [python.org/downloads](https://python.org/downloads) once, then try 
 Copy this **entire `LearningQuest` folder** (USB drive, cloud sync, wherever) to the other
 machine and run `run.bat` there. Everything — the app, every chapter's content, and your
 progress — travels together in this one folder. There is nothing to install or configure.
+
+## Account login (optional)
+
+Click **Log in** in the nav sidebar footer to sign up with a username/password. Logged-in
+progress is saved to a Supabase project instead of the local save file/browser storage, so it
+follows you between devices and between the local app and the hosted GitHub Pages copy. It's
+entirely optional — the app works the same without it, just saved locally instead.
+
+Running your own fork with login enabled needs `app-src/.env.local` with your own Supabase
+project's `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` (not committed to the repo; the
+published GitHub Pages build gets these from a GitHub Actions secret instead). Without them,
+login is skipped entirely and the app just runs in local-save-only mode.
 
 ## Where your progress lives
 
