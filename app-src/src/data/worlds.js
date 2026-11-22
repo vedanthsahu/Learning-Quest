@@ -6,5 +6,6 @@ export const WORLDS = {
  dsa:{name:"The branching garden",kind:"tree",color:"#b79bdd"},
  peg:{name:"The expedition atlas",kind:"atlas",color:"#75c4a7"},
  java:{name:"The foundry",kind:"engine",color:"#efb566"},
+ ccdvf:{name:"The signal relay",kind:"neural",color:"#e0a083"},
 };
 export function worldFor(id){return WORLDS[id]||{name:"The discovery frontier",kind:"atlas",color:"#bde993"};}

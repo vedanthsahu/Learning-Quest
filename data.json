@@ -1,10 +1,10 @@
 {
   "meta": {
     "createdAt": "2026-07-24T00:45:13.254367",
-    "lastActiveDate": "2026-09-16",
-    "streak": 1,
+    "lastActiveDate": "2026-10-30",
+    "streak": 2,
     "longestStreak": 5,
-    "totalActiveSeconds": 5332,
+    "totalActiveSeconds": 9797,
     "dailyLog": {
       "2026-08-10": {
         "seconds": 49,
@@ -97,6 +97,56 @@
           "Mental Model: Vector Databases",
           "The Continuous Project (capstone app preview)",
           "Notation, Diagram Conventions, and Numbering"
+        ]
+      },
+      "2026-09-17": {
+        "seconds": 29,
+        "chapters": [
+          "Notation, Diagram Conventions, and Numbering"
+        ]
+      },
+      "2026-10-03": {
+        "seconds": 5,
+        "chapters": [
+          "EC2"
+        ]
+      },
+      "2026-10-06": {
+        "seconds": 1137,
+        "chapters": [
+          "Challenge: URL Shortener",
+          "How to Use This Handbook",
+          "Claude API Fundamentals"
+        ]
+      },
+      "2026-10-14": {
+        "seconds": 1265,
+        "chapters": [
+          "Claude API Fundamentals",
+          "Mock Exam Set 1: Question Paper",
+          "Mental Model: Data Storage"
+        ]
+      },
+      "2026-10-15": {
+        "seconds": 443,
+        "chapters": [
+          "Claude API Fundamentals",
+          "Prompt Engineering",
+          "Secondary Topics: Recognition Only",
+          "Complete Quick Reference"
+        ]
+      },
+      "2026-10-29": {
+        "seconds": 848,
+        "chapters": [
+          "Notation, Diagram Conventions, and Numbering",
+          "Foundations: Why Systems Fail and What Engineering Judgment Means"
+        ]
+      },
+      "2026-10-30": {
+        "seconds": 738,
+        "chapters": [
+          "Foundations: Why Systems Fail and What Engineering Judgment Means"
         ]
       }
     }
@@ -202,13 +252,13 @@
             {
               "num": "0.4",
               "title": "Notation, Diagram Conventions, and Numbering",
-              "status": "in_progress",
+              "status": "done",
               "notes": "",
-              "dateCompleted": null,
+              "dateCompleted": "2026-09-17",
               "contentFile": "content/ssh/front_matter.md",
               "estMinutes": 7,
-              "scrollPct": 0.07875528236650019,
-              "activeSeconds": 2,
+              "scrollPct": 1,
+              "activeSeconds": 178,
               "highlights": []
             }
           ]
@@ -219,14 +269,33 @@
             {
               "num": "1",
               "title": "Foundations: Why Systems Fail and What Engineering Judgment Means",
-              "status": "not_started",
+              "status": "in_progress",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/ssh/part1_ch01_foundations.md",
               "estMinutes": 13,
-              "scrollPct": 0,
-              "activeSeconds": 0,
-              "highlights": []
+              "scrollPct": 0.2829064164341872,
+              "activeSeconds": 1439,
+              "highlights": [
+                {
+                  "blockId": 2,
+                  "note": "",
+                  "imagePath": null,
+                  "updatedAt": "2026-10-29T13:55:45.162Z"
+                },
+                {
+                  "blockId": 3,
+                  "note": "",
+                  "imagePath": null,
+                  "updatedAt": "2026-10-29T13:55:45.710Z"
+                },
+                {
+                  "blockId": 4,
+                  "note": "",
+                  "imagePath": null,
+                  "updatedAt": "2026-10-29T13:55:46.236Z"
+                }
+              ]
             },
             {
               "num": "2",
@@ -279,13 +348,13 @@
             {
               "num": "6",
               "title": "Mental Model: Data Storage",
-              "status": "not_started",
+              "status": "in_progress",
               "notes": "",
               "dateCompleted": null,
               "contentFile": "content/ssh/part1_ch06_data_storage.md",
               "estMinutes": 7,
-              "scrollPct": 0,
-              "activeSeconds": 0,
+              "scrollPct": 0.6024096385542169,
+              "activeSeconds": 32,
               "highlights": []
             },
             {
@@ -1916,9 +1985,9 @@
             {
               "num": "4",
               "title": "Mental Model: Search & Retrieval",
-              "status": "in_progress",
+              "status": "done",
               "notes": "",
-              "dateCompleted": null,
+              "dateCompleted": "2026-09-17",
               "contentFile": "content/ai/part1_ch004_search_retrieval_mental_model.md",
               "estMinutes": 6,
               "scrollPct": 0.36487472634395524,
@@ -1928,9 +1997,9 @@
             {
               "num": "5",
               "title": "Mental Model: Vector Databases",
-              "status": "in_progress",
+              "status": "done",
               "notes": "",
-              "dateCompleted": null,
+              "dateCompleted": "2026-09-17",
               "contentFile": "content/ai/part1_ch005_vector_databases_mental_model.md",
               "estMinutes": 5,
               "scrollPct": 0,
@@ -4546,8 +4615,8 @@
               "dateCompleted": null,
               "contentFile": "content/cep/part1_ch001_ec2.md",
               "estMinutes": 8,
-              "scrollPct": 0.34856700232378,
-              "activeSeconds": 54,
+              "scrollPct": 0.34858490566037736,
+              "activeSeconds": 59,
               "highlights": [
                 {
                   "blockId": 1,
@@ -9083,6 +9152,409 @@
           ]
         }
       ]
+    },
+    {
+      "id": "ccdvf",
+      "name": "Claude Developer Foundations (CCDV-F)",
+      "subtitle": "Exam-oriented handbook for the Claude ecosystem",
+      "color": "#D97757",
+      "parts": [
+        {
+          "name": "PART 0 -- Orientation",
+          "topics": [
+            {
+              "num": "0",
+              "title": "How to Use This Handbook",
+              "status": "done",
+              "notes": "",
+              "dateCompleted": "2026-10-06",
+              "contentFile": "content/ccdvf/front_matter.md",
+              "estMinutes": 4,
+              "scrollPct": 1,
+              "activeSeconds": 320,
+              "highlights": []
+            }
+          ]
+        },
+        {
+          "name": "PART 1 -- Tier 1: The Claude API Core",
+          "topics": [
+            {
+              "num": "1",
+              "title": "Claude API Fundamentals",
+              "status": "done",
+              "notes": "",
+              "dateCompleted": "2026-10-15",
+              "contentFile": "content/ccdvf/ch01_api_fundamentals.md",
+              "estMinutes": 7,
+              "scrollPct": 0.9479329173166927,
+              "activeSeconds": 2038,
+              "highlights": []
+            },
+            {
+              "num": "2",
+              "title": "Prompt Engineering",
+              "status": "in_progress",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/ch02_prompt_engineering.md",
+              "estMinutes": 4,
+              "scrollPct": 0.0484375,
+              "activeSeconds": 3,
+              "highlights": []
+            },
+            {
+              "num": "3",
+              "title": "Structured Outputs, Schemas and Validation",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/ch03_structured_outputs.md",
+              "estMinutes": 4,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "4",
+              "title": "Context Engineering",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/ch04_context_engineering.md",
+              "estMinutes": 4,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "5",
+              "title": "Tool Use (Function Calling)",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/ch05_tool_use.md",
+              "estMinutes": 5,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "6",
+              "title": "Thinking (Extended Reasoning) and Effort",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/ch06_thinking_effort.md",
+              "estMinutes": 5,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "7",
+              "title": "Prompt Caching",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/ch07_prompt_caching.md",
+              "estMinutes": 5,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            }
+          ]
+        },
+        {
+          "name": "PART 2 -- Tier 1: Systems Around the Model",
+          "topics": [
+            {
+              "num": "8",
+              "title": "Agents and Workflows",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/ch08_agents_workflows.md",
+              "estMinutes": 4,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "9",
+              "title": "Claude Code",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/ch09_claude_code.md",
+              "estMinutes": 7,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "10",
+              "title": "Model Context Protocol (MCP)",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/ch10_mcp.md",
+              "estMinutes": 5,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "11",
+              "title": "Model Selection, Lifecycle and Migration",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/ch11_models_lifecycle.md",
+              "estMinutes": 5,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "12",
+              "title": "Evaluation, Testing and Debugging",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/ch12_evaluation.md",
+              "estMinutes": 4,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            }
+          ]
+        },
+        {
+          "name": "PART 3 -- Tier 2: Production",
+          "topics": [
+            {
+              "num": "13",
+              "title": "Security and Safety",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/ch13_security.md",
+              "estMinutes": 4,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "14",
+              "title": "Production Architecture, Cost and Performance",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/ch14_production_cost.md",
+              "estMinutes": 4,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "15",
+              "title": "Deployment Patterns and Responsibility Boundaries",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/ch15_deployment_patterns.md",
+              "estMinutes": 4,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            }
+          ]
+        },
+        {
+          "name": "PART 4 -- Tiers 3-4 and Final Revision",
+          "topics": [
+            {
+              "num": "16",
+              "title": "Secondary Topics: Recognition Only",
+              "status": "in_progress",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/ch16_tier3_tier4.md",
+              "estMinutes": 4,
+              "scrollPct": 1,
+              "activeSeconds": 8,
+              "highlights": []
+            },
+            {
+              "num": "17",
+              "title": "Final Revision Kit",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/ch17_final_revision.md",
+              "estMinutes": 9,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "QR",
+              "title": "Complete Quick Reference",
+              "status": "in_progress",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/CCDVF_COMPLETE_QUICK_REFERENCE.md",
+              "estMinutes": 45,
+              "scrollPct": 0.051771793054571226,
+              "activeSeconds": 423,
+              "highlights": []
+            }
+          ]
+        },
+        {
+          "name": "PART 5 -- Mock Exams (5 Practice Sets)",
+          "topics": [
+            {
+              "num": "M0",
+              "title": "Mock Exams: How to Use the Five Practice Sets",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/mock_exams_guide.md",
+              "estMinutes": 4,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "M1",
+              "title": "Mock Exam Set 1: Timed Exam",
+              "status": "in_progress",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/mock_exam_set1_paper.md",
+              "estMinutes": 120,
+              "scrollPct": 0.021475818228674514,
+              "activeSeconds": 10,
+              "highlights": [],
+              "embedUrl": "content/ccdvf/mock-exams/index.html?set=1"
+            },
+            {
+              "num": "M1K",
+              "title": "Mock Exam Set 1: Answer Key and Explanations",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/mock_exam_set1_key.md",
+              "estMinutes": 35,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "M2",
+              "title": "Mock Exam Set 2: Timed Exam",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/mock_exam_set2_paper.md",
+              "estMinutes": 120,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": [],
+              "embedUrl": "content/ccdvf/mock-exams/index.html?set=2"
+            },
+            {
+              "num": "M2K",
+              "title": "Mock Exam Set 2: Answer Key and Explanations",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/mock_exam_set2_key.md",
+              "estMinutes": 35,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "M3",
+              "title": "Mock Exam Set 3: Timed Exam",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/mock_exam_set3_paper.md",
+              "estMinutes": 120,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": [],
+              "embedUrl": "content/ccdvf/mock-exams/index.html?set=3"
+            },
+            {
+              "num": "M3K",
+              "title": "Mock Exam Set 3: Answer Key and Explanations",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/mock_exam_set3_key.md",
+              "estMinutes": 35,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "M4",
+              "title": "Mock Exam Set 4: Timed Exam",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/mock_exam_set4_paper.md",
+              "estMinutes": 120,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": [],
+              "embedUrl": "content/ccdvf/mock-exams/index.html?set=4"
+            },
+            {
+              "num": "M4K",
+              "title": "Mock Exam Set 4: Answer Key and Explanations",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/mock_exam_set4_key.md",
+              "estMinutes": 35,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            },
+            {
+              "num": "M5",
+              "title": "Mock Exam Set 5: Timed Exam",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/mock_exam_set5_paper.md",
+              "estMinutes": 120,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": [],
+              "embedUrl": "content/ccdvf/mock-exams/index.html?set=5"
+            },
+            {
+              "num": "M5K",
+              "title": "Mock Exam Set 5: Answer Key and Explanations",
+              "status": "not_started",
+              "notes": "",
+              "dateCompleted": null,
+              "contentFile": "content/ccdvf/mock_exam_set5_key.md",
+              "estMinutes": 35,
+              "scrollPct": 0,
+              "activeSeconds": 0,
+              "highlights": []
+            }
+          ]
+        }
+      ]
     }
   ],
   "challengeSeries": {
@@ -9094,11 +9566,11 @@
       {
         "num": "01",
         "name": "URL Shortener",
-        "challengeStatus": "not_started",
+        "challengeStatus": "in_progress",
         "challengeFile": "content/ces/challenge01_url_shortener.md",
         "challengeEstMinutes": 5,
         "challengeScrollPct": 0,
-        "challengeActiveSeconds": 0,
+        "challengeActiveSeconds": 11,
         "challengeHighlights": [],
         "solutionStatus": "not_started",
         "solutionFile": "content/ces/solution01_url_shortener.md",

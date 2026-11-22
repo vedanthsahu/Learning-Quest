@@ -1,4 +1,5 @@
 import Medal from "./Medal";
+import AstronautBay from './AstronautBay';
 import { useState } from "react";
 import PageHero from "./PageHero";
 import ProgressRing from "./ProgressRing";
@@ -7,11 +8,14 @@ import { ACHIEVEMENTS } from "../data/achievements";
 
 export default function AchievementsView({ data, stats }) {
   const [filter, setFilter] = useState("all");
+  const [bay, setBay] = useState(false);
   const unlockedCount = ACHIEVEMENTS.filter((a) => data.achievementState[a.id]?.unlocked).length;
 
   return (
     <div className="view achievements-view">
       <PageHero eyebrow="THE TROPHY ROOM" title="Curiosity deserves a little glory." description="A collection of small wins, big breakthroughs, and the habits that get you there." accent="#e4c588"><div className="trophy-orbit"><ProgressRing pct={unlockedCount / ACHIEVEMENTS.length} color="#e4c588" size={132} strokeWidth={5} label={`${unlockedCount} / ${ACHIEVEMENTS.length}`}/><span>BADGES EARNED</span></div></PageHero>
+      <button className="equipment-toggle" aria-expanded={bay} aria-controls="achievement-equipment" onClick={() => setBay(value => !value)}>{bay ? 'Close equipment bay' : 'Inspect astronaut equipment'}</button>
+      {bay && <div id="achievement-equipment"><AstronautBay data={data} stats={stats} /></div>}
       <div className="collection-toolbar"><div className="filter-tabs">{["all", "unlocked", "locked"].map(value => <button key={value} aria-pressed={filter === value} onClick={() => setFilter(value)}>{value === "all" ? "All milestones" : value === "unlocked" ? "Earned" : "Still to discover"}</button>)}</div><span className="collection-count" role="status">{unlockedCount} achievements unlocked</span></div>
 
       {filter === "unlocked" && unlockedCount === 0 && <div className="designed-empty"><h2>Your first milestone is ahead.</h2><p>Complete a chapter to start your collection.</p></div>}

@@ -1,0 +1,67 @@
+@font-face { font-family: 'Barlow Flight'; src: url('/space/BarlowCondensed-SemiBold.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: swap; }
+:root { --flight-ink:#050b16; --flight-panel:#0e1a2a; --flight-line:#314358; --flight-text:#f0f3f5; --flight-muted:#b2c0d0; --flight-orange:#f4a077; --ease-out:cubic-bezier(.23,1,.32,1); }
+:root[data-theme='orbital'] { --bg:#080f1d; --bg-elevated:#101d2e; --card-bg:#101d2e; --card-border:#304157; --text:#eef3f8; --text-dim:#b2c0d0; --text-faint:#99abc0; --cyan:#9dd8ef; --emerald:#a8d6c1; --purple:#bbc0ed; }
+[data-theme='orbital'] body { background:var(--bg); }
+[data-theme='orbital'] ::selection { color:#080f1d; background:#b7e0f0; }
+[data-theme='orbital'] :is(input,textarea) { caret-color:var(--cyan); }
+[data-theme='orbital'] * { scrollbar-color:#566c85 #101d2e; scrollbar-width:thin; }
+[data-theme='orbital'] :is(button,a,input,select,textarea):focus-visible { outline:2px solid #f4a077; outline-offset:4px; }
+[data-theme='orbital'] .nav-sidebar { width:224px; background:#0b1422; border-right:1px solid var(--card-border); padding:25px 13px 18px; backdrop-filter:none; }
+[data-theme='orbital'] .nav-logo { font-size:17px; padding-inline:5px; }
+[data-theme='orbital'] .nav-logo-icon { background:#bfddea; color:#0b1422; border-radius:6px; }
+[data-theme='orbital'] .nav-logo-icon circle { fill:#bfddea; }
+[data-theme='orbital'] .nav-item { border-radius:5px; font-size:12px; padding:10px; min-height:42px; }
+[data-theme='orbital'] .nav-item.active { background:#23344a; color:#e5f4fc; box-shadow:none; }
+[data-theme='orbital'] .nav-item:hover { background:#1b2b3e; }
+[data-theme='orbital'] .nav-section-label { color:#9cacc0; letter-spacing:.08em; margin-top:20px; }
+[data-theme='orbital'] .nav-footer { border-color:var(--card-border); }
+[data-theme='orbital'] .nav-xp > div { background:#23344a; }
+[data-theme='orbital'] .nav-xp i { background:var(--cyan); }
+[data-theme='orbital'] :is(.page-hero,.quest-hero) { background:#101d2e; border:1px solid var(--card-border); border-radius:12px; }
+[data-theme='orbital'] .page-hero { min-height:220px; padding:32px; }
+[data-theme='orbital'] :is(.page-hero h1,.dashboard-heading h1) { font-family:'Barlow Flight',sans-serif; font-weight:600; font-size:clamp(36px,4vw,58px); letter-spacing:-.02em; line-height:1.04; }
+[data-theme='orbital'] .page-hero .eyebrow,[data-theme='orbital'] .dashboard-heading .eyebrow { display:none; }
+[data-theme='orbital'] .page-hero-art { min-width:150px; }
+[data-theme='orbital'] :is(.card,.quest-node,.chapter-map,.build-dashboard-entry,.journey-timeline,.lab-summary,.book-journey-strip) { background:var(--card-bg); border-color:var(--card-border); border-radius:12px; box-shadow:none; }
+[data-theme='orbital'] :is(.quest-node:hover,.card:hover) { border-color:#5a7895; }
+[data-theme='orbital'] :is(.chapter-status-row,.challenge-side-btn,.filter-tabs,.reading-toolbar,.reader-header,.reader-footer) { background:#111f31; border-color:var(--card-border); }
+[data-theme='orbital'] .quest-node { transform:none !important; }
+[data-theme='orbital'] .quest-node-num,[data-theme='orbital'] .challenge-card-num { color:#aac2da; }
+[data-theme='orbital'] .reader-panel { background:#0b1422; }
+[data-theme='orbital'] .reader-content { color:#e0e8f0; }
+[data-theme='orbital'] .reader-content :is(h1,h2,h3,h4) { color:#f1f5f9; }
+[data-theme='orbital'] .reader-content pre { background:#070e1a; border-color:#314358; }
+[data-theme='orbital'] :is(.reader-toc,.reader-tts-bar,.tts-settings-panel,.highlight-panel) { background:#101d2e; border-color:var(--card-border); }
+[data-theme='orbital'] .reader-toc a.active { background:#24394d; color:#d9effa; }
+[data-theme='orbital'] .btn-primary { background:var(--cyan); color:#0b1422; border-color:transparent; }
+[data-theme='orbital'] .btn-secondary { background:#16273a; color:#d7e4ef; border-color:var(--card-border); }
+[data-theme='orbital'] .nav-item.active::before { background:var(--cyan); width:2px; }
+[data-theme='orbital'] .filter-tabs button[aria-pressed='true'] { background:#2b4057; color:#f0f5fa; }
+[data-theme='orbital'] .search-field { background:#0b1422; border-color:var(--card-border); }
+[data-theme='orbital'] .eyebrow { color:#b2c0d0; }
+[data-theme='orbital'] .quest-hero::after { display:none; }
+[data-theme='orbital'] .hero-copy .eyebrow { color:#b2c0d0; }
+[data-theme='orbital'] .quest-primary { background:var(--flight-orange); color:#1a1820; border-radius:6px; }
+[data-theme='orbital'] .book-cover { background:#182c42; border:0; border-radius:6px; }
+[data-theme='orbital'] .tactile-book:hover .book-cover { transform:none; box-shadow:none; }
+[data-theme='orbital'] .map-node strong { background:#101d2e; }
+[data-theme='orbital'] .map-node > span { background:#1b3047; }
+[data-theme='orbital'] .scroll-reveal { opacity:1; translate:none; transition:none; }
+
+/* Dashboard "return to flight" window: a real rotating globe made from the
+   equirectangular day map (a flat map cropped to a circle read as a sticker). */
+.dashboard-flight-window { display:grid; place-items:center; align-content:center; gap:14px; padding:24px; text-align:center; }
+.dashboard-globe { width:170px; height:170px; border-radius:50%; background:#0b2a4a url('/textures/4k_earth_daymap.webp') 0 50% / auto 100% repeat-x; box-shadow:inset -34px -10px 50px 6px #02010aee, inset 6px 2px 18px #9adcff33, 0 0 40px #4cc9f033; animation:dashboard-globe-spin 60s linear infinite; }
+@keyframes dashboard-globe-spin { to { background-position:-340px 50%; } }
+.dashboard-flight-window button { background:none; color:var(--cyan); border:0; padding:12px; }
+@media (prefers-reduced-motion:reduce) { .dashboard-globe { animation:none; } }
+[data-motion='quiet'] .dashboard-globe { animation:none; }
+@media (max-width:760px) {
+  [data-theme='orbital'] .nav-sidebar { width:100%; padding:15px 19px; height:auto; }
+  [data-theme='orbital'] .nav-logo { margin:0; padding:0; border:0; }
+  [data-theme='orbital'] .nav-item { min-height:44px; }
+  [data-theme='orbital'] .page-hero { padding:25px; min-height:0; }
+  [data-theme='orbital'] .page-hero-art { display:none; }
+  .dashboard-flight-window { display:none; }
+}
+.flight-boot { min-height:100vh; display:grid; place-items:center; background:#02010a; color:#9adcff; font:12px/1.6 ui-monospace,monospace; letter-spacing:.3em; text-transform:uppercase; }

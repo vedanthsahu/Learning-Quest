@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { uploadImage } from "../utils/api";
+import { uploadImage, resolveImagePath } from "../utils/api";
 
 // A small on-demand editor attached to a highlighted block: a text note, and/or a pasted /
 // uploaded diagram image. Tabs let you flip between the note and the image without losing
@@ -78,7 +78,7 @@ export default function HighlightPanel({ highlight, onSave, onRemove, onClose })
         <div className="highlight-image-area">
           {imagePath ? (
             <div className="highlight-image-preview">
-              <img src={`/${imagePath}`} alt="Your diagram" />
+              <img src={resolveImagePath(imagePath)} alt="Your diagram" />
               <button className="btn-mini" onClick={() => setImagePath(null)}>
                 Remove image
               </button>

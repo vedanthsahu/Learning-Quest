@@ -1,0 +1,217 @@
+[
+  {
+    "path": "00-project-charter.md",
+    "title": "00 — Project Charter",
+    "group": "Project docs"
+  },
+  {
+    "path": "01-pdd.md",
+    "title": "01 — Product Definition Document (PDD)",
+    "group": "Project docs"
+  },
+  {
+    "path": "02-sow.md",
+    "title": "02 — Statement of Work",
+    "group": "Project docs"
+  },
+  {
+    "path": "03-scope-and-roadmap.md",
+    "title": "03 — Scope and Roadmap",
+    "group": "Project docs"
+  },
+  {
+    "path": "04-must-have-vs-good-to-have.md",
+    "title": "04 — Must Have vs Good to Have vs Future vs Not Now",
+    "group": "Project docs"
+  },
+  {
+    "path": "05-technology-stack.md",
+    "title": "05 — Technology Stack",
+    "group": "Project docs"
+  },
+  {
+    "path": "06-learning-and-technology-map.md",
+    "title": "06 — Learning and Technology Map",
+    "group": "Project docs"
+  },
+  {
+    "path": "07-system-architecture.md",
+    "title": "07 — System Architecture",
+    "group": "Project docs"
+  },
+  {
+    "path": "08-data-architecture.md",
+    "title": "08 — Data Architecture",
+    "group": "Project docs"
+  },
+  {
+    "path": "09-ai-engine-architecture.md",
+    "title": "09 — AI Engine Architecture: Adaptive Incident Reasoning",
+    "group": "Project docs"
+  },
+  {
+    "path": "10-memory-architecture.md",
+    "title": "10 — Memory Architecture",
+    "group": "Project docs"
+  },
+  {
+    "path": "11-tool-calling-and-grounding.md",
+    "title": "11 — Tool Calling and Grounding",
+    "group": "Project docs"
+  },
+  {
+    "path": "12-concurrency-and-efficiency.md",
+    "title": "12 — Concurrency and Efficiency",
+    "group": "Project docs"
+  },
+  {
+    "path": "13-observability.md",
+    "title": "13 — Observability",
+    "group": "Project docs"
+  },
+  {
+    "path": "14-evaluation-strategy.md",
+    "title": "14 — Evaluation Strategy",
+    "group": "Project docs"
+  },
+  {
+    "path": "15-security-and-rbac.md",
+    "title": "15 — Security and RBAC",
+    "group": "Project docs"
+  },
+  {
+    "path": "16-ui-product-and-design-spec.md",
+    "title": "16 — UI Product and Design Spec",
+    "group": "Project docs"
+  },
+  {
+    "path": "17-ui-information-architecture.md",
+    "title": "17 — UI Information Architecture",
+    "group": "Project docs"
+  },
+  {
+    "path": "18-deployment-strategy.md",
+    "title": "18 — Deployment Strategy",
+    "group": "Project docs"
+  },
+  {
+    "path": "19-aws-strategy.md",
+    "title": "19 — AWS Strategy",
+    "group": "Project docs"
+  },
+  {
+    "path": "20-open-questions-and-risks.md",
+    "title": "20 — Open Questions and Risks",
+    "group": "Project docs"
+  },
+  {
+    "path": "21-definition-of-done.md",
+    "title": "21 — Definition of Done",
+    "group": "Project docs"
+  },
+  {
+    "path": "22-production-simulator.md",
+    "title": "22 — Production Environment Simulator",
+    "group": "Project docs"
+  },
+  {
+    "path": "23-incident-lifecycle-and-sla.md",
+    "title": "23 — Incident Lifecycle and SLA Model",
+    "group": "Project docs"
+  },
+  {
+    "path": "24-aws-prerequisites-setup-guide.md",
+    "title": "24 — AWS Prerequisites Setup Guide",
+    "group": "Project docs"
+  },
+  {
+    "path": "25-build-blueprint.md",
+    "title": "25 — Build Blueprint",
+    "group": "Project docs"
+  },
+  {
+    "path": "README.md",
+    "title": "Incident Command AI — Documentation Index",
+    "group": "Project docs"
+  },
+  {
+    "path": "adr/ADR-001-react-vs-angular.md",
+    "title": "ADR-001 — React vs Angular",
+    "group": "Decisions"
+  },
+  {
+    "path": "adr/ADR-002-java-spring-boot-vs-node.md",
+    "title": "ADR-002 — Java/Spring Boot vs Node.js for the Application Backend",
+    "group": "Decisions"
+  },
+  {
+    "path": "adr/ADR-003-python-genai-engine.md",
+    "title": "ADR-003 — Python for the GenAI Engine",
+    "group": "Decisions"
+  },
+  {
+    "path": "adr/ADR-004-postgresql.md",
+    "title": "ADR-004 — PostgreSQL as System of Record",
+    "group": "Decisions"
+  },
+  {
+    "path": "adr/ADR-005-redis-usage.md",
+    "title": "ADR-005 — Redis Usage",
+    "group": "Decisions"
+  },
+  {
+    "path": "adr/ADR-006-milvus.md",
+    "title": "ADR-006 — Vector Retrieval: pgvector vs. Milvus",
+    "group": "Decisions"
+  },
+  {
+    "path": "adr/ADR-007-s3.md",
+    "title": "ADR-007 — S3 for Object Storage",
+    "group": "Decisions"
+  },
+  {
+    "path": "adr/ADR-008-sse-vs-websockets.md",
+    "title": "ADR-008 — SSE vs WebSockets for Streaming",
+    "group": "Decisions"
+  },
+  {
+    "path": "adr/ADR-009-local-model-strategy.md",
+    "title": "ADR-009 — Local Model Strategy",
+    "group": "Decisions"
+  },
+  {
+    "path": "adr/ADR-010-api-cloud-model-strategy.md",
+    "title": "ADR-010 — External Model Provider Strategy",
+    "group": "Decisions"
+  },
+  {
+    "path": "adr/ADR-011-memory-architecture.md",
+    "title": "ADR-011 — Memory Architecture",
+    "group": "Decisions"
+  },
+  {
+    "path": "adr/ADR-012-concurrency-model.md",
+    "title": "ADR-012 — Concurrency Model",
+    "group": "Decisions"
+  },
+  {
+    "path": "adr/ADR-013-observability-stack.md",
+    "title": "ADR-013 — Observability Stack",
+    "group": "Decisions"
+  },
+  {
+    "path": "adr/ADR-014-dev-vs-deployment-architecture.md",
+    "title": "ADR-014 — Local/Dev vs. Deployment Architecture",
+    "group": "Decisions"
+  },
+  {
+    "path": "adr/ADR-015-production-simulator-scope.md",
+    "title": "ADR-015 — Production Simulator Scope: Synthetic Generator vs. Real Infrastructure",
+    "group": "Decisions"
+  },
+  {
+    "path": "adr/README.md",
+    "title": "Architecture Decision Records — Index",
+    "group": "Decisions"
+  }
+]

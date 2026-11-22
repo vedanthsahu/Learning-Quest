@@ -1,14 +1,19 @@
-import Observatory from "./Observatory";
 import WorldArt from "./WorldArt";
+import { useState } from 'react';
+import OrbitalLibrary from './OrbitalLibrary';
+import RocketDock from './RocketDock';
 import { motion } from "framer-motion";
 import Mascot from "./Mascot";
 import ProgressRing from "./ProgressRing";
 import { suggestNextTopic, rankTitle, formatMinutesShort } from "../utils/xp";
 import { ACHIEVEMENTS } from "../data/achievements";
+import { projectSummary } from "../data/incidentProject";
 
 export default function Dashboard({ data, stats, onOpenReader, onNavigateView }) {
+  const [libraryView, setLibraryView] = useState('shelf');
   const next = suggestNextTopic(data);
   const isSleepy = (data.meta.streak || 0) === 0;
+  const build = projectSummary(data.buildProjects?.['incident-command']);
 
   const recentUnlocks = Object.entries(data.achievementState)
     .filter(([, v]) => v.unlocked)
@@ -22,6 +27,10 @@ export default function Dashboard({ data, stats, onOpenReader, onNavigateView })
         <div><div className="eyebrow">YOUR PERSONAL LEARNING SPACE</div><h1>A little curiosity.<br /><span>A whole new horizon.</span></h1><p>Build your knowledge, one chapter at a time.</p></div>
         <div className="today-label"><span className="status-dot" />{new Intl.DateTimeFormat("en", { month: "short", day: "numeric", weekday: "short" }).format(new Date())}</div>
       </header>
+      <button className="build-dashboard-entry" onClick={() => onNavigateView({ view: 'incident-project' })}>
+        <span><small>YOUR BUILD WORKSPACE</small><strong>Incident Command AI</strong><span>{build.next ? `Next: ${build.next.title}` : 'Core journey complete · review your evidence'}</span></span>
+        <span><strong>{build.done}/{build.total}</strong><span>core steps verified ↗</span></span>
+      </button>
       <section className="quest-hero">
         <div className="hero-copy">
           <div className="eyebrow">✦ YOUR NEXT ADVENTURE</div>
@@ -29,7 +38,7 @@ export default function Dashboard({ data, stats, onOpenReader, onNavigateView })
           <p>{next ? `${next.bookName} · ${next.partName}` : "Explore your handbooks and keep your curiosity alive."}</p>
           <div className="hero-actions"><button className="quest-primary" onClick={() => next ? onOpenReader({ scope: "book", bookId: next.bookId, partIndex: next.partIndex, topicIndex: next.topicIndex }) : onNavigateView({ view: "challenges" })}>{next ? "Continue learning" : "Explore challenges"}<span aria-hidden="true">↗</span></button>{next && <span className="hero-duration">◷ About {next.topic.estMinutes} min</span>}</div>
         </div>
-        <Observatory books={data.books} onOpen={bookId => onNavigateView({view:"book",bookId})}/>
+        <RocketDock next={next} onReturn={() => onNavigateView({ view: 'journey' })} />
       </section>
       <div className="section-heading"><h2>Your momentum</h2><span>Small steps. Lasting progress.</span></div>
       <div className="dash-top-grid">
@@ -64,8 +73,10 @@ export default function Dashboard({ data, stats, onOpenReader, onNavigateView })
       </div>
 
       <div className="section-heading"><div><div className="eyebrow">CHOOSE YOUR PATH</div><h2>Your learning library</h2></div><span>{stats.perBook.length + 1} paths to explore</span></div>
+      <div className="library-view-controls"><div className="filter-tabs" role="group" aria-label="Library view"><button aria-pressed={libraryView === 'shelf'} onClick={() => setLibraryView('shelf')}>Bookshelf</button><button aria-pressed={libraryView === 'orbit'} onClick={() => setLibraryView('orbit')}>Orbital library</button></div></div>
+      {libraryView === 'orbit' && <OrbitalLibrary books={stats.perBook} onNavigateView={onNavigateView} />}
       <div className="dash-books-grid">
-        {stats.perBook.map((b, i) => {
+        {libraryView === 'shelf' && stats.perBook.map((b, i) => {
           const rank = rankTitle(b.pct);
           return (
             <motion.button

@@ -16,6 +16,11 @@ import Reader from "./components/Reader";
 import QuizView from "./components/QuizView";
 import NotificationCenter from "./components/NotificationCenter";
 import Mascot from "./components/Mascot";
+import IncidentProject from "./components/IncidentProject";
+import SpaceJourney from "./components/SpaceJourney";
+import './space.css';
+import './learning-navigation.css';
+import './space-experiences.css';
 
 export default function App() { return <PreferencesProvider><LearningApp /></PreferencesProvider>; }
 
@@ -29,6 +34,8 @@ function LearningApp() {
     dismissEvent,
     pushEvent,
     updateTopic,
+    updateBuildTask,
+    retrySave,
     updateChallengeProject,
     logActiveTime,
     updateScrollPct,
@@ -39,9 +46,17 @@ function LearningApp() {
     saveStatus,
   } = useGameData();
 
-  const [view, setView] = useState({ view: "dashboard" });
+  const [view, setView] = useState(() => ({ view: window.location.hash === '#/projects/incident-command' ? 'incident-project' : 'journey' }));
   const [readerState, setReaderState] = useState(null); // { target, anchor }
   const [activeQuizId, setActiveQuizId] = useState(null);
+  // While flying, the sidebar becomes a drawer opened from the flight navbar.
+  const [flightMenu, setFlightMenu] = useState(false);
+  useEffect(() => {
+    if (!flightMenu) return;
+    const onKey = (e) => { if (e.key === 'Escape') setFlightMenu(false); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [flightMenu]);
   useScrollReveals(`${view.view}-${view.bookId || ""}-${loading}`);
 
   // Cross-reference links open in a NEW tab (see crossref.js / Reader.jsx's `a` component)
@@ -85,7 +100,13 @@ function LearningApp() {
     setReaderState({ target, anchor: anchor || null, direction: direction || null });
   }
   function navigate(next) {
+    setFlightMenu(false);
     setView(next);
+    if (next.view === 'incident-project' || window.location.hash === '#/projects/incident-command') {
+      const url = new URL(window.location.href);
+      url.hash = next.view === 'incident-project' ? '/projects/incident-command' : '';
+      window.history.replaceState(null, '', url);
+    }
     window.scrollTo({ top: 0, behavior: "instant" });
   }
   function cycleBookStatus(bookId, partIndex, topicIndex, newStatus) {
@@ -99,12 +120,15 @@ function LearningApp() {
   }
 
   return (
-    <div className="app-shell">
+    <div className={`app-shell orbital-shell ${view.view === 'journey' ? 'journey-shell' : ''} ${view.view === 'journey' && flightMenu ? 'flight-menu-open' : ''}`}>
       <a className="skip-link" href="#main-content">Skip to content</a>
       <Nav stats={stats} view={view} data={data} onNavigate={navigate} saveStatus={saveStatus} />
+      {view.view === 'journey' && flightMenu && <button className="flight-menu-scrim" aria-label="Close menu" onClick={() => setFlightMenu(false)} />}
 
       <main className="app-main" id="main-content">
         <Atmosphere />
+        {view.view === 'journey' && <SpaceJourney data={data} stats={stats} onNavigate={navigate} onOpenReader={openReader} onToggleMenu={() => setFlightMenu(open => !open)} paused={!!readerState || !!activeQuizId || flightMenu} />}
+        {view.view === "incident-project" && <IncidentProject progress={data.buildProjects?.["incident-command"] || {}} onUpdate={updateBuildTask} saveStatus={saveStatus} onRetrySave={retrySave} />}
         {view.view === "dashboard" && (
           <Dashboard data={data} stats={stats} onOpenReader={openReader} onNavigateView={navigate} />
         )}
@@ -118,6 +142,7 @@ function LearningApp() {
             onCycleStatus={cycleBookStatus}
             onOpenQuiz={setActiveQuizId}
             onBack={() => navigate({ view: "dashboard" })}
+            paused={!!readerState || !!activeQuizId}
           />
         )}
         {view.view === "challenges" && (

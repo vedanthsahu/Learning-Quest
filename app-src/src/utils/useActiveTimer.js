@@ -18,7 +18,8 @@ export function useActiveTimer(onFlush) {
     const markActivity = () => {
       lastActivityRef.current = Date.now();
     };
-    const events = ["mousemove", "keydown", "scroll", "click", "touchstart"];
+    // "lq-activity" is re-dispatched by the Reader for activity inside embedded iframes.
+    const events = ["mousemove", "keydown", "scroll", "click", "touchstart", "lq-activity"];
     events.forEach((e) => window.addEventListener(e, markActivity, { passive: true }));
 
     const tick = setInterval(() => {

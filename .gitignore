@@ -1,0 +1,12 @@
+# Local design review captures and Python runtime caches
+.impeccable/
+__pycache__/
+*.pyc
+
+# GitHub Pages build output -- rebuilt fresh by the deploy workflow every time,
+# never committed (unlike dist/, which the local server.py setup does ship with)
+dist-pages/
+
+# Supabase project URL/key for local login testing -- the deploy workflow gets
+# these from GitHub Actions secrets instead (see deploy-pages.yml)
+app-src/.env.local

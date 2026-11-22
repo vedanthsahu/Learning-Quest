@@ -2,6 +2,7 @@ import PageHero from "./PageHero";
 import { useDialog } from "../utils/useDialog";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { resolveImagePath } from "../utils/api";
 
 function collectHighlights(data) {
   const items = [];
@@ -74,7 +75,7 @@ export default function RevisionView({ data, onOpenReader }) {
 
               {item.imagePath && (
                 <button className="diagram-preview-button" aria-label={`Enlarge diagram for ${item.topicTitle}`} onClick={() => setLightbox(item.imagePath)}><img
-                  src={`/${item.imagePath}`}
+                  src={resolveImagePath(item.imagePath)}
                   alt="Diagram"
                   className="revision-card-image"
                 /></button>
@@ -100,5 +101,5 @@ export default function RevisionView({ data, onOpenReader }) {
 
 function DiagramLightbox({ path, onClose }) {
   const ref = useDialog(onClose);
-  return <motion.div ref={ref} role="dialog" aria-modal="true" aria-label="Diagram preview" tabIndex={-1} className="lightbox-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose}><button className="lightbox-close icon-btn" onClick={onClose} aria-label="Close diagram">Close &times;</button><img src={`/${path}`} alt="Saved diagram" onClick={e => e.stopPropagation()} /></motion.div>;
+  return <motion.div ref={ref} role="dialog" aria-modal="true" aria-label="Diagram preview" tabIndex={-1} className="lightbox-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose}><button className="lightbox-close icon-btn" onClick={onClose} aria-label="Close diagram">Close &times;</button><img src={resolveImagePath(path)} alt="Saved diagram" onClick={e => e.stopPropagation()} /></motion.div>;
 }
