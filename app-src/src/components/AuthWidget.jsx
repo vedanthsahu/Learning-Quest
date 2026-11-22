@@ -14,7 +14,16 @@ export default function AuthWidget() {
 
   useEffect(() => {
     if (!supabase) return;
-    supabase.auth.getUser().then(({ data }) => setUser(data.user || null));
+    // getSession() reads the cached (already auto-refreshed) session from
+    // localStorage -- no network round trip, so a slow/flaky request to
+    // Supabase can't make a logged-in user briefly look logged out.
+    supabase.auth.getSession().then(({ data }) => setUser(data.session?.user || null));
+    // Keep this in sync afterward too (token refresh, sign-out elsewhere, etc.)
+    // instead of only ever checking once on mount.
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user || null);
+    });
+    return () => sub.subscription.unsubscribe();
   }, []);
 
   if (!supabase) return null; // this build has no Supabase project configured
